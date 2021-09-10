@@ -10,30 +10,32 @@
 }
 
 body{
+    background-color: darkcyan;
+    
     height: 100vh;
-    display: flex;
+    display: grid;
+    justify-items: center;
+    align-items: center;
 
     font-family: 'Righteous', Arial, Helvetica, sans-serif;
 }
 
 /** BOARD SCREEN */
 .board{
-    margin: auto;
-
     display: grid;
-    gap: 10px;
 
-    grid-template: 1fr 1fr / 1fr 1fr 1fr;
+    grid-template-columns: auto auto auto auto auto;
+    gap: 10px;
 }
 
 .card{
-    width: 8em;
-    height: 8em;
+    width: 15vw;
+    height: 15vw;
 
     position: relative;
 
     transform-style: preserve-3d;
-    transition: transform 1s;
+    transition: transform .5s;
 }
 
 @-moz-document url-prefix(){
@@ -45,26 +47,27 @@ body{
 .card-front, .card-back{
     width: 100%;
     height: 100%;
-    
+
     position: absolute;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    justify-items: center;
     align-items: center;
-    
-    border-radius: .3em;
-    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
-    font-size: 3em;
+
+    border-radius: .5em;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
     backface-visibility: hidden;
+
+    font-size: 5vw;
 }
 
 .card-front{
-    background-color: var(--secondary);
-    transform: rotateY(180deg)
+    color: var(--secondary);
+    background-color: var(--primaryColor);
 }
 
 .card-back{
-    background-color: var(--primaryColor);
-    color: white;
+  background-color: var(--secondary);
+  transform: rotateY(180deg);
 }
 
 .flip{
