@@ -106,13 +106,6 @@ button{
     font-size: .6em;
 }
 
-#restart{
-  
-}
-
-#menu{
-
-}
 .no-select{
     -ms-touch-select: none;
     -ms-user-select: none;
