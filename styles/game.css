@@ -53,6 +53,7 @@ body{
     justify-items: center;
     align-items: center;
 
+    border: solid;
     border-radius: .5em;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.9);
     backface-visibility: hidden;
@@ -61,12 +62,22 @@ body{
 }
 
 .card-front{
-    color: var(--secondary);
+    background-color: var(--secondary);
+}
+
+.card-front::after{
+    content: "";
     background-color: var(--primaryColor);
+    
+    width: 35%;
+    height: 35%;
+
+    border-radius: 50%;
 }
 
 .card-back{
-  background-color: var(--secondary);
+  background-color: var(--primaryColor);
+  color: var(--secondary);
   transform: rotateY(180deg);
 }
 
