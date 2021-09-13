@@ -5,7 +5,9 @@
 <!-- What I've learned:
     noscript tag,
     3d flip effect,
+    work with objects
     -->
+
 <head>
     <meta charset="utl-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,12 +18,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
-    <noscript> This page uses javaScript to work. Make sure if you are using the </noscript>
+    <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
+        or if you have enabled the javaScript in your browser! </noscript>
 
     <title>Game</title>
 </head>
 
 <body class="no-select">
+    <div class="moves">Moves: <span></span></div>
     <div class="board">
         <!-- <div class='card' data-icon='bootstrap'>
             <div class='card-back'>A</div>
@@ -30,12 +34,13 @@
     </div>
 
 
-    <div id="gameOver">
+    <div class="gameOver">
         <div>
-            Congratulation! You have finished the game!
+            Congratulation! You have finished you study!
+            <div class="score">SCORE: <span></span></div>
         </div>
         <div>
-            <button id="restart" onclick="restartGame()">Play again</button>
+            <button id="restart" onclick="location.reload()">Play again</button>
             <button id="menu" onclick="goToMenu()">Menu</button>
         </div>
     </div>
