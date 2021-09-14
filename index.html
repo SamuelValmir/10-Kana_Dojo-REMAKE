@@ -12,6 +12,7 @@
     <meta charset="utl-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="rgb(250, 60, 60)">
     <link rel="icon" href="" type="img/png">
     <link rel="stylesheet" href="./styles/game.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,20 +21,37 @@
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
     <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
         or if you have enabled the javaScript in your browser! </noscript>
-
     <title>Game</title>
 </head>
 
 <body class="no-select">
-    <div class="moves">Moves: <span></span></div>
-    <div class="board">
-        <!-- <div class='card' data-icon='bootstrap'>
-            <div class='card-back'>A</div>
-            <div class='card-front'>あ</div>
-        </div> -->
+
+    <!-- MENU -->
+    <div class="menu-screen">
+        <div class="header">
+            <div class="top">
+                <div class="title"> Kana Dojo </div>
+                <span class="menu-icon"> &hellip; </span>
+            </div>
+            <nav>
+                <div class="option-learn" data-selected="true">LEARN</div>
+                <div class="option-play" data-selected="false">PLAY</div>
+            </nav>
+        </div>
+
+        <div class="container">
+
+        </div>
+    </div>
+
+    <!-- MEMORY GAME -->
+    <div class="memory-game">
+        <div class="moves">Moves: <span></span></div>
+        <div class="board"></div>
     </div>
 
 
+    <!-- MEMORY GAME (GAME OVER)-->
     <div class="gameOver">
         <div>
             Congratulation! You have finished you study!
@@ -44,6 +62,7 @@
             <button id="menu" onclick="goToMenu()">Menu</button>
         </div>
     </div>
+    <script src="./scripts/menuInterface.js"></script>
     <script src="./scripts/game.js"></script>
     <script src="./scripts/gameInterface.js"></script>
 </body>

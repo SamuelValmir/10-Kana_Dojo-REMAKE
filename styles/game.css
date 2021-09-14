@@ -11,13 +11,87 @@
 
 body{
     background-color: darkcyan;
-    
     height: 100vh;
+    font-family: 'Righteous', Arial, Helvetica, sans-serif;
+}
+
+/** MENU */
+.menu-screen{
+    color: white;
+}
+
+.title{
+    padding: 15px;
+    font-size: large;
+}
+
+.header{
+    background-color: rgb(245, 73, 73);
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.top{
+    position: relative;
+}
+
+.top .menu-icon{
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+
+    font-size: large;
+}
+
+.header nav{
     display: grid;
+    grid-template-columns: auto auto;
+    justify-items: stretch;
+    text-align: center
+}
+
+.header .option-learn, .option-play{
+    position: relative;
+    padding: 10px;
+}
+
+
+.option-learn::after, .option-play::after{
+    content: "";
+    background-color: rgba(255, 255, 255, 1);
+
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.highlight::after{
+    width: 100%;
+    animation: hightButton .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes hightButton {
+    0%{width: 0px;}
+    99%{width: 100%;}
+    to{background-color: rgba(255, 255, 255, 0);}
+    
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/** MEMORY GAME */
+.memory-game{
+    height: 100vh;
+    display: none;
     justify-items: center;
     align-items: center;
-
-    font-family: 'Righteous', Arial, Helvetica, sans-serif;
 }
 
 .moves{
@@ -97,7 +171,7 @@ body{
     transform: rotateY(180deg);
 }
 
-/** GAME OVER SCREEN */
+/** MEMORY GAME (GAME OVER)*/
 .gameOver{
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
@@ -106,6 +180,7 @@ body{
     height: 100%;
 
     display: none;
+    top: 0;
     position: absolute;
     
     place-items: center;
