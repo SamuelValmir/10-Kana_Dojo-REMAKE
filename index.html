@@ -6,6 +6,15 @@
     noscript tag,
     3d flip effect,
     work with objects
+    Mobile first
+    Progress bar
+    Tab navigator
+    -->
+
+<!-- News (changes):
+    Study with memory card
+    Compatibility from desktop
+    Progress bar change color to indicate the current level
     -->
 
 <head>
@@ -13,7 +22,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="rgb(250, 60, 60)">
-    <link rel="icon" href="" type="img/png">
+    <link rel="icon" href="./assets/icon/logo.png" type="img/png">
     <link rel="stylesheet" href="./styles/game.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,32 +35,85 @@
 
 <body class="no-select">
 
-    <!-- MENU -->
+    <!------- MENU SCREEN ------->
     <div class="menu-screen">
         <div class="header">
             <div class="top">
                 <div class="title"> Kana Dojo </div>
                 <span class="menu-icon"> &hellip; </span>
             </div>
-            <nav>
-                <div class="option-learn" data-selected="true">LEARN</div>
-                <div class="option-play" data-selected="false">PLAY</div>
+            <nav class="menu-screen-nav">
+                <div class="nav-option left-option learn-option" data-selected="true">LEARN</div>
+                <div class="nav-option right-option play-option" data-selected="false">PLAY</div>
             </nav>
         </div>
 
         <div class="container">
+            <div class="study-section"  onclick="goToReferenceScreen()">
+                <img src="./assets/icon/reference_icon.png" alt="reference">
+                <div class="description">
+                    <h2>Reference</h2>
+                    <p>Look up kana</p>
+                </div>
+            </div>
+            <div class="study-section">
+                <img src="./assets/icon/flash_icon.png" alt="flashcards">
+                <div class="description">
+                    <h2>Flash Cards</h2>
+                    <p>Study at your own pace</p>
+                </div>
+            </div>
+            <div class="study-section">
+                <img src="./assets/icon/quiz_icon.png" alt="quiz">
+                <div class="description">
+                    <h2>Quiz</h2>
+                    <p>Test your knowledge</p>
+                </div>
+            </div>
 
+            <div class="progress-container">
+                <h3 class="title">Hiragana</h3>
+                <div class="top">
+                    <p class="progress-text">Advanced</p>
+                    <p class="progress-number">50%</p>
+                </div>
+                <div class="progress-bar"></div>
+            </div>
+
+            <div class="progress-container">
+                <h3 class="title">Katakana</h3>
+                <div class="top">
+                    <p class="progress-text">Beginner</p>
+                    <p class="progress-number">50%</p>
+                </div>
+                <div class="progress-bar"></div>
+
+            </div>
         </div>
     </div>
 
-    <!-- MEMORY GAME -->
+    <!------- REFERENCE SCREEN ------->
+    <div class="reference-screen">
+        <div class="header">
+            <div class="top">
+                <div class="title"> Reference </div>
+                <span class="menu-icon">...</span>
+            </div>
+            <nav class="reference-screen-nav">
+                <div class="nav-option left-option hiragana-option" data-selected="true">HIRAGANA</div>
+                <div class="nav-option right-option katakana-option" data-selected="false">KATAKANA</div>
+            </nav>
+        </div>
+    </div>
+
+    <!------- MEMORY GAME ------->
     <div class="memory-game">
         <div class="moves">Moves: <span></span></div>
         <div class="board"></div>
     </div>
 
 
-    <!-- MEMORY GAME (GAME OVER)-->
+    <!------- MEMORY GAME (GAME OVER) ------->
     <div class="gameOver">
         <div>
             Congratulation! You have finished you study!
@@ -63,6 +125,7 @@
         </div>
     </div>
     <script src="./scripts/menuInterface.js"></script>
+    <script src="./scripts/referenceInterface.js"></script>
     <script src="./scripts/game.js"></script>
     <script src="./scripts/gameInterface.js"></script>
 </body>
