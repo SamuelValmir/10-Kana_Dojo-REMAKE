@@ -48,7 +48,6 @@ let game = {
         this.cards = [];
 
         // It puts each element/kana from kanaJson to cards array
-        console.log(kanaJson)
         for (const family of Object.values(kanaJson.basic)) {
             for (const kana of family) {
                 this.cards.push(this.createPairOf(kana));

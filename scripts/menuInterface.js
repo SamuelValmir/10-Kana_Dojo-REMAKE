@@ -13,6 +13,66 @@ document.addEventListener("DOMContentLoaded", () => {
     // changeScreen(null, ".menu-screen");
 })
 
+let progressBar = document.querySelector(".reference-screen-progress-container");
+let progressBarTop = progressBar.offsetTop;
+
+// It fills the 3 scrolls bar as long as the screen is scrolled
+window.onscroll = () => {
+    let winScroll = document.documentElement.scrollTop;
+    let voicedTop = document.querySelector("#voiced").offsetTop;
+    let comboTop = document.querySelector("#combo").offsetTop;
+    let winHeight = document.documentElement.scrollHeight;
+
+    let basicBarHeight = voicedTop - document.documentElement.clientHeight;
+    let voicedBarHeight = comboTop - voicedTop;
+    let comboBarHeight = winHeight - comboTop;
+
+    let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let basicScrolled = (winScroll / basicBarHeight) * 100;
+    let voicedScrolled = ((winScroll - basicBarHeight) / voicedBarHeight) * 100;
+    let comboScrolled = ((winScroll - voicedBarHeight - basicBarHeight) / comboBarHeight) * 100;
+    console.log(comboScrolled)
+
+
+    // This if to not overflow the value between 0 and 100
+    if (basicScrolled < 0) {
+        basicScrolled = 0;
+    }
+    if (voicedScrolled < 0) {
+        voicedScrolled = 0;
+    }
+    if (comboScrolled < 0) {
+        comboScrolled = 0;
+    }
+
+    if (basicScrolled > 100) {
+        basicScrolled = 100;
+    }
+    if (voicedScrolled > 100) {
+        voicedScrolled = 100;
+    }
+    if (comboScrolled > 100) {
+        comboScrolled = 100;
+    }
+
+
+
+    document.querySelector("#basic-scroll").style.width = basicScrolled + "%";
+    document.querySelector("#voiced-scroll").style.width = voicedScrolled + "%";
+    document.querySelector("#combo-scroll").style.width = comboScrolled + "%";
+    pinOnTop();
+}
+
+function pinOnTop() {
+    if (window.pageYOffset >= progressBarTop) {
+        progressBar.classList.add("pinOnTop");
+        let progressContainerHeight = document.querySelector(".reference-screen-progress-container").offsetHeight;
+        document.body.style.marginTop = progressContainerHeight + "px";
+    } else {
+        progressBar.classList.remove("pinOnTop");
+        document.body.style.marginTop = "0";
+    }
+}
 
 function changeScreen(exitScreen, goScreen) {
     if (document.querySelector(exitScreen) != null) {
@@ -29,7 +89,6 @@ function changeScreen(exitScreen, goScreen) {
         leftOption = document.querySelector(".learn-option");
         rightOption = document.querySelector(".play-option");
         navOptions = document.querySelector(".menu-screen-nav").children;
-        console.log(123)
 
     } else if (document.querySelector(".reference-screen").style.display !== "none") {
         leftOption = document.querySelector(".hiragana-option");

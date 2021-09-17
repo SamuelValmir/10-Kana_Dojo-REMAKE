@@ -22,10 +22,16 @@ body{
 }
 
 h2, h3{
-    color: #777;
+    color: #888;
 }
 
-.scroll-progress svg{
+/* #basic-scroll{
+    background-color: blue;
+    width: 0;
+    height: 100%;
+} */
+
+/* .scroll-progress svg{
     background-color: aqua;
     width: 15vw;
     height: 15vw;
@@ -43,7 +49,7 @@ svg circle:last-child {
     stroke-dasharray: 280%;
     stroke-dashoffset: 280%;
     stroke-linecap: round;
-}
+} */
 
 /** ----- MENU ----- */
 .title{
@@ -86,6 +92,7 @@ svg circle:last-child {
 
     height: 100%;
     position: absolute;
+    z-index: -1;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
@@ -98,7 +105,7 @@ svg circle:last-child {
 }
 
 @keyframes hightButton {
-    0%{width: 0px;}
+    0%{width: 0px; z-index: 1;}
     99%{width: 100%;}
     to{background-color: rgba(255, 255, 255, 0);}
     
@@ -173,6 +180,49 @@ svg circle:last-child {
 .reference-screen .header .top{
     justify-content: start;
     gap: 10px;
+}
+
+.reference-screen-progress-container{
+    background-color: #aaa;
+    width: 100%;
+    display: flex;
+}
+
+.reference-screen-progress-container > div{
+    display: flex;
+    flex-flow: column;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.basic-scroll-container{
+    background-color: #74E332;
+}
+.voiced-scroll-container{
+    background-color: #42B200;
+}
+.combo-scroll-container{
+    background-color: #348C00;
+}
+.pinOnTop{
+    position: fixed;
+    top: 0;
+}
+
+.scroll-progress-bar{
+    background-color: #FF7B38 ;
+    /* #28B587
+    #00885B
+    #006B48 */
+    height: 8px;
+}
+
+#voiced-scroll{
+    background-color: #CC4500;
+}
+
+#combo-scroll{
+    background-color: #A03600;
 }
 
 .reference-screen .container{
