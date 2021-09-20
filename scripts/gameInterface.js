@@ -1,5 +1,4 @@
-// Global variables
-let kanaJson;
+
 
 // Contante variables
 const CARD = "card";

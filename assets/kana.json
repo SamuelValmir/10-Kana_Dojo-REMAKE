@@ -69,7 +69,44 @@
             "n"
         ]
     },
-    "combo": {
+    "voiced": {
+        "ga": [
+            "ga",
+            "gi",
+            "gu",
+            "ge",
+            "go"
+        ],
+        "za": [
+            "za",
+            "ji",
+            "zu",
+            "ze",
+            "zo"
+        ],
+        "da": [
+            "da",
+            "di",
+            "du",
+            "de",
+            "do"
+        ],
+        "ba": [
+            "ba",
+            "bi",
+            "bu",
+            "be",
+            "bo"
+        ],
+        "pa": [
+            "pa",
+            "pi",
+            "pu",
+            "pe",
+            "po"
+        ]
+    },
+    "combo1": {
         "kya": [
             "kya",
             "kyu",
@@ -104,6 +141,28 @@
             "rya",
             "ryu",
             "ryo"
+        ]
+    },
+    "combo2": {
+        "gya": [
+            "gya",
+            "gyu",
+            "gyo"
+        ],
+        "ja": [
+            "ja",
+            "ju",
+            "jo"
+        ],
+        "bya": [
+            "bya",
+            "byu",
+            "byo"
+        ],
+        "pya": [
+            "pya",
+            "pyu",
+            "pyo"
         ]
     }
 }

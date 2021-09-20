@@ -201,8 +201,11 @@ svg circle:last-child {
 .voiced-scroll-container{
     background-color: #42B200;
 }
-.combo-scroll-container{
+.combo-scroll-container1{
     background-color: #348C00;
+}
+.combo-scroll-container2{
+    background-color: #125C00;
 }
 .pinOnTop{
     position: fixed;
@@ -210,6 +213,7 @@ svg circle:last-child {
 }
 
 .scroll-progress-bar{
+    width: 0;
     background-color: #FF7B38 ;
     /* #28B587
     #00885B
@@ -221,12 +225,16 @@ svg circle:last-child {
     background-color: #CC4500;
 }
 
-#combo-scroll{
+#combo-scroll1{
     background-color: #A03600;
 }
 
+#combo-scroll2{
+    background-color: #403600;
+}
+
 .reference-screen .container{
-    background-color: tomato;
+    background-color: #f1f1f1;
     color: #777;
 
     display: flex;
@@ -242,7 +250,6 @@ svg circle:last-child {
 
 .reference-screen .container .family{
     display: flex;
-
 }
 
 .reference-screen .container .card{
@@ -255,6 +262,10 @@ svg circle:last-child {
     flex-direction: column;
     place-content: center;
     place-items: center;
+}
+
+.reference-screen .card .top{
+    font-size: 6vw;
 }
 
 /* ----------------------------------------------------------- */
