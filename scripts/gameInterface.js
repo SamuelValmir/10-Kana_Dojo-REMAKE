@@ -1,4 +1,4 @@
-
+"use strict";
 
 // Contante variables
 const CARD = "card";

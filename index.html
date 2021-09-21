@@ -15,7 +15,7 @@
 <!-- News (changes):
     Study with memory card
     Compatibility from desktop
-    Progress bar change color to indicate the current level
+    The progress bar changes it color to indicate the current level
     -->
 
 <head>
@@ -37,7 +37,7 @@
 <body class="no-select">
 
     <!------- MENU SCREEN ------->
-    <div class="menu-screen" style="display: none;">
+    <div class="menu-screen">
         <div class="header">
             <div class="top">
                 <div class="title"> Kana Dojo </div>
@@ -50,21 +50,21 @@
         </div>
 
         <div class="container">
-            <div class="study-section" onclick="goToReferenceScreen()">
+            <div class="study-section study-section-reference" ">
                 <img src="./assets/icon/reference_icon.png" alt="reference">
                 <div class="description">
                     <h2>Reference</h2>
                     <p>Look up kana</p>
                 </div>
             </div>
-            <div class="study-section">
+            <div class="study-section study-section-flash">
                 <img src="./assets/icon/flash_icon.png" alt="flashcards">
                 <div class="description">
                     <h2>Flash Cards</h2>
                     <p>Study at your own pace</p>
                 </div>
             </div>
-            <div class="study-section">
+            <div class="study-section study-section-quiz">
                 <img src="./assets/icon/quiz_icon.png" alt="quiz">
                 <div class="description">
                     <h2>Quiz</h2>
@@ -96,7 +96,7 @@
     <div class="reference-screen">
         <div class="header">
             <div class="top">
-                <span class="return-icon" onclick="changeScreen('.reference-screen', '.menu-screen')"><img
+                <span class="return-icon"><img
                         src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
                 <div class="title"> Reference </div>
             </div>
@@ -166,6 +166,7 @@
             <button id="menu" onclick="goToMenu()">Menu</button>
         </div>
     </div>
+    <script src="./scripts/generalInterface.js"></script>
     <script src="./scripts/menuInterface.js"></script>
     <script src="./scripts/referenceInterface.js"></script>
     <script src="./scripts/game.js"></script>

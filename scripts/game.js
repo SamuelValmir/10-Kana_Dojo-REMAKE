@@ -1,3 +1,5 @@
+"use strict";
+
 let game = {
     cards: null,
     lockMode: false,

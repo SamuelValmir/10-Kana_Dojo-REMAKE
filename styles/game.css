@@ -21,6 +21,13 @@ body{
     font-size: 4vw;
 }
 
+/** GENERAL */
+
+.pinOnTop{
+    position: fixed;
+    top: 0;
+}
+
 h2, h3{
     color: #888;
 }
@@ -52,6 +59,9 @@ svg circle:last-child {
 } */
 
 /** ----- MENU ----- */
+.menu-screen{
+    display: none;
+}
 .title{
     font-size: 6vw;
 }
@@ -70,7 +80,7 @@ svg circle:last-child {
 
 .top .menu-icon{
     transform: rotate(90deg);
-    font-size: large;
+    font-size: 7vw;
 }
 
 .header nav{
@@ -173,6 +183,9 @@ svg circle:last-child {
 /* ----------------------------------------------------------- */
 
 /** ----- REFERENCE SCREEN -----  */
+.reference-screen{
+    display: none;
+}
 .reference-screen .header{
     background-color: rgb(0, 175, 117);   
 }
@@ -180,6 +193,10 @@ svg circle:last-child {
 .reference-screen .header .top{
     justify-content: start;
     gap: 10px;
+}
+
+.reference-screen .header .top .return-icon img{
+    width: 7vw;
 }
 
 .reference-screen-progress-container{
@@ -198,18 +215,17 @@ svg circle:last-child {
 .basic-scroll-container{
     background-color: #74E332;
 }
+
 .voiced-scroll-container{
     background-color: #42B200;
 }
+
 .combo-scroll-container1{
     background-color: #348C00;
 }
+
 .combo-scroll-container2{
     background-color: #125C00;
-}
-.pinOnTop{
-    position: fixed;
-    top: 0;
 }
 
 .scroll-progress-bar{
@@ -265,7 +281,7 @@ svg circle:last-child {
 }
 
 .reference-screen .card .top{
-    font-size: 6vw;
+    font-size: 7.5vw;
 }
 
 /* ----------------------------------------------------------- */
