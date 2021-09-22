@@ -51,13 +51,13 @@
 
         <div class="container">
             <div class="study-section study-section-reference" ">
-                <img src="./assets/icon/reference_icon.png" alt="reference">
+                <img src=" ./assets/icon/reference_icon.png" alt="reference">
                 <div class="description">
                     <h2>Reference</h2>
                     <p>Look up kana</p>
                 </div>
             </div>
-            <div class="study-section study-section-flash">
+            <div class="study-section study-section-flash-card">
                 <img src="./assets/icon/flash_icon.png" alt="flashcards">
                 <div class="description">
                     <h2>Flash Cards</h2>
@@ -96,8 +96,7 @@
     <div class="reference-screen">
         <div class="header">
             <div class="top">
-                <span class="return-icon"><img
-                        src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
+                <span class="return-icon"><img src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
                 <div class="title"> Reference </div>
             </div>
             <nav class="reference-screen-nav">
@@ -122,7 +121,7 @@
                 <div id="combo-scroll1" class="scroll-progress-bar"></div>
             </div>
 
-            
+
             <div class="combo-scroll-container2">
                 <span>Combo 2</span>
                 <div id="combo-scroll2" class="scroll-progress-bar"></div>
@@ -145,7 +144,74 @@
 
         <!-- It's filled by Javascript -->
         <div class="container"></div>
-        
+
+    </div>
+
+    <!------- MODAL SCREEN ------->
+    <div class="modal">
+        <div class="modal-container">
+            <div class="modal-top">
+                <h4>New Flash Cards</h4>
+            </div>
+            <div class="modal-content">
+                <div class="modal-content-left">
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" checked name="hiragana">
+                            <span class="checkmark"></span>
+                            Hiragana
+                        </label>
+                    </span>
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="katakana"> 
+                            <span class="checkmark"></span>
+                            Katakana                   
+                        </label>
+                    </span>
+                </div>
+
+                <div class="modal-content-right">
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" checked name="basic">
+                            <span class="checkmark"></span>
+                            Basic (<span>き</span>)                   
+                        </label>
+                    </span>
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="voiced"> 
+                            <span class="checkmark"></span>
+                            Voiced (<span>ぎ</span>)                   
+                        </label>
+                    </span>
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="combo1"> 
+                            <span class="checkmark"></span>
+                            Combo 1 (<span>きゃ</span>)                   
+                        </label>
+                    </span>
+                    <span>
+                        <label class="checkbox-container">
+                            <input type="checkbox" name="combo2"> 
+                            <span class="checkmark"></span>
+                            Combo 2 (<span>ぎゃ</span>)                   
+                        </label>
+                    </span>
+                </div>
+            </div>
+            <div class="modal-bottom">
+                <div>CUSTOM</div>
+                <div>START</div>
+            </div>
+        </div>
+    </div>
+    <!------- FLASH CARD SCREEN ------->
+
+    <div class="">
+
     </div>
 
     <!------- MEMORY GAME ------->

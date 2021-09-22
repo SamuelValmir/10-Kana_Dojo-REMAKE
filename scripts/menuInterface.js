@@ -10,11 +10,9 @@ for (const studySection of studySections) {
                 document.querySelector(".reference-screen").style.display = "block";
                 changeScreen(".menu-screen", ".reference-screen");
                 drawCardsOnReferenceScreen("hiragana");
+            } else if (studySection.classList.contains("study-section-flash-card")) {
+                document.querySelector(".modal").style.display = "flex";
             } /* else if (studySection.classList.contains("study-section-reference")) {
-                document.querySelector(".menu-screen").style.display = "none";
-                document.querySelector(".reference-screen").style.display = "block";
-                changeScreen(".menu-screen", ".reference-screen");
-            } else if (studySection.classList.contains("study-section-reference")) {
                 document.querySelector(".menu-screen").style.display = "none";
                 document.querySelector(".reference-screen").style.display = "block";
                 changeScreen(".menu-screen", ".reference-screen");

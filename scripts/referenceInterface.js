@@ -56,52 +56,55 @@ function drawCardsOnReferenceScreen(option) {
 
 // It fills the 3 scrolls bar as long as the screen is scrolled
 window.onscroll = () => {
-    let winScroll = document.documentElement.scrollTop;
-    let voicedTop = document.querySelector("#voiced").offsetTop;
-    let comboTop1 = document.querySelector("#combo1").offsetTop;
-    let comboTop2 = document.querySelector("#combo2").offsetTop;
-    let winHeight = document.documentElement.scrollHeight;
+    if (document.querySelector(".reference-screen").style.display != "none") {
 
-    let basicBarHeight = voicedTop - document.documentElement.clientHeight;
-    let voicedBarHeight = comboTop1 - voicedTop;
-    let comboBarHeight1 = comboTop2 - comboTop1;
-    let comboBarHeight2 = winHeight - comboTop2;
+        let winScroll = document.documentElement.scrollTop;
+        let voicedTop = document.querySelector("#voiced").offsetTop;
+        let comboTop1 = document.querySelector("#combo1").offsetTop;
+        let comboTop2 = document.querySelector("#combo2").offsetTop;
+        let winHeight = document.documentElement.scrollHeight;
 
-    let basicScrolled = (winScroll / basicBarHeight) * 100;
-    let voicedScrolled = ((winScroll - basicBarHeight) / voicedBarHeight) * 100;
-    let comboScrolled1 = ((winScroll - voicedBarHeight - basicBarHeight) / comboBarHeight1) * 100;
-    let comboScrolled2 = ((winScroll - comboBarHeight1 - voicedBarHeight - basicBarHeight) / comboBarHeight2) * 100;
+        let basicBarHeight = voicedTop - document.documentElement.clientHeight;
+        let voicedBarHeight = comboTop1 - voicedTop;
+        let comboBarHeight1 = comboTop2 - comboTop1;
+        let comboBarHeight2 = winHeight - comboTop2;
 
-    // This is to not overflow the value between 0 and 100
-    if (basicScrolled < 0) {
-        basicScrolled = 0;
-    } else if (basicScrolled > 100) {
-        basicScrolled = 100;
+        let basicScrolled = (winScroll / basicBarHeight) * 100;
+        let voicedScrolled = ((winScroll - basicBarHeight) / voicedBarHeight) * 100;
+        let comboScrolled1 = ((winScroll - voicedBarHeight - basicBarHeight) / comboBarHeight1) * 100;
+        let comboScrolled2 = ((winScroll - comboBarHeight1 - voicedBarHeight - basicBarHeight) / comboBarHeight2) * 100;
+
+        // This is to not overflow the value between 0 and 100
+        if (basicScrolled < 0) {
+            basicScrolled = 0;
+        } else if (basicScrolled > 100) {
+            basicScrolled = 100;
+        }
+
+        if (voicedScrolled < 0) {
+            voicedScrolled = 0;
+        } else if (voicedScrolled > 100) {
+            voicedScrolled = 100;
+        }
+
+        if (comboScrolled1 < 0) {
+            comboScrolled1 = 0;
+        } else if (comboScrolled1 > 100) {
+            comboScrolled1 = 100;
+        }
+
+        if (comboScrolled2 < 0) {
+            comboScrolled2 = 0;
+        } else if (comboScrolled2 > 100) {
+            comboScrolled2 = 100;
+        }
+
+        document.querySelector("#basic-scroll").style.width = basicScrolled + "%";
+        document.querySelector("#voiced-scroll").style.width = voicedScrolled + "%";
+        document.querySelector("#combo-scroll1").style.width = comboScrolled1 + "%";
+        document.querySelector("#combo-scroll2").style.width = comboScrolled2 + "%";
+        pinOnTop();
     }
-
-    if (voicedScrolled < 0) {
-        voicedScrolled = 0;
-    } else if (voicedScrolled > 100) {
-        voicedScrolled = 100;
-    }
-
-    if (comboScrolled1 < 0) {
-        comboScrolled1 = 0;
-    } else if (comboScrolled1 > 100) {
-        comboScrolled1 = 100;
-    }
-
-    if (comboScrolled2 < 0) {
-        comboScrolled2 = 0;
-    } else if (comboScrolled2 > 100) {
-        comboScrolled2 = 100;
-    }
-
-    document.querySelector("#basic-scroll").style.width = basicScrolled + "%";
-    document.querySelector("#voiced-scroll").style.width = voicedScrolled + "%";
-    document.querySelector("#combo-scroll1").style.width = comboScrolled1 + "%";
-    document.querySelector("#combo-scroll2").style.width = comboScrolled2 + "%";
-    pinOnTop();
 }
 
 function pinOnTop() {
@@ -115,6 +118,6 @@ function pinOnTop() {
     }
 }
 
-document.querySelector(".reference-screen .return-icon").addEventListener("click", ()=>{
+document.querySelector(".reference-screen .return-icon").addEventListener("click", () => {
     changeScreen('.reference-screen', '.menu-screen')
 })

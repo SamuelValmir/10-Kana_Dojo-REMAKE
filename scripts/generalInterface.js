@@ -16,8 +16,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(
             () => {
-                document.querySelector(".menu-screen").style.display = "none";
                 document.querySelector(".reference-screen").style.display = "none";
+                document.querySelector(".modal").style.display = "none";
                 // document.querySelector(".flash-screen").style.display = "none";
                 // document.querySelector(".quiz-screen").style.display = "none";
 
