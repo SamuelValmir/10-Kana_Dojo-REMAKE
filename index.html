@@ -3,6 +3,7 @@
 
 <!-- Built in 07/09/2021 - /09/2021 by Samuel Valmir -->
 <!-- What I've learned:
+    Make the project with just one html file,
     noscript tag,
     3d flip effect,
     work with objects
@@ -16,6 +17,7 @@
     Study with memory card
     Compatibility from desktop
     The progress bar changes it color to indicate the current level
+    The Flash Card study can choice hiragana and katakana in the same time and also has division between kana combo with and without dakuten and handakuten.
     -->
 
 <head>
@@ -158,6 +160,7 @@
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" checked name="hiragana">
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Hiragana
                         </label>
@@ -165,16 +168,18 @@
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" name="katakana"> 
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Katakana                   
                         </label>
                     </span>
                 </div>
-
+                
                 <div class="modal-content-right">
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" checked name="basic">
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Basic (<span>き</span>)                   
                         </label>
@@ -182,6 +187,7 @@
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" name="voiced"> 
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Voiced (<span>ぎ</span>)                   
                         </label>
@@ -189,6 +195,7 @@
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" name="combo1"> 
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Combo 1 (<span>きゃ</span>)                   
                         </label>
@@ -196,6 +203,7 @@
                     <span>
                         <label class="checkbox-container">
                             <input type="checkbox" name="combo2"> 
+                            <span class="checkmark-circle-animation"></span>
                             <span class="checkmark"></span>
                             Combo 2 (<span>ぎゃ</span>)                   
                         </label>
