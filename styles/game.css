@@ -292,7 +292,7 @@ svg circle:last-child {
     width: 100%;
     height: 100%;
     position: absolute;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     top: 0;
@@ -306,31 +306,49 @@ svg circle:last-child {
 }
 
 .modal-container{
-    width: 80%;
+    width: fit-content;
     background-color: var(--white);
 
     display: flex;
     flex-direction: column;
-    gap: 20px;
-
-    padding: 20px;
+    gap: 10px;
+    
+    padding: 10px;
     border-radius: 3px;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
 }
 
+
 .modal-content{
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 
 .checkbox-container{
     width: fit-content;
     display:flex;
     align-items: center;
-    gap: 8px;
+    gap: 5px;
 
     white-space: nowrap;
     position: relative;
+}
+
+.modal-content-left, .modal-content-right{
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    align-items: start;
+}
+
+.modal-content-right span{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.modal-content-right img{
+    width: 6vw;
 }
 
 label{
@@ -349,19 +367,6 @@ label{
     border: var(--primaryColor);
 }
 
-
-
-.checkmark{
-    width: 5vw;
-    height: 5vw;
-    border: solid 2px rgba(0, 0, 0, 0.6);
-    border-radius: 2px;
-    display: flex;
-    position: relative;
-    justify-content: center;
-    align-items: center;
-}
-
 .checkmark-circle-animation{
     width: 5vw;
     height: 5vw;
@@ -370,6 +375,18 @@ label{
     opacity: 0;
     background: rgba(0, 0, 0, .5);
 }
+
+.checkmark{
+    width: 5vw;
+    height: 5vw;
+    border: solid 2px rgba(0, 0, 0, 0.6);
+    border-radius: 3px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .checkmark::after{
     content: "";
@@ -385,14 +402,24 @@ label{
 
 .checkbox-container input:checked ~ .checkmark::after{
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 1vw 1vw 0;
 }
 
-.modal-content-left, .modal-content-right{
-    display: flex;
-    gap: 5px;
-    flex-direction: column;
-    align-items: start;
+@media screen and (min-width: 300px) {
+    .modal-container{    
+        gap: 20px;
+        padding: 4vw;
+    }
+
+    .modal-content{
+        display: flex;
+        gap: 20px;
+    }
+
+    .checkbox-container{
+        gap: 8px;
+    }
+
 }
 
 .modal-bottom{
