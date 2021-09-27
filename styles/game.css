@@ -362,11 +362,6 @@ label{
 
 }
 
-.checkbox-container input:checked ~ .checkmark{
-    background-color: var(--primaryColor);
-    border: var(--primaryColor);
-}
-
 .checkmark-circle-animation{
     width: 5vw;
     height: 5vw;

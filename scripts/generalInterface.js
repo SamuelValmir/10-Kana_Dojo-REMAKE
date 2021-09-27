@@ -1,5 +1,8 @@
 "use strict";
 
+// Constants
+const PRIMARY_COLOR = "rgb(213, 3, 3)";
+
 // Global variables
 var kanaJson;
 var leftOption;
@@ -17,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(
             () => {
                 document.querySelector(".reference-screen").style.display = "none";
-                document.querySelector(".modal").style.display = "none";
+                document.querySelector(".modal-main").style.display = "none";
                 // document.querySelector(".flash-screen").style.display = "none";
                 // document.querySelector(".quiz-screen").style.display = "none";
 
