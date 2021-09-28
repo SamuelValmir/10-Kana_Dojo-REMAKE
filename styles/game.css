@@ -12,6 +12,7 @@
     --primaryColor: rgb(213, 3, 3);
     --secondary: #e1e5e7;
     --white: #fefefe;
+    --scrollbarColor: var(--primaryColor);
 }
 
 body{
@@ -284,7 +285,7 @@ svg circle:last-child {
     font-size: 7.5vw;
 }
 
-/** ----- MODAL SCREEN ----- */
+/** ----- MODAL MAIN ----- */
 .modal{
     color: black;
     background-color: rgba(0, 0, 0, 0.4);
@@ -397,6 +398,34 @@ label{
 
 
 
+/** ----- MODAL CUSTOM ----- */
+
+.modal-custom .modal-container{
+    height: 100vw;
+}
+
+.modal-custom .modal-content{
+    flex-direction: column;
+    overflow-x: auto;
+    padding-right: 5vw;
+}
+
+.modal-custom .family{
+    display: flex;
+    gap: 10px;
+}
+
+::-webkit-scrollbar{
+    width: 2vw;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #ddd;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: var(--scrollbarColor);
+}
 
 @media screen and (min-width: 300px) {
     .modal-container{    

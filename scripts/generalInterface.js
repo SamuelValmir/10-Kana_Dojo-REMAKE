@@ -4,7 +4,15 @@
 const PRIMARY_COLOR = "rgb(213, 3, 3)";
 
 // Global variables
+var root = document.documentElement;
+
 var kanaJson;
+
+var kanaBasic;
+var kanaVoiced;
+var kanaCombo1;
+var kanaCombo2;
+
 var leftOption;
 var rightOption;
 
@@ -16,11 +24,17 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             kanaJson = data;
+
+            kanaBasic = Object.entries(kanaJson)[0][1];
+            kanaVoiced = Object.entries(kanaJson)[1][1];
+            kanaCombo1 = Object.entries(kanaJson)[2][1];
+            kanaCombo2 = Object.entries(kanaJson)[3][1];
         })
         .then(
             () => {
                 document.querySelector(".reference-screen").style.display = "none";
                 document.querySelector(".modal-main").style.display = "none";
+                document.querySelector(".modal-custom").style.display = "none";
                 // document.querySelector(".flash-screen").style.display = "none";
                 // document.querySelector(".quiz-screen").style.display = "none";
 
@@ -48,12 +62,16 @@ function changeScreen(exitScreen, goScreen) {
     // Change the variables of the options of the nav according to which screen is on 
     switch (goScreen) {
         case ".menu-screen": {
+            root.style.setProperty("--scrollbarColor", "var(--primaryColor)");
+
             leftOption = document.querySelector(".learn-option");
             rightOption = document.querySelector(".play-option");
             navOptions = document.querySelector(".menu-screen-nav").children;
         } break;
 
         case ".reference-screen": {
+            root.style.setProperty("--scrollbarColor", "darkcyan");
+
             progressBar = document.querySelector(".reference-screen-progress-container");
             progressBarTop = progressBar.offsetTop;
             leftOption = document.querySelector(".hiragana-option");

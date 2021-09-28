@@ -149,7 +149,7 @@
 
     </div>
 
-    <!------- MODAL SCREEN ------->
+    <!------- MODAL MAIN ------->
     <div class="modal modal-main">
         <div class="modal-container">
             <div class="modal-top">
@@ -160,7 +160,7 @@
                     <span>
                         <label class="checkbox-container">
                             <span class="checkmark-circle-animation"></span>
-                            <span class="checkbox">
+                            <span class="checkbox" name="hiragana">
                                 <span class="checkmark"></span>
                             </span>
                             Hiragana
@@ -169,7 +169,7 @@
                     <span>
                         <label class="checkbox-container">
                             <span class="checkmark-circle-animation"></span>
-                            <span class="checkbox">
+                            <span class="checkbox" name="katakana">
                                 <span class="checkmark"></span>
                             </span>
                             Katakana
@@ -186,7 +186,7 @@
                             </span>
                             Basic (<span>き</span>)
                         </label>
-                        <img src="./assets/icon/edit_icon.png" alt="edit icon">
+                        <img src="./assets/icon/edit_icon.png" alt="edit icon" name="Basic">
                     </span>
                     <span>
                         <label class="checkbox-container">
@@ -196,7 +196,7 @@
                             </span>
                             Voiced (<span>ぎ</span>)
                         </label>
-                        <img src="./assets/icon/edit_icon.png" alt="edit icon">
+                        <img src="./assets/icon/edit_icon.png" alt="edit icon" name="Voiced">
                     </span>
                     <span>
                         <label class="checkbox-container">
@@ -206,7 +206,7 @@
                             </span>
                             Combo 1 (<span>きゃ</span>)
                         </label>
-                        <img src="./assets/icon/edit_icon.png" alt="edit icon">
+                        <img src="./assets/icon/edit_icon.png" alt="edit icon" name="Combo 1">
                     </span>
                     <span>
                         <label class="checkbox-container">
@@ -216,7 +216,7 @@
                             </span>
                             Combo 2 (<span>ぎゃ</span>)
                         </label>
-                        <img src="./assets/icon/edit_icon.png" alt="edit icon">
+                        <img src="./assets/icon/edit_icon.png" alt="edit icon" name="Combo 2">
                     </span>
                 </div>
             </div>
@@ -227,14 +227,16 @@
         </div>
     </div>
 
+    <!------- MODAL CUSTOM ------->
+
     <div class="modal modal-custom">
         <div class="modal-container">
             <div class="modal-top">
                 <h4></h4>
             </div>
-            <div class="modal-content">
 
-            </div>
+            <div class="modal-content"></div>
+
             <div class="modal-bottom">
                 <div>CANCEL</div>
                 <div>FINISH</div>

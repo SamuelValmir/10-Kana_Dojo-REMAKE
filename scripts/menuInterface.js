@@ -3,6 +3,10 @@
 let modalMain;
 let modalCustom;
 
+let checkBoxList;
+let checkBoxLeftList;
+let checkBoxRightList;
+
 let modalButtons;
 
 let studySections = document.querySelectorAll(".menu-screen .container .study-section");
@@ -46,16 +50,14 @@ let setModalButtons = () => {
 }
 
 let insertAnimationInCheckbox = () => {
-//! When checked, i must make that it checkmark to be visible, and when not, to be invisible.
-
-    let checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
-    let checkBoxLeftList = [];
-    let checkBoxRightList = [];
+    checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
+    checkBoxLeftList = [];
+    checkBoxRightList = [];
 
     for (let i = 0; i < checkBoxList.length; i++) {
         let checkBox = checkBoxList[i];
         let checkMarkCircle = checkBox.parentElement.children[0];
-        let checkMark = checkBox.parentElement.children[1];
+        let checkMark = checkBox.children[0];
 
         // It separates who go to left list and who go to right list
         if (i < 2) {
@@ -64,12 +66,14 @@ let insertAnimationInCheckbox = () => {
             checkBoxRightList.push(checkBox);
         }
 
-        if (i == 0 || i == 2) {
+        if (i === 0 || i === 2) {
             checkBox.dataset.checked = "true";
             checkBox.style.backgroundColor = PRIMARY_COLOR;
             checkBox.style.borderColor = PRIMARY_COLOR;
+            checkMark.style.display = "block"
         } else {
             checkBox.dataset.checked = "false";
+            checkMark.style.display = "none"
         }
 
         checkBox.addEventListener('click', () => {
@@ -78,24 +82,12 @@ let insertAnimationInCheckbox = () => {
                 { transform: "scale(3.5)" }
             ], 200);
 
-            checkMark.animate([
+            checkBox.animate([
                 { transform: "scale(0.8)" }
             ], 200);
 
             let posLeft = checkBoxLeftList.findIndex((element) => element === checkBox);
             let posRight = checkBoxRightList.findIndex((element) => element === checkBox);
-
-            let isChecked = e => e.dataset.checked === "true";
-
-            function filter(callback) {
-                let checkedNumber = 0;
-                this.forEach((e) => {
-                    if (callback(e) === true) {
-                        checkedNumber++;
-                    }
-                })
-                return checkedNumber;
-            }
 
             checkBoxLeftList.filter = filter;
             checkBoxRightList.filter = filter;
@@ -118,6 +110,7 @@ let insertAnimationInCheckbox = () => {
 
                     checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
                     checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
+                    checkMark.style.display = "none"
 
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
@@ -130,6 +123,7 @@ let insertAnimationInCheckbox = () => {
 
                     checkBox.style.backgroundColor = PRIMARY_COLOR;
                     checkBox.style.borderColor = PRIMARY_COLOR;
+                    checkMark.style.display = "block"
 
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
@@ -193,13 +187,107 @@ let setCheckboxEditIcon = () => {
             checkBoxEditIcon.style.display = "none";
         }
         checkBoxEditIcon.addEventListener("click", () => {
-            modalCustom = document.querySelector(".modal-custom");
-            modalCustom.style.display = "flex";
-
-            let checkBoxOfTheEditIcon = checkBoxEditIcon.parentElement.children[0].children[0];
-            let modalCustomTopText = document.querySelector(".modal-custom .modal-top h4");
-            modalCustomTopText.innerHTML = "Custom " + checkBoxOfTheEditIcon.name;
+            fillModalCustomContent(checkBoxEditIcon);
         })
     }
 
+}
+
+let fillModalCustomContent = (checkBoxEditIcon) => {
+    modalCustom = document.querySelector(".modal-custom");
+    modalCustom.style.display = "flex";
+
+    // It defines the title
+    let modalCustomTopText = document.querySelector(".modal-custom .modal-top h4");
+    modalCustomTopText.innerHTML = "Custom " + checkBoxEditIcon.name;
+
+    let modalCustomContent = document.querySelector(".modal-custom .modal-content");
+    modalCustomContent.innerHTML = "";
+
+    let group;
+
+    switch (checkBoxEditIcon.name) {
+        case "Basic":
+            group = kanaBasic;
+            break;
+        case "Voiced":
+            group = kanaVoiced;
+            break;
+        case "Combo 1":
+            group = kanaCombo1;
+            break;
+        case "Combo 2":
+            group = kanaCombo2;
+            break;
+        default:
+            break;
+    }
+
+    // It defines if it will be whiten in hiragana or in katakana
+    let checkBoxHiragana = checkBoxLeftList[0];
+    let checkBoxKatakana = checkBoxLeftList[1];
+    let showHiragana = false;
+    let showKatakana = false;
+
+    if (checkBoxHiragana.dataset.checked === "true") {
+        console.log("ht")
+        showHiragana = true;
+    }
+    
+    if (checkBoxKatakana.dataset.checked === "true") {
+        console.log("kt")
+        showKatakana = true;
+    }
+
+    if (showHiragana) {
+        insertFamilies(group, "hiragana", modalCustomContent);
+    }
+
+    if (showKatakana) {
+        insertFamilies(group, "katakana", modalCustomContent);
+    }
+}
+
+let insertFamilies = (group, alphabet, modalCustomContent) => {
+
+    // It makes the content of the Modal Custom
+    for (const family of Object.values(group)) {
+
+        let familyElement = document.createElement("span");
+        familyElement.classList.add("family");
+
+        let checkBoxElement = document.createElement("span");
+        checkBoxElement.classList.add("checkbox");
+
+        let familyContentElement = document.createElement("span");
+        familyContentElement.style.display = "flex";
+        familyContentElement.style.gap = "10px"
+
+        for (const kana of family) {
+            let kanaElement = document.createElement("span");
+            if (alphabet === "hiragana") {
+                kanaElement.innerHTML = wanakana.toHiragana(kana)
+            } else if (alphabet === "katakana") {
+                kanaElement.innerHTML = wanakana.toKatakana(kana)
+            }
+
+            familyContentElement.appendChild(kanaElement);
+        }
+
+        modalCustomContent.appendChild(familyElement);
+        familyElement.appendChild(checkBoxElement);
+        familyElement.appendChild(familyContentElement);
+    }
+}
+
+let isChecked = e => e.dataset.checked === "true";
+
+function filter(callback) {
+    let checkedNumber = 0;
+    this.forEach((e) => {
+        if (callback(e) === true) {
+            checkedNumber++;
+        }
+    })
+    return checkedNumber;
 }
