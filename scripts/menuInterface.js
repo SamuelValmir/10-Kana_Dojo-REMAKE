@@ -46,15 +46,30 @@ let setModalButtons = () => {
 }
 
 let insertAnimationInCheckbox = () => {
-    let checkBoxList = document.querySelectorAll(".checkbox-container input");
+//! When checked, i must make that it checkmark to be visible, and when not, to be invisible.
+
+    let checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
+    let checkBoxLeftList = [];
+    let checkBoxRightList = [];
+
     for (let i = 0; i < checkBoxList.length; i++) {
         let checkBox = checkBoxList[i];
-        let checkMark = checkBox.parentElement.children[2];
-        let checkMarkCircle = checkBox.parentElement.children[1];
+        let checkMarkCircle = checkBox.parentElement.children[0];
+        let checkMark = checkBox.parentElement.children[1];
+
+        // It separates who go to left list and who go to right list
+        if (i < 2) {
+            checkBoxLeftList.push(checkBox);
+        } else {
+            checkBoxRightList.push(checkBox);
+        }
 
         if (i == 0 || i == 2) {
-            checkMark.style.backgroundColor = PRIMARY_COLOR;
-            checkMark.style.borderColor = PRIMARY_COLOR;
+            checkBox.dataset.checked = "true";
+            checkBox.style.backgroundColor = PRIMARY_COLOR;
+            checkBox.style.borderColor = PRIMARY_COLOR;
+        } else {
+            checkBox.dataset.checked = "false";
         }
 
         checkBox.addEventListener('click', () => {
@@ -65,32 +80,75 @@ let insertAnimationInCheckbox = () => {
 
             checkMark.animate([
                 { transform: "scale(0.8)" }
-            ], 200)
+            ], 200);
 
-            //! I need to not allow that modal has no checkbox checked.
+            let posLeft = checkBoxLeftList.findIndex((element) => element === checkBox);
+            let posRight = checkBoxRightList.findIndex((element) => element === checkBox);
 
-            if (checkBox.checked == true) {
-                checkMark.style.backgroundColor = PRIMARY_COLOR;
-                checkMark.style.borderColor = PRIMARY_COLOR;
-            } else {
-                checkMark.style.backgroundColor = "rgb(0, 0, 0, 0)";
-                checkMark.style.borderColor = "rgba(0, 0, 0, 0.6)";
+            let isChecked = e => e.dataset.checked === "true";
+
+            function filter(callback) {
+                let checkedNumber = 0;
+                this.forEach((e) => {
+                    if (callback(e) === true) {
+                        checkedNumber++;
+                    }
+                })
+                return checkedNumber;
             }
 
-            // It show the edit icon only if check box is inside of modal content right
-            if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
-                showEditIcon(checkBox);
+            checkBoxLeftList.filter = filter;
+            checkBoxRightList.filter = filter;
+
+            let num;
+            if (posLeft > -1) {
+                num = checkBoxLeftList.filter(isChecked);
+            } else if (posRight > -1) {
+                num = checkBoxRightList.filter(isChecked);
+            }
+
+            let lastCheckBoxCheckLeft = checkBoxLeftList.find((e) => e.dataset.checked === "true");
+            let lastCheckBoxCheckRight = checkBoxRightList.find((e) => e.dataset.checked === "true");
+
+            if (num == 1 && (lastCheckBoxCheckLeft === checkBox || lastCheckBoxCheckRight === checkBox)) {
+
+            } else {
+                if (checkBox.dataset.checked === "true") {
+                    checkBox.dataset.checked = "false";
+
+                    checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
+                    checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
+
+                    // It show the edit icon only if check box is inside of modal content right
+                    if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
+                        showEditIcon(checkBox, false);
+                    }
+
+
+                } else if (checkBox.dataset.checked === "false") {
+                    checkBox.dataset.checked = "true";
+
+                    checkBox.style.backgroundColor = PRIMARY_COLOR;
+                    checkBox.style.borderColor = PRIMARY_COLOR;
+
+                    // It show the edit icon only if check box is inside of modal content right
+                    if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
+                        showEditIcon(checkBox, true);
+                    }
+                }
+
             }
         });
     }
 }
 
 // It shows the edit icon when check box is checked
-let showEditIcon = (checkBox) => {
+
+let showEditIcon = (checkBox, toShow) => {
     let checkBoxEditIcon = checkBox.parentElement.parentElement.children[1];
-    if (checkBoxEditIcon.style.display === "none") {
+    if (toShow === true) {
         checkBoxEditIcon.style.display = "block"
-    } else if (checkBoxEditIcon.style.display === "block") {
+    } else {
         checkBoxEditIcon.style.display = "none"
     }
 }
