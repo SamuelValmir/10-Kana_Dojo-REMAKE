@@ -12,12 +12,12 @@
     --primaryColor: rgb(213, 3, 3);
     --secondary: #e1e5e7;
     --white: #fefefe;
-    --scrollbarColor: var(--primaryColor);
+    --scrollbarThumbColor: rgb(213, 3, 3);
+    --scrollbarTrackColor: rgb(253, 94, 94);
 }
 
 body{
     color: white;
-    background-color: darkcyan;
     height: 100vh;
     font-family: 'Righteous', Arial, Helvetica, sans-serif;
     font-size: 4vw;
@@ -358,7 +358,7 @@ label{
 
 
 .checkbox{
-    width: 5vw;
+    min-width: 5vw;
     height: 5vw;
     border: solid 2px rgba(0, 0, 0, 0.6);
     border-radius: 3px;
@@ -401,7 +401,8 @@ label{
 /** ----- MODAL CUSTOM ----- */
 
 .modal-custom .modal-container{
-    height: 100vw;
+    height: fit-content;
+    max-height: 100vw;
 }
 
 .modal-custom .modal-content{
@@ -420,11 +421,26 @@ label{
 }
 
 ::-webkit-scrollbar-track{
-    background-color: #ddd;
+    background-color: var(--scrollbarTrackColor);
+    border-radius: 1vw;
+    margin-block: 5px;
 }
 
 ::-webkit-scrollbar-thumb{
-    background-color: var(--scrollbarColor);
+    background-color: var(--scrollbarThumbColor);
+    border: 2px solid var(--scrollbarTrackColor);
+    border-radius: 1vw;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(255, 0, 0, 0.7);
+}
+
+@supports (scrollbar-color:var(--scrollbarThumbColor) var(--scrollbarTrackColor)){
+    *{
+        scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarTrackColor);
+        scrollbar-width: thin;
+    }
 }
 
 @media screen and (min-width: 300px) {

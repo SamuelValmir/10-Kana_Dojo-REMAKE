@@ -1,7 +1,5 @@
 "use strict";
 
-// Constants
-const PRIMARY_COLOR = "rgb(213, 3, 3)";
 
 // Global variables
 var root = document.documentElement;
@@ -18,6 +16,10 @@ var rightOption;
 
 let progressBar;
 let progressBarTop;
+
+// CONSTANTS
+const MENU_PRIMARY_COLOR = "rgb(213, 3, 3)";
+
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("./assets/kana.json")
@@ -62,15 +64,17 @@ function changeScreen(exitScreen, goScreen) {
     // Change the variables of the options of the nav according to which screen is on 
     switch (goScreen) {
         case ".menu-screen": {
-            root.style.setProperty("--scrollbarColor", "var(--primaryColor)");
-
+            root.style.setProperty("--scrollbarThumbColor", "rgb(213, 3, 3)");
+            root.style.setProperty("--scrollbarTrackColor", "rgb(253, 94, 94)");
+            
             leftOption = document.querySelector(".learn-option");
             rightOption = document.querySelector(".play-option");
             navOptions = document.querySelector(".menu-screen-nav").children;
         } break;
-
+        
         case ".reference-screen": {
-            root.style.setProperty("--scrollbarColor", "darkcyan");
+            root.style.setProperty("--scrollbarThumbColor", "rgb(0, 83, 65)");
+            root.style.setProperty("--scrollbarTrackColor", "rgb(0, 255, 157)");
 
             progressBar = document.querySelector(".reference-screen-progress-container");
             progressBarTop = progressBar.offsetTop;

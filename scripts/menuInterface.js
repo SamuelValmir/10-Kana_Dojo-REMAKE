@@ -22,10 +22,6 @@ for (const studySection of studySections) {
             } else if (studySection.classList.contains("study-section-flash-card")) {
                 modalMain = document.querySelector(".modal-main")
                 modalMain.style.display = "flex";
-                setModalButtons();
-                insertAnimationInCheckbox();
-                insertAnimationInModalButtons();
-                setCheckboxEditIcon();
             } /* else if (studySection.classList.contains("study-section-reference")) {
                 document.querySelector(".menu-screen").style.display = "none";
                 document.querySelector(".reference-screen").style.display = "block";
@@ -49,7 +45,7 @@ let setModalButtons = () => {
     modalButtons = document.querySelectorAll(".modal-bottom div");
 }
 
-let insertAnimationInCheckbox = () => {
+let insertAnimationInModalMainCheckbox = () => {
     checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
     checkBoxLeftList = [];
     checkBoxRightList = [];
@@ -58,6 +54,24 @@ let insertAnimationInCheckbox = () => {
         let checkBox = checkBoxList[i];
         let checkMarkCircle = checkBox.parentElement.children[0];
         let checkMark = checkBox.children[0];
+
+        let showCheckBoxAndCheckMark = () => {
+            checkBox.dataset.checked = "true";
+            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
+            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
+            checkMark.style.display = "block"
+        }
+    
+        let hideCheckBoxAndCheckMark = () => {
+            checkBox.dataset.checked = "false";
+            checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
+            checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
+            checkMark.style.display = "none"
+        }
+
+        // It is for always reset the values when 
+        hideCheckBoxAndCheckMark();
+
 
         // It separates who go to left list and who go to right list
         if (i < 2) {
@@ -68,8 +82,8 @@ let insertAnimationInCheckbox = () => {
 
         if (i === 0 || i === 2) {
             checkBox.dataset.checked = "true";
-            checkBox.style.backgroundColor = PRIMARY_COLOR;
-            checkBox.style.borderColor = PRIMARY_COLOR;
+            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
+            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
             checkMark.style.display = "block"
         } else {
             checkBox.dataset.checked = "false";
@@ -102,16 +116,13 @@ let insertAnimationInCheckbox = () => {
             let lastCheckBoxCheckLeft = checkBoxLeftList.find((e) => e.dataset.checked === "true");
             let lastCheckBoxCheckRight = checkBoxRightList.find((e) => e.dataset.checked === "true");
 
+            // console.log(checkBox.dataset.checked)
+            // console.log(checkBoxLeftList)
             if (num == 1 && (lastCheckBoxCheckLeft === checkBox || lastCheckBoxCheckRight === checkBox)) {
-
             } else {
                 if (checkBox.dataset.checked === "true") {
-                    checkBox.dataset.checked = "false";
-
-                    checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
-                    checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
-                    checkMark.style.display = "none"
-
+                    console.log("hide")
+                    hideCheckBoxAndCheckMark();
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, false);
@@ -119,12 +130,8 @@ let insertAnimationInCheckbox = () => {
 
 
                 } else if (checkBox.dataset.checked === "false") {
-                    checkBox.dataset.checked = "true";
-
-                    checkBox.style.backgroundColor = PRIMARY_COLOR;
-                    checkBox.style.borderColor = PRIMARY_COLOR;
-                    checkMark.style.display = "block"
-
+                    console.log("show")
+                    showCheckBoxAndCheckMark();
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, true);
@@ -187,10 +194,21 @@ let setCheckboxEditIcon = () => {
             checkBoxEditIcon.style.display = "none";
         }
         checkBoxEditIcon.addEventListener("click", () => {
+            insertAnimationInModalCustomCheckbox();
             fillModalCustomContent(checkBoxEditIcon);
         })
     }
 
+}
+
+let insertAnimationInModalCustomCheckbox = () => {
+    let a = document.querySelectorAll(".modal-custom .checkBox");
+
+    for (let i = 0; i < a.length; i++) {
+        const element = a[i];
+
+
+    }
 }
 
 let fillModalCustomContent = (checkBoxEditIcon) => {
@@ -222,7 +240,6 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
         default:
             break;
     }
-
     // It defines if it will be whiten in hiragana or in katakana
     let checkBoxHiragana = checkBoxLeftList[0];
     let checkBoxKatakana = checkBoxLeftList[1];
@@ -233,7 +250,7 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
         console.log("ht")
         showHiragana = true;
     }
-    
+
     if (checkBoxKatakana.dataset.checked === "true") {
         console.log("kt")
         showKatakana = true;
@@ -291,3 +308,8 @@ function filter(callback) {
     })
     return checkedNumber;
 }
+
+setModalButtons();
+insertAnimationInModalButtons();
+insertAnimationInModalMainCheckbox();
+setCheckboxEditIcon();
