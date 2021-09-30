@@ -387,7 +387,7 @@ label{
 }
 
 
-.checkmark-circle-animation{
+.checkmark-circle{
     width: 5vw;
     height: 5vw;
     position: absolute;
@@ -402,13 +402,17 @@ label{
 
 .modal-custom .modal-container{
     height: fit-content;
-    max-height: 100vw;
 }
 
 .modal-custom .modal-content{
+    max-height: 50vw;
+    width: 100%;
     flex-direction: column;
-    overflow-x: auto;
+
+    overflow-y: auto;
+    
     padding-right: 5vw;
+    padding-left: 5vw;     /*! The checkmark circle of the checkboxes of the modal custom are not overflowing the modal-container. This is for fix it! */
 }
 
 .modal-custom .family{
@@ -416,29 +420,33 @@ label{
     gap: 10px;
 }
 
-::-webkit-scrollbar{
+.modal ::-webkit-scrollbar{
     width: 2vw;
 }
 
-::-webkit-scrollbar-track{
+.modal ::-webkit-scrollbar-track{
     background-color: var(--scrollbarTrackColor);
     border-radius: 1vw;
     margin-block: 5px;
 }
 
-::-webkit-scrollbar-thumb{
+.modal ::-webkit-scrollbar-thumb{
     background-color: var(--scrollbarThumbColor);
     border: 2px solid var(--scrollbarTrackColor);
     border-radius: 1vw;
 }
 
-::-webkit-scrollbar-thumb:hover{
+.modal ::-webkit-scrollbar-thumb:hover{
     background-color: rgba(255, 0, 0, 0.7);
 }
 
 @supports (scrollbar-color:var(--scrollbarThumbColor) var(--scrollbarTrackColor)){
-    *{
+    .modal{
         scrollbar-color: var(--scrollbarThumbColor) var(--scrollbarTrackColor);
+
+    }
+
+    *:not(:root){
         scrollbar-width: thin;
     }
 }

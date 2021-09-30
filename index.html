@@ -157,30 +157,30 @@
             </div>
             <div class="modal-content">
                 <div class="modal-content-left">
-                    <span>
-                        <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
-                            <span class="checkbox" name="hiragana">
-                                <span class="checkmark"></span>
-                            </span>
-                            Hiragana
-                        </label>
-                    </span>
-                    <span>
-                        <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
-                            <span class="checkbox" name="katakana">
-                                <span class="checkmark"></span>
-                            </span>
-                            Katakana
-                        </label>
-                    </span>
+
+                    <label class="checkbox-container">
+                        <span class="checkmark-circle"></span>
+                        <span class="checkbox" name="hiragana">
+                            <span class="checkmark"></span>
+                        </span>
+                        Hiragana
+                    </label>
+
+
+                    <label class="checkbox-container">
+                        <span class="checkmark-circle"></span>
+                        <span class="checkbox" name="katakana">
+                            <span class="checkmark"></span>
+                        </span>
+                        Katakana
+                    </label>
+
                 </div>
 
                 <div class="modal-content-right">
                     <span>
                         <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
+                            <span class="checkmark-circle"></span>
                             <span class="checkbox">
                                 <span class="checkmark"></span>
                             </span>
@@ -190,7 +190,7 @@
                     </span>
                     <span>
                         <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
+                            <span class="checkmark-circle"></span>
                             <span class="checkbox">
                                 <span class="checkmark"></span>
                             </span>
@@ -200,7 +200,7 @@
                     </span>
                     <span>
                         <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
+                            <span class="checkmark-circle"></span>
                             <span class="checkbox">
                                 <span class="checkmark"></span>
                             </span>
@@ -210,7 +210,7 @@
                     </span>
                     <span>
                         <label class="checkbox-container">
-                            <span class="checkmark-circle-animation"></span>
+                            <span class="checkmark-circle"></span>
                             <span class="checkbox">
                                 <span class="checkmark"></span>
                             </span>
@@ -221,8 +221,8 @@
                 </div>
             </div>
             <div class="modal-bottom">
-                <div>BACK</div>
-                <div>START</div>
+                <div class="modal-button modal-main-button-back">BACK</div>
+                <div class="modal-button modal-main-button-start">START</div>
             </div>
         </div>
     </div>
@@ -235,11 +235,25 @@
                 <h4></h4>
             </div>
 
-            <div class="modal-content"></div>
+            <div class="modal-content">
+                <span class="family" alphabet="hiragana" style="position: none">
+                    <span class="checkmark-circle"></span>
+                    <span class="checkbox" data-checked="true">
+                        <span class="checkmark"></span>
+                    </span>
+                    <span>
+                        <span>a</span>
+                        <span>b</span>
+                        <span>c</span>
+                        <span>d</span>
+                        <span>e</span>
+                    </span>
+                </span>
+            </div>
 
             <div class="modal-bottom">
-                <div>CANCEL</div>
-                <div>FINISH</div>
+                <div class="modal-button modal-custom-button-cancel">CANCEL</div>
+                <div class="modal-button modal-custom-button-finish">FINISH</div>
             </div>
         </div>
     </div>
