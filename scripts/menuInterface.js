@@ -6,10 +6,13 @@ let modalCustom;
 let checkBoxList;
 let checkBoxLeftList;
 let checkBoxRightList;
+let checkBoxHiragana
+let checkBoxKatakana
 
-let modalCustomCheckBoxList;
+let modalCustomCheckBoxList = [];
 let modalButtons;
 
+let currentEditIcon;
 
 let studySections = document.querySelectorAll(".menu-screen .container .study-section");
 
@@ -118,7 +121,7 @@ let insertAnimationInModalMainCheckbox = () => {
             if (num == 1 && (lastCheckBoxCheckLeft === checkBox || lastCheckBoxCheckRight === checkBox)) {
                 setTimeout(() => {
                     alert("At least one option must be selected!");
-                }, 200);
+                }, 300);
             } else {
                 if (checkBox.dataset.checked === "true") {
                     console.log("hide")
@@ -144,8 +147,6 @@ let insertAnimationInModalMainCheckbox = () => {
 }
 
 let insertAnimationInModalCustomCheckbox = () => {
-
-    // checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
 
     // It converts a NodeList object to an array.
     // It works well in all modern and old browsers including IE 6+.
@@ -173,13 +174,11 @@ let insertAnimationInModalCustomCheckbox = () => {
         hideCheckBoxAndCheckMark();
 
         if (i === 0) {
-            checkBox.dataset.checked = "true";
-            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
-            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
-            checkMark.style.display = "block"
+            showCheckBoxAndCheckMark();
         }
 
         checkBox.addEventListener('click', () => {
+
             checkMarkCircle.animate([
                 { opacity: 1 },
                 { transform: "scale(3.5)" }
@@ -198,7 +197,7 @@ let insertAnimationInModalCustomCheckbox = () => {
             if (num == 1 && (modalCustomLastCheckBoxCheck === checkBox)) {
                 setTimeout(() => {
                     alert("At least one option must be selected!");
-                }, 200);
+                }, 300);
             } else {
                 if (checkBox.dataset.checked === "true") {
                     console.log("hide")
@@ -251,17 +250,103 @@ let insertAnimationInModalButtons = () => {
     })
 }
 
+let basicCheckboxCheckedList;
+let voicedCheckboxCheckedList;
+let combo1CheckboxCheckedList;
+let combo2CheckboxCheckedList;
 let executeModalButton = (modalButton) => {
+
+    basicCheckboxCheckedList = basicCheckboxCheckedList = kanaBasic;
+    function filter(callback) {
+        let filteredCheckBoxList = [];
+        for (let checkBox of this) {
+            if (callback(checkBox)) {
+                filteredCheckBoxList.push({ "family": checkBox.getAttribute("family"), "alphabet": checkBox.getAttribute("alphabet") });
+            }
+        }
+
+        return filteredCheckBoxList;
+    }
+
+    if(modalCustomCheckBoxList !== []){
+        modalCustomCheckBoxList.filter = filter
+    }
+
     if (modalButton.classList.contains("modal-main-button-back")) {
         modalMain.style.display = "none";
     } else if (modalButton.classList.contains("modal-main-button-start")) {
         modalMain.style.display = "none";
+        console.log(checkBoxHiragana)
+        console.log(checkBoxKatakana)
+
+        if (checkBoxHiragana.dataset.checked === "false" && basicCheckboxCheckedList.find(
+            (element) => element.alphabet === "hiragana")) {
+                
+                let a = basicCheckboxCheckedList.filter((element) => {
+                    if (element.alphabet === "hiragana") {
+                        return element;
+                    }
+                })
+                console.log(a)
+        }
+//! I need to delete the hiragana or katakana cards according to if checkbox hiragana or checkbox katakana is not checked
+
+
+        console.log(basicCheckboxCheckedList)
+        console.log(voicedCheckboxCheckedList)
+        console.log(combo1CheckboxCheckedList)
+        console.log(combo2CheckboxCheckedList)
         //To show flash card screen
     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
         modalCustom.style.display = "none";
+        switch (currentEditIcon.name) {
+            case "Basic":
+                basicCheckboxCheckedList = kanaBasic;
+                break;
+            case "Voiced":
+                voicedCheckboxCheckedList = kanaVoiced;
+                break;
+            case "Combo 1":
+                combo1CheckboxCheckedList = kanaCombo1;
+                break;
+            case "Combo 2":
+                combo2CheckboxCheckedList = kanaCombo2;
+                break;
+
+            default:
+                alert("Error on switch casse of the execute modal button");
+                break;
+        }
     } else if (modalButton.classList.contains("modal-custom-button-finish")) {
+
+        let a = modalCustomCheckBoxList.filter((isChecked))
         modalCustom.style.display = "none";
+        switch (currentEditIcon.name) {
+            case "Basic":
+                basicCheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                break;
+            case "Voiced":
+                voicedCheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                break;
+            case "Combo 1":
+                combo1CheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                break;
+            case "Combo 2":
+                combo2CheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                break;
+
+            default:
+                alert("Error on switch casse of the execute modal button");
+                break;
+        }
     }
+    // for (const element of basicCheckboxCheckedList) {
+    //     console.log(element)
+    // }
+
+
+    console.log(basicCheckboxCheckedList)
+
 }
 
 let setCheckboxEditIcon = () => {
@@ -275,28 +360,29 @@ let setCheckboxEditIcon = () => {
         } else {
             checkBoxEditIcon.style.display = "none";
         }
-        checkBoxEditIcon.addEventListener("click", async() => {
+        checkBoxEditIcon.addEventListener("click", async () => {
             await animateEditIcon(checkBoxEditIcon);
             fillModalCustomContent(checkBoxEditIcon);
-            insertAnimationInModalCustomCheckbox();
+            currentEditIcon = checkBoxEditIcon;
         })
+
     }
 
 }
 
 let animateEditIcon = (checkBoxEditIcon) => {
 
-    let promise = new Promise ((resolve) =>{
+    let promise = new Promise((resolve) => {
         let checkBoxEditIconAnimation = checkBoxEditIcon.animate([
-            {transform: "scale(.8)"}
+            { transform: "scale(.8)" }
         ], 150);
-    
+
         checkBoxEditIconAnimation.addEventListener('finish', () => {
             resolve();
         })
     })
 
-  return promise;
+    return promise;
 }
 
 let fillModalCustomContent = (checkBoxEditIcon) => {
@@ -308,7 +394,7 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
     modalCustomTopText.innerHTML = "Custom " + checkBoxEditIcon.name;
 
     let modalCustomContent = document.querySelector(".modal-custom .modal-content");
-    // modalCustomContent.innerHTML = "";
+    modalCustomContent.innerHTML = "";
 
     let group;
 
@@ -330,18 +416,16 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
             break;
     }
     // It defines if it will be whiten in hiragana or in katakana
-    let checkBoxHiragana = checkBoxLeftList[0];
-    let checkBoxKatakana = checkBoxLeftList[1];
     let showHiragana = false;
     let showKatakana = false;
 
     if (checkBoxHiragana.dataset.checked === "true") {
-        console.log("ht")
+        // console.log("ht")
         showHiragana = true;
     }
 
     if (checkBoxKatakana.dataset.checked === "true") {
-        console.log("kt")
+        // console.log("kt")
         showKatakana = true;
     }
 
@@ -352,6 +436,8 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
     if (showKatakana) {
         insertFamilies(group, "katakana", modalCustomContent);
     }
+
+    insertAnimationInModalCustomCheckbox();
 }
 
 let insertFamilies = (group, alphabet, modalCustomContent) => {
@@ -364,17 +450,18 @@ let insertFamilies = (group, alphabet, modalCustomContent) => {
         familyElement.classList.add("family");
         familyElement.style.name = Object.keys(group)[i];
         familyElement.style.position = "relative";
-        familyElement.setAttribute("alphabet", alphabet);
-        
+
         let checkMarkCircleElement = document.createElement("span");
         checkMarkCircleElement.classList.add("checkmark-circle");
-        
+
         let checkBoxElement = document.createElement("span");
         checkBoxElement.classList.add("checkbox");
-        
+        checkBoxElement.setAttribute("alphabet", alphabet);
+        checkBoxElement.setAttribute("family", Object.entries(group)[i][0]);
+
         let checkMarkElement = document.createElement("span");
         checkMarkElement.classList.add("checkmark");
-        
+
         let familyContentElement = document.createElement("span");
         familyContentElement.style.display = "flex";
         familyContentElement.style.gap = "10px"
@@ -395,8 +482,6 @@ let insertFamilies = (group, alphabet, modalCustomContent) => {
         familyElement.appendChild(checkBoxElement);
         familyElement.appendChild(familyContentElement);
         checkBoxElement.appendChild(checkMarkElement);
-        console.log(familyElement.getAttribute("alphabet"));
-        // console.log(familyContentElement);
     }
     modalCustomCheckBoxList = document.querySelectorAll(".modal-custom .checkbox");
 }
@@ -417,3 +502,5 @@ setModalButtons();
 insertAnimationInModalButtons();
 insertAnimationInModalMainCheckbox();
 setCheckboxEditIcon();
+checkBoxHiragana = checkBoxLeftList[0];
+checkBoxKatakana = checkBoxLeftList[1];
