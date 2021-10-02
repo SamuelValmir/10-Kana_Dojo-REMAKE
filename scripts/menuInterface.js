@@ -6,8 +6,14 @@ let modalCustom;
 let checkBoxList;
 let checkBoxLeftList;
 let checkBoxRightList;
+
 let checkBoxHiragana
 let checkBoxKatakana
+
+let checkboxBasic
+let checkboxVoiced
+let checkboxCombo1
+let checkboxCombo2
 
 let modalCustomCheckBoxList = [];
 let modalButtons;
@@ -108,22 +114,23 @@ let insertAnimationInModalMainCheckbox = () => {
             checkBoxLeftList.filter = filter;
             checkBoxRightList.filter = filter;
 
-            let num;
+            let numberOfCheckboxChecked;
             if (posLeft > -1) {
-                num = checkBoxLeftList.filter(isChecked);
+                numberOfCheckboxChecked = checkBoxLeftList.filter(isChecked);
             } else if (posRight > -1) {
-                num = checkBoxRightList.filter(isChecked);
+                numberOfCheckboxChecked = checkBoxRightList.filter(isChecked);
             }
 
             let lastCheckBoxCheckLeft = checkBoxLeftList.find((e) => e.dataset.checked === "true");
             let lastCheckBoxCheckRight = checkBoxRightList.find((e) => e.dataset.checked === "true");
 
-            if (num == 1 && (lastCheckBoxCheckLeft === checkBox || lastCheckBoxCheckRight === checkBox)) {
+            if (numberOfCheckboxChecked == 1 && (lastCheckBoxCheckLeft === checkBox || lastCheckBoxCheckRight === checkBox)) {
                 setTimeout(() => {
                     alert("At least one option must be selected!");
                 }, 300);
             } else {
                 if (checkBox.dataset.checked === "true") {
+                    checkBox.dataset.edited = "false";
                     console.log("hide")
                     hideCheckBoxAndCheckMark();
                     // It show the edit icon only if check box is inside of modal content right
@@ -191,10 +198,10 @@ let insertAnimationInModalCustomCheckbox = () => {
             modalCustomCheckBoxList.filter = filter;
             checkBoxRightList.filter = filter;
 
-            let num = modalCustomCheckBoxList.filter(isChecked);
+            let numberOfCheckboxChecked = modalCustomCheckBoxList.filter(isChecked);
             let modalCustomLastCheckBoxCheck = modalCustomCheckBoxList.find((e) => e.dataset.checked === "true");
 
-            if (num == 1 && (modalCustomLastCheckBoxCheck === checkBox)) {
+            if (numberOfCheckboxChecked == 1 && (modalCustomLastCheckBoxCheck === checkBox)) {
                 setTimeout(() => {
                     alert("At least one option must be selected!");
                 }, 300);
@@ -250,13 +257,13 @@ let insertAnimationInModalButtons = () => {
     })
 }
 
-let basicCheckboxCheckedList;
-let voicedCheckboxCheckedList;
-let combo1CheckboxCheckedList;
-let combo2CheckboxCheckedList;
+let basicCheckboxCheckedList = [];
+let voicedCheckboxCheckedList = [];
+let combo1CheckboxCheckedList = [];
+let combo2CheckboxCheckedList = [];
+
 let executeModalButton = (modalButton) => {
 
-    basicCheckboxCheckedList = basicCheckboxCheckedList = kanaBasic;
     function filter(callback) {
         let filteredCheckBoxList = [];
         for (let checkBox of this) {
@@ -268,37 +275,63 @@ let executeModalButton = (modalButton) => {
         return filteredCheckBoxList;
     }
 
-    if(modalCustomCheckBoxList !== []){
-        modalCustomCheckBoxList.filter = filter
+    if (modalCustomCheckBoxList !== []) {
+        modalCustomCheckBoxList.filter = filter;
     }
 
     if (modalButton.classList.contains("modal-main-button-back")) {
         modalMain.style.display = "none";
     } else if (modalButton.classList.contains("modal-main-button-start")) {
         modalMain.style.display = "none";
+
+        checkboxBasic = document.querySelector(".modal-main .checkbox-basic")
+        checkboxVoiced = document.querySelector(".modal-main .checkbox-voiced")
+        checkboxCombo1 = document.querySelector(".modal-main .checkbox-combo1")
+        checkboxCombo2 = document.querySelector(".modal-main .checkbox-combo2")
+
+        if (checkboxBasic.dataset.checked === "true") {
+            if (checkboxBasic.dataset.edited === "false") {
+                //! Test this!
+                console.log("aaaaaa")
+                basicCheckboxCheckedList = kanaBasic;
+            }
+        }
+        if (checkboxVoiced.dataset.checked === "true") {
+            voicedCheckboxCheckedList = kanaVoiced;
+        }
+        if (checkboxCombo1.dataset.checked === "true") {
+            combo1CheckboxCheckedList = kanaCombo1;
+        }
+        if (checkboxCombo2.dataset.checked === "true") {
+            combo2CheckboxCheckedList = kanaCombo2;
+        }
+
         console.log(checkBoxHiragana)
         console.log(checkBoxKatakana)
 
         if (checkBoxHiragana.dataset.checked === "false" && basicCheckboxCheckedList.find(
             (element) => element.alphabet === "hiragana")) {
-                
-                let a = basicCheckboxCheckedList.filter((element) => {
-                    if (element.alphabet === "hiragana") {
-                        return element;
-                    }
-                })
-                console.log(a)
-        }
-//! I need to delete the hiragana or katakana cards according to if checkbox hiragana or checkbox katakana is not checked
 
+            let a = basicCheckboxCheckedList.filter((element) => {
+                if (element.alphabet === "hiragana") {
+                    return element;
+                }
+            })
+            console.log(a)
+        }
 
         console.log(basicCheckboxCheckedList)
         console.log(voicedCheckboxCheckedList)
         console.log(combo1CheckboxCheckedList)
         console.log(combo2CheckboxCheckedList)
         //To show flash card screen
+
     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
         modalCustom.style.display = "none";
+
+        // It changes the dataset-edit of the checkbox of the edit icon that was clicked to show the modal custom
+        currentEditIcon.parentElement.children[0].children[1].dataset.edited = "false";
+
         switch (currentEditIcon.name) {
             case "Basic":
                 basicCheckboxCheckedList = kanaBasic;
@@ -318,9 +351,11 @@ let executeModalButton = (modalButton) => {
                 break;
         }
     } else if (modalButton.classList.contains("modal-custom-button-finish")) {
-
-        let a = modalCustomCheckBoxList.filter((isChecked))
         modalCustom.style.display = "none";
+
+        // It changes the dataset-edit of the checkbox of the edit icon that was clicked to show the modal custom
+        currentEditIcon.parentElement.children[0].children[1].dataset.edited = "true";
+
         switch (currentEditIcon.name) {
             case "Basic":
                 basicCheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
@@ -340,13 +375,6 @@ let executeModalButton = (modalButton) => {
                 break;
         }
     }
-    // for (const element of basicCheckboxCheckedList) {
-    //     console.log(element)
-    // }
-
-
-    console.log(basicCheckboxCheckedList)
-
 }
 
 let setCheckboxEditIcon = () => {
