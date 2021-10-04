@@ -257,22 +257,44 @@ let insertAnimationInModalButtons = () => {
     })
 }
 
-let basicCheckboxCheckedList = [];
-let voicedCheckboxCheckedList = [];
-let combo1CheckboxCheckedList = [];
-let combo2CheckboxCheckedList = [];
+let hiraganaBasicCheckboxCheckedList = [];
+let hiraganaVoicedCheckboxCheckedList = [];
+let hiraganaCombo1CheckboxCheckedList = [];
+let hiraganaCombo2CheckboxCheckedList = [];
+
+let katakanaBasicCheckboxCheckedList = [];
+let katakanaVoicedCheckboxCheckedList = [];
+let katakanaCombo1CheckboxCheckedList = [];
+let katakanaCombo2CheckboxCheckedList = [];
 
 let executeModalButton = (modalButton) => {
 
-    function filter(callback) {
+    function filter(callback, alphabet, type) {
         let filteredCheckBoxList = [];
+        let result = [];
+
+        // It adds in filteredCheckBoxList all the families of the alphabet that are checked in the checkbox 
         for (let checkBox of this) {
             if (callback(checkBox)) {
-                filteredCheckBoxList.push({ "family": checkBox.getAttribute("family"), "alphabet": checkBox.getAttribute("alphabet") });
+                if (checkBox.getAttribute("alphabet") === alphabet) {
+                    for (let i = 0; i < type.length; i++) {
+                        if (type[i][0] === checkBox.getAttribute("family")) {
+                            filteredCheckBoxList.push(type[i][1]);
+                        }
+                    }
+                }
             }
         }
 
-        return filteredCheckBoxList;
+        // It adds in result array all element of the families that are in filteredCheckBoxList 
+        if (filteredCheckBoxList.length > 0) {
+            filteredCheckBoxList.forEach((family) => {
+                family.forEach((kana) => {
+                    result.push(kana);
+                })
+            })
+        }
+        return result;
     }
 
     if (modalCustomCheckBoxList !== []) {
@@ -284,30 +306,83 @@ let executeModalButton = (modalButton) => {
     } else if (modalButton.classList.contains("modal-main-button-start")) {
         modalMain.style.display = "none";
 
-        checkboxBasic = document.querySelector(".modal-main .checkbox-basic")
-        checkboxVoiced = document.querySelector(".modal-main .checkbox-voiced")
-        checkboxCombo1 = document.querySelector(".modal-main .checkbox-combo1")
-        checkboxCombo2 = document.querySelector(".modal-main .checkbox-combo2")
+        checkboxBasic = document.querySelector(".modal-main .checkbox-basic");
+        checkboxVoiced = document.querySelector(".modal-main .checkbox-voiced");
+        checkboxCombo1 = document.querySelector(".modal-main .checkbox-combo1");
+        checkboxCombo2 = document.querySelector(".modal-main .checkbox-combo2");
 
-        if (checkboxBasic.dataset.checked === "true") {
-            if (checkboxBasic.dataset.edited === "false") {
-                //! Test this!
-                console.log("aaaaaa")
-                basicCheckboxCheckedList = kanaBasic;
+        if (checkBoxHiragana.dataset.checked === "true") {  // If checkbox hiragana is checked...
+            if (checkboxBasic.dataset.checked === "true") {
+                if (checkboxBasic.dataset.edited === "false") {
+                    hiraganaBasicCheckboxCheckedList = [...allBasicKana];
+                }
+            }
+
+            if (checkboxVoiced.dataset.checked === "true") {
+                if (checkboxVoiced.dataset.edited === "false") {
+                    voicedCheckboxCheckedList = [...kanaVoiced];
+                }
+            }
+
+            if (checkboxCombo1.dataset.checked === "true") {
+                if (checkboxCombo1.dataset.edited === "false") {
+                    combo1CheckboxCheckedList = [...kanaCombo1];
+                }
+            }
+
+            if (checkboxCombo2.dataset.checked === "true") {
+                if (checkboxCombo2.dataset.edited === "false") {
+                    combo2CheckboxCheckedList = [...kanaCombo2];
+                }
+            }
+
+
+        }
+        if (checkBoxKatakana.dataset.checked === "true") { // If checkbox hiragana is not checked...
+            if (checkboxBasic.dataset.checked === "true") {
+                if (checkboxBasic.dataset.edited === "false") {
+                    katakanaBasicCheckboxCheckedList = [...allBasicKana];
+                }
+            }
+
+            if (checkboxVoiced.dataset.checked === "true") {
+                if (checkboxVoiced.dataset.edited === "false") {
+                    katakanaVoicedCheckboxCheckedList = [...kanaVoiced];
+                }
+            }
+
+            if (checkboxCombo1.dataset.checked === "true") {
+                if (checkboxCombo1.dataset.edited === "false") {
+                    katakanaCombo1CheckboxCheckedList = [...kanaCombo1];
+                }
+            }
+
+            if (checkboxCombo2.dataset.checked === "true") {
+                if (checkboxCombo2.dataset.edited === "false") {
+                    katakanaCombo2CheckboxCheckedList = [...kanaCombo2];
+                }
             }
         }
-        if (checkboxVoiced.dataset.checked === "true") {
-            voicedCheckboxCheckedList = kanaVoiced;
-        }
-        if (checkboxCombo1.dataset.checked === "true") {
-            combo1CheckboxCheckedList = kanaCombo1;
-        }
-        if (checkboxCombo2.dataset.checked === "true") {
-            combo2CheckboxCheckedList = kanaCombo2;
-        }
 
-        console.log(checkBoxHiragana)
-        console.log(checkBoxKatakana)
+        let cardsForFlashCards = [
+            [...hiraganaBasicCheckboxCheckedList],
+            [...hiraganaVoicedCheckboxCheckedList],
+            [...hiraganaCombo1CheckboxCheckedList],
+            [...hiraganaCombo2CheckboxCheckedList],
+            [...katakanaBasicCheckboxCheckedList],
+            [...katakanaVoicedCheckboxCheckedList],
+            [...katakanaCombo1CheckboxCheckedList],
+            [...katakanaCombo2CheckboxCheckedList]]
+
+        console.log(hiraganaBasicCheckboxCheckedList)
+        console.log(katakanaBasicCheckboxCheckedList)
+
+        console.log(cardsForFlashCards);
+        cardsForFlashCards = cardsForFlashCards.reduce((e) => e);
+        console.log(cardsForFlashCards);
+
+        // console.log(checkBoxHiragana)
+        // console.log(checkBoxKatakana)
 
         if (checkBoxHiragana.dataset.checked === "false" && basicCheckboxCheckedList.find(
             (element) => element.alphabet === "hiragana")) {
@@ -320,10 +395,10 @@ let executeModalButton = (modalButton) => {
             console.log(a)
         }
 
-        console.log(basicCheckboxCheckedList)
-        console.log(voicedCheckboxCheckedList)
-        console.log(combo1CheckboxCheckedList)
-        console.log(combo2CheckboxCheckedList)
+        // console.log(basicCheckboxCheckedList)
+        // console.log(voicedCheckboxCheckedList)
+        // console.log(combo1CheckboxCheckedList)
+        // console.log(combo2CheckboxCheckedList)
         //To show flash card screen
 
     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
@@ -332,24 +407,24 @@ let executeModalButton = (modalButton) => {
         // It changes the dataset-edit of the checkbox of the edit icon that was clicked to show the modal custom
         currentEditIcon.parentElement.children[0].children[1].dataset.edited = "false";
 
-        switch (currentEditIcon.name) {
-            case "Basic":
-                basicCheckboxCheckedList = kanaBasic;
-                break;
-            case "Voiced":
-                voicedCheckboxCheckedList = kanaVoiced;
-                break;
-            case "Combo 1":
-                combo1CheckboxCheckedList = kanaCombo1;
-                break;
-            case "Combo 2":
-                combo2CheckboxCheckedList = kanaCombo2;
-                break;
+        // switch (currentEditIcon.name) {
+        //     case "Basic":
+        //         basicCheckboxCheckedList = kanaBasic;
+        //         break;
+        //     case "Voiced":
+        //         voicedCheckboxCheckedList = kanaVoiced;
+        //         break;
+        //     case "Combo 1":
+        //         combo1CheckboxCheckedList = kanaCombo1;
+        //         break;
+        //     case "Combo 2":
+        //         combo2CheckboxCheckedList = kanaCombo2;
+        //         break;
 
-            default:
-                alert("Error on switch casse of the execute modal button");
-                break;
-        }
+        //     default:
+        //         alert("Error on switch casse of the execute modal button");
+        //         break;
+        // }
     } else if (modalButton.classList.contains("modal-custom-button-finish")) {
         modalCustom.style.display = "none";
 
@@ -358,16 +433,20 @@ let executeModalButton = (modalButton) => {
 
         switch (currentEditIcon.name) {
             case "Basic":
-                basicCheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                hiraganaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(basicKana));
+                katakanaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(basicKana));
                 break;
             case "Voiced":
-                voicedCheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                hiraganaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(voicedKana));
+                katakanaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(voicedKana));
                 break;
             case "Combo 1":
-                combo1CheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                hiraganaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(combo1Kana));
+                katakanaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(combo1Kana));
                 break;
             case "Combo 2":
-                combo2CheckboxCheckedList = modalCustomCheckBoxList.filter((isChecked));
+                hiraganaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(combo2Kana));
+                katakanaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(combo2Kana));
                 break;
 
             default:
@@ -429,16 +508,16 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
     // It defines which group it will be displayed in modal custom
     switch (checkBoxEditIcon.name) {
         case "Basic":
-            group = kanaBasic;
+            group = basicKana;
             break;
         case "Voiced":
-            group = kanaVoiced;
+            group = voicedKana;
             break;
         case "Combo 1":
-            group = kanaCombo1;
+            group = combo1Kana;
             break;
         case "Combo 2":
-            group = kanaCombo2;
+            group = combo2Kana;
             break;
         default:
             break;

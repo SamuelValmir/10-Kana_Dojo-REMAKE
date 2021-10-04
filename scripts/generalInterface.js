@@ -6,10 +6,15 @@ var root = document.documentElement;
 
 var kanaJson;
 
-var kanaBasic;
-var kanaVoiced;
-var kanaCombo1;
-var kanaCombo2;
+var basicKana;
+var voicedKana;
+var combo1Kana;
+var combo2Kana;
+
+var allBasicKana = [];
+var allVoicedKana = [];
+var allCombo1Kana = [];
+var allCombo2Kana = [];
 
 var leftOption;
 var rightOption;
@@ -26,11 +31,35 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             kanaJson = data;
+            
+            for (let i = 0; i < Object.entries(kanaJson).length; i++) {
+                let kanaTypes = Object.entries(kanaJson);
 
-            kanaBasic = Object.entries(kanaJson)[0][1];
-            kanaVoiced = Object.entries(kanaJson)[1][1];
-            kanaCombo1 = Object.entries(kanaJson)[2][1];
-            kanaCombo2 = Object.entries(kanaJson)[3][1];
+                let kanaType = Object.values(kanaTypes[i][1]);
+
+                for (let index = 0; index < kanaType.length; index++) {
+                    const family = kanaType[index];
+                    family.forEach((kana) => {
+
+                        if (i === 0) {
+                            basicKana = kanaTypes[i][1];
+                            allBasicKana.push(kana);
+
+                        } else if (i === 1) {
+                            voicedKana = kanaTypes[i][1];
+                            allVoicedKana.push(kana);
+
+                        } else if (i === 2) {
+                            combo1Kana = kanaTypes[i][1];
+                            allCombo1Kana.push(kana);
+
+                        } else if (i === 3) {
+                            combo2Kana = kanaTypes[i][1];
+                            allCombo2Kana.push(kana);
+                        }
+                    })
+                }
+            }
         })
         .then(
             () => {
@@ -66,12 +95,12 @@ function changeScreen(exitScreen, goScreen) {
         case ".menu-screen": {
             root.style.setProperty("--scrollbarThumbColor", "rgb(213, 3, 3)");
             root.style.setProperty("--scrollbarTrackColor", "rgb(253, 94, 94)");
-            
+
             leftOption = document.querySelector(".learn-option");
             rightOption = document.querySelector(".play-option");
             navOptions = document.querySelector(".menu-screen-nav").children;
         } break;
-        
+
         case ".reference-screen": {
             root.style.setProperty("--scrollbarThumbColor", "rgb(0, 83, 65)");
             root.style.setProperty("--scrollbarTrackColor", "rgb(0, 255, 157)");
