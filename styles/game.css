@@ -490,15 +490,17 @@ label{
 
 /* ------- FLASH CARD SCREEN ------- */
 .flashCard-screen{
-    background-color: #dba102;
+    background-color: #f5bd23;
     color: black;
 
+    display: none;
     place-items: center;
 
     position: relative;
 }
 
 .flashCard-screen .top{
+    font-size: 6vw;
     position: absolute;
     top: 10px;
     z-index: 1;
@@ -515,8 +517,8 @@ label{
     display: flex;
 
 
-    gap: 5rem;
-    padding: 0 5rem;
+    gap: 2rem;
+    padding: 0 2rem;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
@@ -525,16 +527,20 @@ label{
 
 .flashCard {
     flex: none;
+
     width: 100%;
     height: 100vw;
     max-height: 80vh;
-    scroll-snap-align: center;
-    pointer-events: none;
     position: relative;
+
+    scroll-snap-align: center;
+    
+    transform-style: preserve-3d;
+    transition: transform .5s;
 }
 
 .flashCard-front,.flashCard-back{
-    background-color: rgb(220, 235, 156);
+    background-color: rgb(254, 255, 225);
 
     display: flex;
     place-content: center;
@@ -546,13 +552,13 @@ label{
     height: 100%;
     border-radius: 2rem;
 
-}
-
-.flashCard-front{
+    backface-visibility: hidden;
 
 }
+
 
 .flashCard-back{
+    transform: rotateY(180deg);
 }
 
 .flashCard-screen ::-webkit-scrollbar{
@@ -624,7 +630,7 @@ label{
     }
 } */
 
-.memory-game .card-front, .card-back{
+.memory-game .card-front, .memory-game .card-back{
     width: 100%;
     height: 100%;
 

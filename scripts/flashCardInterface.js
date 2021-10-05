@@ -1,1 +1,1 @@
-console.log(flashCardScreen.items)
+// console.log(flashCardScreen.items)
