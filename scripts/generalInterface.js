@@ -66,13 +66,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.querySelector(".reference-screen").style.display = "none";
                 document.querySelector(".modal-main").style.display = "none";
                 document.querySelector(".modal-custom").style.display = "none";
-                document.querySelector(".flashCard-screen").style.display = "block";
+                document.querySelector(".flashCard-screen").style.display = "none";
                 // document.querySelector(".quiz-screen").style.display = "none";
-                document.querySelector(".memory-game").style.display = "grid";
+                // document.querySelector(".memory-game").style.display = "grid";
 
                 document.body.style.backgroundColor = "white";
 
-                // changeScreen(null, ".menu-screen");
+                changeScreen(null, ".menu-screen");
             }
         )
 

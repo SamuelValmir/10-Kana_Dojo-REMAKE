@@ -330,45 +330,45 @@ let executeModalButton = (modalButton) => {
         modalCustomCheckBoxList.filter = filter;
     }
 
-  
+
     if (modalButton.classList.contains("modal-main-button-back")) {
         modalMainElement.style.display = "none";
         resetModalMain();
-        
+
     } else if (modalButton.classList.contains("modal-main-button-start")) {
         modalMainElement.style.display = "none";
-        
+
         checkboxBasic = document.querySelector(".modal-main .checkbox-basic");
         checkboxVoiced = document.querySelector(".modal-main .checkbox-voiced");
         checkboxCombo1 = document.querySelector(".modal-main .checkbox-combo1");
         checkboxCombo2 = document.querySelector(".modal-main .checkbox-combo2");
-        
+
         if (checkBoxHiragana.dataset.checked === "true") {  // If checkbox hiragana is checked...
             if (checkboxBasic.dataset.checked === "true") {
                 if (checkboxBasic.dataset.edited === "false") {
                     hiraganaBasicCheckboxCheckedList = [...allBasicKana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-            
+
             if (checkboxVoiced.dataset.checked === "true") {
                 if (checkboxVoiced.dataset.edited === "false") {
                     hiraganaVoicedCheckboxCheckedList = [...allVoicedKana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-            
+
             if (checkboxCombo1.dataset.checked === "true") {
                 if (checkboxCombo1.dataset.edited === "false") {
                     hiraganaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-            
+
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
                     hiraganaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-            
-            
+
+
         }
         if (checkBoxKatakana.dataset.checked === "true") { // If checkbox hiragana is not checked...
             if (checkboxBasic.dataset.checked === "true") {
@@ -388,14 +388,14 @@ let executeModalButton = (modalButton) => {
                     katakanaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
-            
+
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
                     katakanaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
         }
-        
+
         let cardsForFlashCards = [
             [...hiraganaBasicCheckboxCheckedList],
             [...hiraganaVoicedCheckboxCheckedList],
@@ -405,13 +405,20 @@ let executeModalButton = (modalButton) => {
             [...katakanaVoicedCheckboxCheckedList],
             [...katakanaCombo1CheckboxCheckedList],
             [...katakanaCombo2CheckboxCheckedList]]
-            
-  
-            cardsForFlashCards = cardsForFlashCards.flat();
-            resetModalMain();
-            
-            //To show flash card screen
-            
+
+
+        cardsForFlashCards = cardsForFlashCards.flat();
+        resetModalMain();
+
+        // Initialize the flashCardScreen
+        // I must make the flashCardScreen do this 
+        flashCardScreen.items.cards = cardsForFlashCards;
+        flashCardScreen.setItemsEventListener();
+        flashCardScreen.items.buildCards();
+
+        document.querySelector(".menu-screen").style.display = "none";
+        flashCardScreen.show();
+
     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
         modalCustom.style.display = "none";
 
