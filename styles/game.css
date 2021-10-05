@@ -526,12 +526,12 @@ label{
 @keyframes f {
     to{transform: rotateY(360deg);}
 }
-
+/* 
 @-moz-document url-prefix(){
     .card{
         backface-visibility: hidden;
     }
-}
+} */
 
 .card-front, .card-back{
     width: 100%;

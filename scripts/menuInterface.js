@@ -1,6 +1,6 @@
 "use strict";
 
-let modalMain;
+let modalMainElement;
 let modalCustom;
 
 let checkBoxList;
@@ -14,6 +14,16 @@ let checkboxBasic
 let checkboxVoiced
 let checkboxCombo1
 let checkboxCombo2
+
+let hiraganaBasicCheckboxCheckedList = [];
+let hiraganaVoicedCheckboxCheckedList = [];
+let hiraganaCombo1CheckboxCheckedList = [];
+let hiraganaCombo2CheckboxCheckedList = [];
+
+let katakanaBasicCheckboxCheckedList = [];
+let katakanaVoicedCheckboxCheckedList = [];
+let katakanaCombo1CheckboxCheckedList = [];
+let katakanaCombo2CheckboxCheckedList = [];
 
 let modalCustomCheckBoxList = [];
 let modalButtons;
@@ -31,8 +41,8 @@ for (const studySection of studySections) {
                 changeScreen(".menu-screen", ".reference-screen");
                 drawCardsOnReferenceScreen("hiragana");
             } else if (studySection.classList.contains("study-section-flash-card")) {
-                modalMain = document.querySelector(".modal-main")
-                modalMain.style.display = "flex";
+                modalMainElement = document.querySelector(".modal-main")
+                modalMainElement.style.display = "flex";
             } /* else if (studySection.classList.contains("study-section-reference")) {
                 document.querySelector(".menu-screen").style.display = "none";
                 document.querySelector(".reference-screen").style.display = "block";
@@ -56,6 +66,20 @@ let setModalButtons = () => {
     modalButtons = document.querySelectorAll(".modal-bottom .modal-button");
 }
 
+let showCheckBoxAndCheckMark = (checkBox, checkMark) => {
+    checkBox.dataset.checked = "true";
+    checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
+    checkBox.style.borderColor = MENU_PRIMARY_COLOR;
+    checkMark.style.display = "block"
+}
+
+let hideCheckBoxAndCheckMark = (checkBox, checkMark) => {
+    checkBox.dataset.checked = "false";
+    checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
+    checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
+    checkMark.style.display = "none"
+}
+
 let insertAnimationInModalMainCheckbox = () => {
     checkBoxList = document.querySelectorAll(".checkbox-container .checkbox");
     checkBoxLeftList = [];
@@ -66,22 +90,9 @@ let insertAnimationInModalMainCheckbox = () => {
         let checkMarkCircle = checkBox.parentElement.children[0];
         let checkMark = checkBox.children[0];
 
-        let showCheckBoxAndCheckMark = () => {
-            checkBox.dataset.checked = "true";
-            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
-            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
-            checkMark.style.display = "block"
-        }
-
-        let hideCheckBoxAndCheckMark = () => {
-            checkBox.dataset.checked = "false";
-            checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
-            checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
-            checkMark.style.display = "none"
-        }
 
         // It is for always reset the values when 
-        hideCheckBoxAndCheckMark();
+        hideCheckBoxAndCheckMark(checkBox, checkMark);
 
 
         // It separates who go to left list and who go to right list
@@ -92,10 +103,7 @@ let insertAnimationInModalMainCheckbox = () => {
         }
 
         if (i === 0 || i === 2) {
-            checkBox.dataset.checked = "true";
-            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
-            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
-            checkMark.style.display = "block"
+            showCheckBoxAndCheckMark(checkBox, checkMark);
         }
 
         checkBox.addEventListener('click', () => {
@@ -131,8 +139,7 @@ let insertAnimationInModalMainCheckbox = () => {
             } else {
                 if (checkBox.dataset.checked === "true") {
                     checkBox.dataset.edited = "false";
-                    console.log("hide")
-                    hideCheckBoxAndCheckMark();
+                    hideCheckBoxAndCheckMark(checkBox, checkMark);
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, false);
@@ -140,8 +147,7 @@ let insertAnimationInModalMainCheckbox = () => {
 
 
                 } else if (checkBox.dataset.checked === "false") {
-                    console.log("show")
-                    showCheckBoxAndCheckMark();
+                    showCheckBoxAndCheckMark(checkBox, checkMark);
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, true);
@@ -163,14 +169,14 @@ let insertAnimationInModalCustomCheckbox = () => {
         let checkMarkCircle = checkBox.parentElement.children[0];
         let checkMark = checkBox.children[0];
 
-        let showCheckBoxAndCheckMark = () => {
+        let showCheckBoxAndCheckMark = (checkBox, checkMark) => {
             checkBox.dataset.checked = "true";
             checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
             checkBox.style.borderColor = MENU_PRIMARY_COLOR;
             checkMark.style.display = "block"
         }
 
-        let hideCheckBoxAndCheckMark = () => {
+        let hideCheckBoxAndCheckMark = (checkBox, checkMark) => {
             checkBox.dataset.checked = "false";
             checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
             checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
@@ -178,10 +184,10 @@ let insertAnimationInModalCustomCheckbox = () => {
         }
 
         // It is for always reset the values when 
-        hideCheckBoxAndCheckMark();
+        hideCheckBoxAndCheckMark(checkBox, checkMark);
 
         if (i === 0) {
-            showCheckBoxAndCheckMark();
+            showCheckBoxAndCheckMark(checkBox, checkMark);
         }
 
         checkBox.addEventListener('click', () => {
@@ -207,8 +213,7 @@ let insertAnimationInModalCustomCheckbox = () => {
                 }, 300);
             } else {
                 if (checkBox.dataset.checked === "true") {
-                    console.log("hide")
-                    hideCheckBoxAndCheckMark();
+                    hideCheckBoxAndCheckMark(checkBox, checkMark);
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, false);
@@ -216,8 +221,7 @@ let insertAnimationInModalCustomCheckbox = () => {
 
 
                 } else if (checkBox.dataset.checked === "false") {
-                    console.log("show")
-                    showCheckBoxAndCheckMark();
+                    showCheckBoxAndCheckMark(checkBox, checkMark);
                     // It show the edit icon only if check box is inside of modal content right
                     if (checkBox.parentElement.parentElement.parentElement.classList.contains("modal-content-right")) {
                         showEditIcon(checkBox, true);
@@ -257,16 +261,6 @@ let insertAnimationInModalButtons = () => {
     })
 }
 
-let hiraganaBasicCheckboxCheckedList = [];
-let hiraganaVoicedCheckboxCheckedList = [];
-let hiraganaCombo1CheckboxCheckedList = [];
-let hiraganaCombo2CheckboxCheckedList = [];
-
-let katakanaBasicCheckboxCheckedList = [];
-let katakanaVoicedCheckboxCheckedList = [];
-let katakanaCombo1CheckboxCheckedList = [];
-let katakanaCombo2CheckboxCheckedList = [];
-
 let executeModalButton = (modalButton) => {
 
     function filter(callback, alphabet, type) {
@@ -288,82 +282,120 @@ let executeModalButton = (modalButton) => {
 
         // It adds in result array all element of the families that are in filteredCheckBoxList 
         if (filteredCheckBoxList.length > 0) {
-            filteredCheckBoxList.forEach((family) => {
-                family.forEach((kana) => {
+            for (let i1 = 0; i1 < filteredCheckBoxList.length; i1++) {
+                let family = filteredCheckBoxList[i1];
+                for (let i2 = 0; i2 < family.length; i2++) {
+                    let kana = family[i2];
+
+                    if (alphabet === "hiragana") {
+                        kana = wanakana.toHiragana(kana)
+
+                    } else if (alphabet === "katakana") {
+                        kana = wanakana.toKatakana(kana);
+                    }
+
                     result.push(kana);
-                })
-            })
+                }
+
+            }
+
         }
         return result;
+    }
+
+    let resetModalMain = () => {
+        hiraganaBasicCheckboxCheckedList = [];
+        hiraganaVoicedCheckboxCheckedList = [];
+        hiraganaCombo1CheckboxCheckedList = [];
+        hiraganaCombo2CheckboxCheckedList = [];
+
+        katakanaBasicCheckboxCheckedList = [];
+        katakanaVoicedCheckboxCheckedList = [];
+        katakanaCombo1CheckboxCheckedList = [];
+        katakanaCombo2CheckboxCheckedList = [];
+
+        for (let i = 0; i < checkBoxList.length; i++) {
+            let checkBox = checkBoxList[i];
+            let checkMark = checkBox.children[0];
+
+            hideCheckBoxAndCheckMark(checkBox, checkMark);
+
+            if (i === 0 || i === 2) {
+                showCheckBoxAndCheckMark(checkBox, checkMark);
+            }
+        }
     }
 
     if (modalCustomCheckBoxList !== []) {
         modalCustomCheckBoxList.filter = filter;
     }
 
+  
     if (modalButton.classList.contains("modal-main-button-back")) {
-        modalMain.style.display = "none";
+        modalMainElement.style.display = "none";
+        resetModalMain();
+        
     } else if (modalButton.classList.contains("modal-main-button-start")) {
-        modalMain.style.display = "none";
-
+        modalMainElement.style.display = "none";
+        
         checkboxBasic = document.querySelector(".modal-main .checkbox-basic");
         checkboxVoiced = document.querySelector(".modal-main .checkbox-voiced");
         checkboxCombo1 = document.querySelector(".modal-main .checkbox-combo1");
         checkboxCombo2 = document.querySelector(".modal-main .checkbox-combo2");
-
+        
         if (checkBoxHiragana.dataset.checked === "true") {  // If checkbox hiragana is checked...
             if (checkboxBasic.dataset.checked === "true") {
                 if (checkboxBasic.dataset.edited === "false") {
-                    hiraganaBasicCheckboxCheckedList = [...allBasicKana];
+                    hiraganaBasicCheckboxCheckedList = [...allBasicKana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-
+            
             if (checkboxVoiced.dataset.checked === "true") {
                 if (checkboxVoiced.dataset.edited === "false") {
-                    voicedCheckboxCheckedList = [...kanaVoiced];
+                    hiraganaVoicedCheckboxCheckedList = [...allVoicedKana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-
+            
             if (checkboxCombo1.dataset.checked === "true") {
                 if (checkboxCombo1.dataset.edited === "false") {
-                    combo1CheckboxCheckedList = [...kanaCombo1];
+                    hiraganaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-
+            
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
-                    combo2CheckboxCheckedList = [...kanaCombo2];
+                    hiraganaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toHiragana(kana));
                 }
             }
-
-
+            
+            
         }
         if (checkBoxKatakana.dataset.checked === "true") { // If checkbox hiragana is not checked...
             if (checkboxBasic.dataset.checked === "true") {
                 if (checkboxBasic.dataset.edited === "false") {
-                    katakanaBasicCheckboxCheckedList = [...allBasicKana];
+                    katakanaBasicCheckboxCheckedList = [...allBasicKana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
 
             if (checkboxVoiced.dataset.checked === "true") {
                 if (checkboxVoiced.dataset.edited === "false") {
-                    katakanaVoicedCheckboxCheckedList = [...kanaVoiced];
+                    katakanaVoicedCheckboxCheckedList = [...allVoicedKana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
 
             if (checkboxCombo1.dataset.checked === "true") {
                 if (checkboxCombo1.dataset.edited === "false") {
-                    katakanaCombo1CheckboxCheckedList = [...kanaCombo1];
+                    katakanaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
-
+            
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
-                    katakanaCombo2CheckboxCheckedList = [...kanaCombo2];
+                    katakanaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toKatakana(kana));
                 }
             }
         }
-
+        
         let cardsForFlashCards = [
             [...hiraganaBasicCheckboxCheckedList],
             [...hiraganaVoicedCheckboxCheckedList],
@@ -373,58 +405,19 @@ let executeModalButton = (modalButton) => {
             [...katakanaVoicedCheckboxCheckedList],
             [...katakanaCombo1CheckboxCheckedList],
             [...katakanaCombo2CheckboxCheckedList]]
-
-        console.log(hiraganaBasicCheckboxCheckedList)
-        console.log(katakanaBasicCheckboxCheckedList)
-
-        console.log(cardsForFlashCards);
-        cardsForFlashCards = cardsForFlashCards.reduce((e) => e);
-        console.log(cardsForFlashCards);
-
-        // console.log(checkBoxHiragana)
-        // console.log(checkBoxKatakana)
-
-        if (checkBoxHiragana.dataset.checked === "false" && basicCheckboxCheckedList.find(
-            (element) => element.alphabet === "hiragana")) {
-
-            let a = basicCheckboxCheckedList.filter((element) => {
-                if (element.alphabet === "hiragana") {
-                    return element;
-                }
-            })
-            console.log(a)
-        }
-
-        // console.log(basicCheckboxCheckedList)
-        // console.log(voicedCheckboxCheckedList)
-        // console.log(combo1CheckboxCheckedList)
-        // console.log(combo2CheckboxCheckedList)
-        //To show flash card screen
-
+            
+  
+            cardsForFlashCards = cardsForFlashCards.flat();
+            resetModalMain();
+            
+            //To show flash card screen
+            
     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
         modalCustom.style.display = "none";
 
         // It changes the dataset-edit of the checkbox of the edit icon that was clicked to show the modal custom
         currentEditIcon.parentElement.children[0].children[1].dataset.edited = "false";
 
-        // switch (currentEditIcon.name) {
-        //     case "Basic":
-        //         basicCheckboxCheckedList = kanaBasic;
-        //         break;
-        //     case "Voiced":
-        //         voicedCheckboxCheckedList = kanaVoiced;
-        //         break;
-        //     case "Combo 1":
-        //         combo1CheckboxCheckedList = kanaCombo1;
-        //         break;
-        //     case "Combo 2":
-        //         combo2CheckboxCheckedList = kanaCombo2;
-        //         break;
-
-        //     default:
-        //         alert("Error on switch casse of the execute modal button");
-        //         break;
-        // }
     } else if (modalButton.classList.contains("modal-custom-button-finish")) {
         modalCustom.style.display = "none";
 
@@ -527,12 +520,10 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
     let showKatakana = false;
 
     if (checkBoxHiragana.dataset.checked === "true") {
-        // console.log("ht")
         showHiragana = true;
     }
 
     if (checkBoxKatakana.dataset.checked === "true") {
-        // console.log("kt")
         showKatakana = true;
     }
 
