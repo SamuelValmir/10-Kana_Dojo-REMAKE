@@ -1,15 +1,27 @@
+"use strict";
 let flashCardScreen = {
     htmlElement: document.querySelector(".flashCard-screen"),
     top: {
         htmlElement: document.querySelector(".flashCard-screen .top"),
-        current: 1,
-        total: 0,
-        setTotal() {
-            this.total = flashCardScreen.items.cards.length;
+        returnButton:{
+            htmlElement: document.querySelector(".flashCard-screen .top .return-icon"),
+            addEventListener(){
+                this.htmlElement.addEventListener("click", ()=>{
+                    flashCardScreen.hide();
+                })
+            }
         },
-        setText() {
-            this.htmlElement.innerHTML = this.current + " / " + this.total;
-        }
+        text: {
+            htmlElement: document.querySelector(".flashCard-screen .top .text"),
+            current: 1,
+            total: 0,
+            setTotal() {
+                this.total = flashCardScreen.items.cards.length;
+            },
+            setText() {
+                this.htmlElement.innerHTML = this.current + " / " + this.total;
+            }
+        },
     },
 
     items: {
@@ -41,9 +53,9 @@ let flashCardScreen = {
         },
 
         buildCards() {
-            let top = flashCardScreen.top;
-            top.setTotal();
-            top.setText();
+            let topText = flashCardScreen.top.text;
+            topText.setTotal();
+            topText.setText();
 
 
             let items = this.htmlElement;
@@ -80,9 +92,13 @@ let flashCardScreen = {
             items.addEventListener("scroll", () => {
                 let spaceBetweenCards;
                 let spotsToChangeCounter = [0];
+                let cardWidth;
 
+                // It defines the 'spaceBetweenCards', 'spotsToChangeCounter' and 'cardWidth' variables
                 for (let i = 0; i < this.flashCardList.length; i++) {
                     let card = this.flashCardList[i];
+                    cardWidth = card.offsetWidth;
+
                     if (i === 0) {
                         spaceBetweenCards = card.offsetLeft;
                     }
@@ -93,13 +109,13 @@ let flashCardScreen = {
                     }
                 }
 
+                // It changes the text of the index in the top of the screen according to position of the items's scroll 
                 spotsToChangeCounter.forEach((spot) => {
-                    if (items.scrollLeft === spot) {
+                    if (items.scrollLeft >= spot - (cardWidth / 2) && items.scrollLeft <= spot + (cardWidth / 2)) {
                         let indexOfCurrent = spotsToChangeCounter.findIndex((element) => element === spot) + 1;
-                        top.current = indexOfCurrent;
+                        topText.current = indexOfCurrent;
                     }
-
-                    top.setText();
+                    topText.setText();
                 })
             })
         },
@@ -109,7 +125,6 @@ let flashCardScreen = {
         let items = this.items.htmlElement
         items.addEventListener("wheel", event => {
             // If the mouse has been scrolled down...
-            // console.log(event.target)
             if (event.deltaY > 0) {
                 items.scrollBy(500, 0)
             } else {
@@ -127,4 +142,5 @@ let flashCardScreen = {
     }
 }
 
+flashCardScreen.top.returnButton.addEventListener();
 // console.log(flashCardScreen.flashCard.cards)

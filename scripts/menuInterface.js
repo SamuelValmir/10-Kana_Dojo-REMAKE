@@ -36,10 +36,10 @@ for (const studySection of studySections) {
     if (studySection.classList.contains("study-section")) {
         studySection.addEventListener("click", function () {
             if (studySection.classList.contains("study-section-reference")) {
-                document.querySelector(".menu-screen").style.display = "none";
-                document.querySelector(".reference-screen").style.display = "block";
+                menuScreen.hide();
+                referenceScreen.show();
                 changeScreen(".menu-screen", ".reference-screen");
-                drawCardsOnReferenceScreen("hiragana");
+                referenceScreen.drawCards(HIRAGANA);
             } else if (studySection.classList.contains("study-section-flash-card")) {
                 modalMainElement = document.querySelector(".modal-main")
                 modalMainElement.style.display = "flex";
@@ -346,25 +346,25 @@ let executeModalButton = (modalButton) => {
         if (checkBoxHiragana.dataset.checked === "true") {  // If checkbox hiragana is checked...
             if (checkboxBasic.dataset.checked === "true") {
                 if (checkboxBasic.dataset.edited === "false") {
-                    hiraganaBasicCheckboxCheckedList = [...allBasicKana].map((kana) => wanakana.toHiragana(kana));
+                    hiraganaBasicCheckboxCheckedList = [...kana.basic].map((kana) => wanakana.toHiragana(kana));
                 }
             }
 
             if (checkboxVoiced.dataset.checked === "true") {
                 if (checkboxVoiced.dataset.edited === "false") {
-                    hiraganaVoicedCheckboxCheckedList = [...allVoicedKana].map((kana) => wanakana.toHiragana(kana));
+                    hiraganaVoicedCheckboxCheckedList = [...kana.voiced].map((kana) => wanakana.toHiragana(kana));
                 }
             }
 
             if (checkboxCombo1.dataset.checked === "true") {
                 if (checkboxCombo1.dataset.edited === "false") {
-                    hiraganaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toHiragana(kana));
+                    hiraganaCombo1CheckboxCheckedList = [...kana.combo1].map((kana) => wanakana.toHiragana(kana));
                 }
             }
 
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
-                    hiraganaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toHiragana(kana));
+                    hiraganaCombo2CheckboxCheckedList = [...kana.combo2].map((kana) => wanakana.toHiragana(kana));
                 }
             }
 
@@ -373,25 +373,25 @@ let executeModalButton = (modalButton) => {
         if (checkBoxKatakana.dataset.checked === "true") { // If checkbox hiragana is not checked...
             if (checkboxBasic.dataset.checked === "true") {
                 if (checkboxBasic.dataset.edited === "false") {
-                    katakanaBasicCheckboxCheckedList = [...allBasicKana].map((kana) => wanakana.toKatakana(kana));
+                    katakanaBasicCheckboxCheckedList = [...kana.basic].map((kana) => wanakana.toKatakana(kana));
                 }
             }
 
             if (checkboxVoiced.dataset.checked === "true") {
                 if (checkboxVoiced.dataset.edited === "false") {
-                    katakanaVoicedCheckboxCheckedList = [...allVoicedKana].map((kana) => wanakana.toKatakana(kana));
+                    katakanaVoicedCheckboxCheckedList = [...kana.voiced].map((kana) => wanakana.toKatakana(kana));
                 }
             }
 
             if (checkboxCombo1.dataset.checked === "true") {
                 if (checkboxCombo1.dataset.edited === "false") {
-                    katakanaCombo1CheckboxCheckedList = [...allCombo1Kana].map((kana) => wanakana.toKatakana(kana));
+                    katakanaCombo1CheckboxCheckedList = [...kana.combo1].map((kana) => wanakana.toKatakana(kana));
                 }
             }
 
             if (checkboxCombo2.dataset.checked === "true") {
                 if (checkboxCombo2.dataset.edited === "false") {
-                    katakanaCombo2CheckboxCheckedList = [...allCombo2Kana].map((kana) => wanakana.toKatakana(kana));
+                    katakanaCombo2CheckboxCheckedList = [...kana.combo2].map((kana) => wanakana.toKatakana(kana));
                 }
             }
         }
@@ -433,20 +433,20 @@ let executeModalButton = (modalButton) => {
 
         switch (currentEditIcon.name) {
             case "Basic":
-                hiraganaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(basicKana));
-                katakanaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(basicKana));
+                hiraganaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.basicFamilies));
+                katakanaBasicCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.basicFamilies));
                 break;
             case "Voiced":
-                hiraganaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(voicedKana));
-                katakanaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(voicedKana));
+                hiraganaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.voicedFamilies));
+                katakanaVoicedCheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.voicedFamilies));
                 break;
             case "Combo 1":
-                hiraganaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(combo1Kana));
-                katakanaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(combo1Kana));
+                hiraganaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.combo1Families));
+                katakanaCombo1CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.combo1Families));
                 break;
             case "Combo 2":
-                hiraganaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(combo2Kana));
-                katakanaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(combo2Kana));
+                hiraganaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.combo2Families));
+                katakanaCombo2CheckboxCheckedList = modalCustomCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.combo2Families));
                 break;
 
             default:
@@ -508,16 +508,16 @@ let fillModalCustomContent = (checkBoxEditIcon) => {
     // It defines which group it will be displayed in modal custom
     switch (checkBoxEditIcon.name) {
         case "Basic":
-            group = basicKana;
+            group = kana.basicFamilies;
             break;
         case "Voiced":
-            group = voicedKana;
+            group = kana.voicedFamilies;
             break;
         case "Combo 1":
-            group = combo1Kana;
+            group = kana.combo1Families;
             break;
         case "Combo 2":
-            group = combo2Kana;
+            group = kana.combo2Families;
             break;
         default:
             break;

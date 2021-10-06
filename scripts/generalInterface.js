@@ -4,18 +4,6 @@
 // Global variables
 var root = document.documentElement;
 
-var kanaJson;
-
-var basicKana;
-var voicedKana;
-var combo1Kana;
-var combo2Kana;
-
-var allBasicKana = [];
-var allVoicedKana = [];
-var allCombo1Kana = [];
-var allCombo2Kana = [];
-
 var leftOption;
 var rightOption;
 
@@ -24,58 +12,21 @@ let progressBarTop;
 
 // CONSTANTS
 const MENU_PRIMARY_COLOR = "rgb(213, 3, 3)";
+const HIRAGANA = "hiragana";
+const KATAKANA = "katakana";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("./assets/kana.json")
-        .then(response => response.json())
-        .then(data => {
-            kanaJson = data;
-            
-            for (let i = 0; i < Object.entries(kanaJson).length; i++) {
-                let kanaTypes = Object.entries(kanaJson);
+    referenceScreen.hide();
+    document.querySelector(".modal-main").style.display = "none";
+    document.querySelector(".modal-custom").style.display = "none";
+    document.querySelector(".flashCard-screen").style.display = "none";
+    // document.querySelector(".quiz-screen").style.display = "none";
+    // document.querySelector(".memory-game").style.display = "grid";
 
-                let kanaType = Object.values(kanaTypes[i][1]);
+    document.body.style.backgroundColor = "white";
 
-                for (let index = 0; index < kanaType.length; index++) {
-                    const family = kanaType[index];
-                    family.forEach((kana) => {
-
-                        if (i === 0) {
-                            basicKana = kanaTypes[i][1];
-                            allBasicKana.push(kana);
-
-                        } else if (i === 1) {
-                            voicedKana = kanaTypes[i][1];
-                            allVoicedKana.push(kana);
-
-                        } else if (i === 2) {
-                            combo1Kana = kanaTypes[i][1];
-                            allCombo1Kana.push(kana);
-
-                        } else if (i === 3) {
-                            combo2Kana = kanaTypes[i][1];
-                            allCombo2Kana.push(kana);
-                        }
-                    })
-                }
-            }
-        })
-        .then(
-            () => {
-                document.querySelector(".reference-screen").style.display = "none";
-                document.querySelector(".modal-main").style.display = "none";
-                document.querySelector(".modal-custom").style.display = "none";
-                document.querySelector(".flashCard-screen").style.display = "none";
-                // document.querySelector(".quiz-screen").style.display = "none";
-                // document.querySelector(".memory-game").style.display = "grid";
-
-                document.body.style.backgroundColor = "white";
-
-                changeScreen(null, ".menu-screen");
-            }
-        )
-
+    changeScreen(null, ".menu-screen");
 })
 
 function changeScreen(exitScreen, goScreen) {
@@ -146,7 +97,7 @@ function changeNavOption(event) { //It animates the change of the option of the 
             if (option.classList.contains("learn-option")) {
                 goToLearnMenu();
             } else if (option.classList.contains("hiragana-option")) {
-                drawCardsOnReferenceScreen("hiragana");
+                referenceScreen.drawCards(HIRAGANA);
             }
 
         } else if (option.classList.contains("right-option")) {
@@ -161,7 +112,7 @@ function changeNavOption(event) { //It animates the change of the option of the 
             if (option.classList.contains("play-option")) {
                 goToPlayMenu();
             } else if (option.classList.contains("katakana-option")) {
-                drawCardsOnReferenceScreen("katakana");
+                referenceScreen.drawCards(KATAKANA);
             }
         }
     }

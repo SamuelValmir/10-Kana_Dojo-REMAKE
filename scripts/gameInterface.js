@@ -7,13 +7,8 @@ const CARD_BACK = "card-back";
 
 
 window.onload = () => {
-    fetch('./assets/kana.json')
-        .then(response => response.json())
-        .then(data => {
-            kanaJson = data;
-            startGame();
-            setMoves();
-        })
+    startGame();
+    setMoves();
 }
 
 let startGame = () => {
@@ -59,8 +54,8 @@ function flipCard() {
             if (game.checkMatch()) {
                 game.clearCards();
                 if (game.checkGameOver()) {
-                    setTimeout(()=>{
-                        let gameOverLayer =  document.querySelector(".gameOver");
+                    setTimeout(() => {
+                        let gameOverLayer = document.querySelector(".gameOver");
                         gameOverLayer.style.display = "grid";
                         setScore();
                     }, 1000)
@@ -79,10 +74,10 @@ function flipCard() {
     }
 }
 
-let setMoves = () =>{
+let setMoves = () => {
     let a = document.querySelector(".moves span").innerHTML = game.moves;
 }
 
-let setScore = () =>{
+let setScore = () => {
     let a = document.querySelector(".score span").innerHTML = game.moves;
 }

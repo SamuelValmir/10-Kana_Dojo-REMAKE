@@ -248,7 +248,11 @@
     <!------- FLASH CARD SCREEN ------->
 
     <div class="flashCard-screen">
-        <div class="top"> 1 / 45</div>
+        <div class="top">
+            <span class="return-icon"><img src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
+            <div class="text"></div>
+            <span></span>
+        </div>
         <div class="items-wrapper">
             <div class="items">
                 <!--
@@ -286,9 +290,11 @@
             <button id="menu" onclick="goToMenu()">Menu</button>
         </div>
     </div>
+    <script src="./scripts/kana.js"></script>
+    <script src="./scripts/referenceScreen.js"></script>
+    <script src="./scripts/menuScreen.js"></script>
     <script src="./scripts/generalInterface.js" ></script>
     <script src="./scripts/menuInterface.js"></script>
-    <script src="./scripts/referenceInterface.js"></script>
     <script src="./scripts/flashCardScreen.js"></script>
     <script src="./scripts/flashCardInterface.js"></script>
     <script src="./scripts/game.js"></script>

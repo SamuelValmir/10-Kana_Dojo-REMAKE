@@ -1,62 +1,76 @@
-"use strict";
+let referenceScreen = {
+    htmlElement: document.querySelector(".reference-screen"),
+    isShowing: false,
+    show() {
+        this.htmlElement.style.display = "block";
+        this.initialize();
+        this.isShowing = true;
+    },
 
-function drawCardsOnReferenceScreen(option) {
-    let referenceScreenContainer = document.querySelector(".reference-screen .container");
-    referenceScreenContainer.innerHTML = "";
-    for (const group of Object.entries(kanaJson)) {
-        let familyName = document.createElement("div");
-        familyName.id = group[0];
-        familyName.classList.add("family-name");
-        group[0][0].toUpperCase;
-        familyName.innerHTML = capitalizeFirstLetter(group[0]);
-        referenceScreenContainer.appendChild(familyName);
+    hide() {
+        this.htmlElement.style.display = "none";
+        this.reset();
+        this.isShowing = false;
+    },
 
-        for (const family of Object.values(group[1])) {
-            let familyElement = document.createElement("div");
-            familyElement.classList.add("family");
-            for (let kana of family) {
-                let cardElement = document.createElement("div");
-                cardElement.classList.add("card");
+    drawCards(option) {
+        let referenceScreenContainer = document.querySelector(".reference-screen .container");
+        referenceScreenContainer.innerHTML = "";
+        for (const group of Object.entries(kana.groups)) {
+            let familyName = document.createElement("div");
+            familyName.id = group[0];
+            familyName.classList.add("family-name");
+            group[0][0].toUpperCase;
+            familyName.innerHTML = capitalizeFirstLetter(group[0]);
+            referenceScreenContainer.appendChild(familyName);
 
-                let cardTop = document.createElement("span");
-                cardTop.classList.add("top");
+            for (const family of Object.values(group[1])) {
+                let familyElement = document.createElement("div");
+                familyElement.classList.add("family");
+                for (let kana of family) {
+                    let cardElement = document.createElement("div");
+                    cardElement.classList.add("card");
 
-                if (option === "hiragana") {
-                    cardTop.innerHTML = wanakana.toHiragana(kana);
-                } else if (option === "katakana") {
-                    cardTop.innerHTML = wanakana.toKatakana(kana);
+                    let cardTop = document.createElement("span");
+                    cardTop.classList.add("top");
+
+                    if (option === "hiragana") {
+                        cardTop.innerHTML = wanakana.toHiragana(kana);
+                    } else if (option === "katakana") {
+                        cardTop.innerHTML = wanakana.toKatakana(kana);
+                    }
+
+                    let cardBottom = document.createElement("span");
+                    cardBottom.classList.add("bottom");
+                    if (kana === "du") {
+                        kana = "dzu";
+                    }
+                    cardBottom.innerHTML = kana;
+
+                    referenceScreenContainer.appendChild(familyElement);
+                    familyElement.appendChild(cardElement);
+                    cardElement.appendChild(cardTop);
+                    cardElement.appendChild(cardBottom);
                 }
-
-                let cardBottom = document.createElement("span");
-                cardBottom.classList.add("bottom");
-                if (kana === "du") {
-                    kana = "dzu";
+                if (familyElement.childElementCount == 2 || familyElement.childElementCount == 3) {
+                    familyElement.style.justifyContent = "space-between";
                 }
-                cardBottom.innerHTML = kana;
-
-                referenceScreenContainer.appendChild(familyElement);
-                familyElement.appendChild(cardElement);
-                cardElement.appendChild(cardTop);
-                cardElement.appendChild(cardBottom);
-            }
-            if (familyElement.childElementCount == 2 || familyElement.childElementCount == 3) {
-                familyElement.style.justifyContent = "space-between";
             }
         }
+    },
+
+    initialize() {
+        this.drawCards();
+    },
+
+    reset() {
+
     }
-
-
-    /* <div id="basic" class="family-name">Basic</div>
-        <div class="family">
-            <div class="card">
-                <span class="top">a</span>
-                <span class="bottom">b</span>
-            </div> */
 }
 
 // It fills the 3 scrolls bar as long as the screen is scrolled
 window.onscroll = () => {
-    if (document.querySelector(".reference-screen").style.display != "none") {
+    if (referenceScreen.isShowing) {
 
         let winScroll = document.documentElement.scrollTop;
         let voicedTop = document.querySelector("#voiced").offsetTop;
@@ -119,5 +133,7 @@ function pinOnTop() {
 }
 
 document.querySelector(".reference-screen .return-icon").addEventListener("click", () => {
-    changeScreen('.reference-screen', '.menu-screen')
+    referenceScreen.hide();
+    menuScreen.show();
+    changeScreen('.reference-screen', '.menu-screen');
 })
