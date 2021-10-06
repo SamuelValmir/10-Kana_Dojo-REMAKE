@@ -6,15 +6,22 @@ let flashCardScreen = {
         total: 0,
         setTotal() {
             this.total = flashCardScreen.items.cards.length;
+        },
+        setText() {
+            this.htmlElement.innerHTML = this.current + " / " + this.total;
         }
     },
+
     items: {
         htmlElement: document.querySelector(".flashCard-screen .items"),
 
         cards: [],
+
+        flashCardList: [],
         flashCard: {
             tag: "div",
             class: "flashCard",
+            width: "",
 
             front: {
                 tag: "div",
@@ -36,11 +43,13 @@ let flashCardScreen = {
         buildCards() {
             let top = flashCardScreen.top;
             top.setTotal();
-            top.htmlElement.innerHTML = top.current + " / " + top.total;
+            top.setText();
+
 
             let items = this.htmlElement;
             this.cards.forEach(kana => {
                 let card = this.flashCard;
+                let flashCardList = this.flashCardList;
                 let front = this.flashCard.front;
                 front.text = kana;
 
@@ -49,6 +58,7 @@ let flashCardScreen = {
 
                 let cardElement = document.createElement(card.tag);
                 cardElement.classList.add(card.class);
+                flashCardList.push(cardElement);
 
                 let backCardElement = document.createElement(back.tag);
                 backCardElement.classList.add(back.class);
@@ -58,7 +68,6 @@ let flashCardScreen = {
                 frontCardElement.classList.add(front.class);
                 frontCardElement.innerHTML = front.text;
 
-                a.push(cardElement);
                 items.appendChild(cardElement);
                 cardElement.appendChild(backCardElement);
                 cardElement.appendChild(frontCardElement);
@@ -66,9 +75,34 @@ let flashCardScreen = {
                 cardElement.addEventListener("click", () => {
                     cardElement.classList.toggle("flip");
                 });
-
             });
-        }
+
+            items.addEventListener("scroll", () => {
+                let spaceBetweenCards;
+                let spotsToChangeCounter = [0];
+
+                for (let i = 0; i < this.flashCardList.length; i++) {
+                    let card = this.flashCardList[i];
+                    if (i === 0) {
+                        spaceBetweenCards = card.offsetLeft;
+                    }
+
+                    if (i < this.flashCardList.length - 1) {
+                        let cardOffsetRight = card.offsetLeft + card.offsetWidth;
+                        spotsToChangeCounter.push(cardOffsetRight);
+                    }
+                }
+
+                spotsToChangeCounter.forEach((spot) => {
+                    if (items.scrollLeft === spot) {
+                        let indexOfCurrent = spotsToChangeCounter.findIndex((element) => element === spot) + 1;
+                        top.current = indexOfCurrent;
+                    }
+
+                    top.setText();
+                })
+            })
+        },
     },
 
     setItemsEventListener: function () {
@@ -90,11 +124,7 @@ let flashCardScreen = {
 
     hide() {
         this.htmlElement.style.display = "none";
-    },
-
-    drawCardsOnScreen() {
-
-    },
+    }
 }
 
 // console.log(flashCardScreen.flashCard.cards)
