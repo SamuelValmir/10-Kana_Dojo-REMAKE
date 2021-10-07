@@ -1,10 +1,60 @@
 let referenceScreen = {
     htmlElement: document.querySelector(".reference-screen"),
     isShowing: false,
+    returnButton:{
+        htmlElement: document.querySelector(".reference-screen .return-icon")
+    },
+    progressBar: document.querySelector(".reference-screen-progress-container"),
+    progressBarTop: "",
+    setProgressBarTop(){
+        this.progressBarTop = this.progressBar.offsetTop;
+    },
+
+    navOptions: {
+        htmlElement: document.querySelector(".reference-screen-nav").children,
+
+        hiraganaOption: {
+            htmlElement: document.querySelector(".hiragana-option"),
+            isSelected: true,
+            animate() {
+                let katakanaOption = referenceScreen.navOptions.katakanaOption;
+                if (katakanaOption.isSelected === true && this.isSelected === false) {
+                    this.isSelected = true;
+                    katakanaOption.isSelected = false;
+
+                    this.htmlElement.classList.add("highlight");
+                    katakanaOption.htmlElement.classList.remove("highlight");
+
+                    this.htmlElement.style.borderBottom = "5px solid white";
+                    katakanaOption.htmlElement.style.borderBottom = "none";
+                }
+            }
+        },
+        katakanaOption: {
+            htmlElement: document.querySelector(".katakana-option"),
+            isSelected: false,
+            animate() {
+                let hiraganaOption = referenceScreen.navOptions.hiraganaOption;
+                if (hiraganaOption.isSelected === true && this.isSelected === false) {
+                    this.isSelected = true;
+                    hiraganaOption.isSelected = false;
+
+                    this.htmlElement.classList.add("highlight");
+                    hiraganaOption.htmlElement.classList.remove("highlight");
+
+                    this.htmlElement.style.borderBottom = "5px solid white";
+                    hiraganaOption.htmlElement.style.borderBottom = "none";
+
+                }
+            }
+        }
+    },
+
     show() {
         this.htmlElement.style.display = "block";
         this.initialize();
         this.isShowing = true;
+        this.drawCards(HIRAGANA);
     },
 
     hide() {
@@ -60,10 +110,57 @@ let referenceScreen = {
     },
 
     initialize() {
-        this.drawCards();
+        let hiraganaOption = this.navOptions.hiraganaOption;
+        let katakanaOption = this.navOptions.katakanaOption;
+
+        hiraganaOption.isSelected = true;
+        katakanaOption.isSelected = false;
+
+        hiraganaOption.htmlElement.style.borderBottom = "5px solid white";
+        katakanaOption.htmlElement.style.borderBottom = "none";
+
+        hiraganaOption.htmlElement.classList.remove("highlight");
+        katakanaOption.htmlElement.classList.remove("highlight");
+
+        // When hiragana option is clicked
+        hiraganaOption.htmlElement.addEventListener("click", () => {
+            hiraganaOption.animate();
+            referenceScreen.drawCards(HIRAGANA);
+        })
+        
+        // When katakana option is clicked
+        katakanaOption.htmlElement.addEventListener("click", () => {
+            katakanaOption.animate();
+            referenceScreen.drawCards(KATAKANA);
+        })
+
+        // When return button is clicked
+        referenceScreen.returnButton.htmlElement.addEventListener("click", () => {
+            referenceScreen.hide();
+            menuScreen.show();
+        })
+
+        this.setProgressBarTop();
     },
 
     reset() {
+        let hiraganaOption = this.navOptions.hiraganaOption;
+        let katakanaOption = this.navOptions.katakanaOption;
+
+        hiraganaOption.htmlElement.removeEventListener("click", () => {
+            hiraganaOption.animate();
+            referenceScreen.drawCards(HIRAGANA);
+        })
+
+        katakanaOption.htmlElement.removeEventListener("click", () => {
+            katakanaOption.animate();
+            referenceScreen.drawCards(KATAKANA);
+        })
+
+        referenceScreen.returnButton.htmlElement.removeEventListener("click", () => {
+            referenceScreen.hide();
+            menuScreen.show();
+        })
 
     }
 }
@@ -122,18 +219,13 @@ window.onscroll = () => {
 }
 
 function pinOnTop() {
-    if (window.pageYOffset >= progressBarTop) {
-        progressBar.classList.add("pinOnTop");
+    // If the top of the screen overflow the progress bars'top
+    if (window.pageYOffset >= referenceScreen.progressBarTop) {
+        referenceScreen.progressBar.classList.add("pinOnTop");
         let progressContainerHeight = document.querySelector(".reference-screen-progress-container").offsetHeight;
         document.body.style.marginTop = progressContainerHeight + "px";
     } else {
-        progressBar.classList.remove("pinOnTop");
+        referenceScreen.progressBar.classList.remove("pinOnTop");
         document.body.style.marginTop = "0";
     }
 }
-
-document.querySelector(".reference-screen .return-icon").addEventListener("click", () => {
-    referenceScreen.hide();
-    menuScreen.show();
-    changeScreen('.reference-screen', '.menu-screen');
-})

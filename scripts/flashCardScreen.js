@@ -7,6 +7,7 @@ let flashCardScreen = {
             htmlElement: document.querySelector(".flashCard-screen .top .return-icon"),
             addEventListener(){
                 this.htmlElement.addEventListener("click", ()=>{
+                    menuScreen.show();
                     flashCardScreen.hide();
                 })
             }
