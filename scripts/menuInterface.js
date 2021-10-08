@@ -25,13 +25,8 @@ let katakanaCombo1CheckboxCheckedList = [];
 let katakanaCombo2CheckboxCheckedList = [];
 
 let modalCustommCheckBoxList = [];
-let modalButtons;
 
 let currentEditIcon;
-
-let setModalButtons = () => {
-    modalButtons = document.querySelectorAll(".modal-bottom .modal-button");
-}
 
 let showCheckBoxAndCheckMark = (checkBox, checkMark) => {
     checkBox.dataset.checked = "true";
@@ -213,19 +208,7 @@ let showEditIcon = (checkBox, toShow) => {
 }
 
 let insertAnimationInModalButtons = () => {
-    modalButtons.forEach((modalButton) => {
-        modalButton.addEventListener("click", () => {
-            let modalButtonAnimation = modalButton.animate([
-                { backgroundColor: "#ddd" },
-                { backgroundColor: "var(--white)" },
-            ], 300);
-
-            // When animation is finished the button execute it function
-            modalButtonAnimation.addEventListener('finish', () => {
-                executeModalButton(modalButton);
-            })
-        });
-    })
+        executeModalButton(modalButton);
 }
 
 let executeModalButton = (modalButton) => {
@@ -567,7 +550,6 @@ function filter(callback) {
     return checkedNumber;
 }
 
-setModalButtons();
 insertAnimationInModalMainCheckbox();
 setCheckboxEditIcon();
 checkBoxHiragana = checkBoxLeftList[0];
