@@ -1,0 +1,5 @@
+
+class CheckBox{
+    isChecked;
+    name;
+}

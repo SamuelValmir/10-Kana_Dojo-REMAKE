@@ -1,14 +1,8 @@
 "use strict";
 
-// Contante variables
-const CARD = "card";
-const CARD_FRONT = "card-front";
-const CARD_BACK = "card-back";
-
-
 window.onload = () => {
-    startGame();
-    setMoves();
+    // startGame();
+    // setMoves();
 }
 
 let startGame = () => {

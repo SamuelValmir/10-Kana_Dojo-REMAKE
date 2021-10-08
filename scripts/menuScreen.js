@@ -98,7 +98,7 @@ let menuScreen = {
         })
                     
         flashCardSection.htmlElement.addEventListener("click", () =>{
-            modalMain.show();
+            modalMainInterface.show();
         })
     },
 
@@ -124,7 +124,7 @@ let menuScreen = {
         })
                     
         flashCardSection.htmlElement.removeEventListener("click", () =>{
-            modalMain.show();
+            modalMainInterface.show();
         })
     }
 }
