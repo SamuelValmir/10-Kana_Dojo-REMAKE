@@ -1,13 +1,11 @@
 let modalMain = {
-    checkBoxList: {
-        leftCheckBoxList: [],
+    leftCheckBoxList: [],
 
-        rightCheckBoxList: [],
+    rightCheckBoxList: [],
 
-        check(checkBox) {
-            checkBox.isChecked = true;
-            //* Make it red
-        },
+    check(checkBox) {
+        checkBox.isChecked = true;
+        //* Make it red
     },
 
     buttons: {

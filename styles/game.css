@@ -349,6 +349,7 @@ svg circle:last-child {
 }
 
 .modal-content-right img{
+    display: none;
     width: 6vw;
 }
 

@@ -2,63 +2,16 @@ let modalMainInterface = {
     htmlElement: document.querySelector(".modal-main"),
     checkBoxList: {
         leftCheckBoxList: document.querySelectorAll(".modal-main .modal-content-left .checkbox"),
-        // hiragana: {
-        //     htmlElement: document.querySelector(".modal-main .checkbox-hiragana"),
-        // },
-        // katakana:{
-        //     htmlElement: document.querySelector(".modal-main .checkbox-katakana"),
-        // }
-
-
-        rightCheckBoxList: document.querySelector(".modal-main .modal-content-right"),
-        // basic:{
-        //     htmlElement: document.querySelector(".modal-main .checkbox-basic"),
-        // },
-        // voiced:{
-        //     htmlElement: document.querySelector(".modal-main .checkbox-voiced"),
-        // },
-        // combo1:{
-        //     htmlElement: document.querySelector(".modal-main .checkbox-combo1"),
-        // },
-        // combo2:{
-        //     htmlElement: document.querySelector(".modal-main .checkbox-combo2"),
-        // },
-
-        animateCheckBoxAndCheckMarkCircle(checkBox, checkMarkCircle) {
-            checkBox.animate([
-                { transform: "scale(0.8)" }
-            ], 200);
-
-            checkMarkCircle.animate([
-                { opacity: 1 },
-                { transform: "scale(3.5)" }
-            ], 200);
-        },
-
-        showCheckBoxAndCheckMark(checkBox, checkMark) {
-            checkBox.style.backgroundColor = MENU_PRIMARY_COLOR;
-            checkBox.style.borderColor = MENU_PRIMARY_COLOR;
-            checkMark.style.display = "block"
-        },
-
-        hideCheckBoxAndCheckMark(checkBox, checkMark) {
-            checkBox.style.backgroundColor = "rgb(0, 0, 0, 0)";
-            checkBox.style.borderColor = "rgba(0, 0, 0, 0.6)";
-            checkMark.style.display = "none"
-        }
+        rightCheckBoxList: document.querySelectorAll(".modal-main .modal-content-right .checkbox"),
     },
 
     buttons: {
-        backButton: {
-            htmlElement: document.querySelector(".modal-main-button-back"),
-        },
-        startButton: {
-            htmlElement: document.querySelector(".modal-main-button-start"),
-        },
+        backButton: document.querySelector(".modal-main-button-back"),
+        startButton: document.querySelector(".modal-main-button-start"),
 
         animate(button) {
             let promise = new Promise((resolve) => {
-                let animation = button.htmlElement.animate([
+                let animation = button.animate([
                     { backgroundColor: "#ddd" },
                     { backgroundColor: "var(--white)" },
                 ], 300);
@@ -82,58 +35,137 @@ let modalMainInterface = {
     },
 
     initialize() {
-        let backButton = this.buttons.backButton;
-        let startButton = this.buttons.startButton;
-
-        backButton.htmlElement.addEventListener("click", async () => {
-            await this.buttons.animate(backButton);
-            this.hide();
-        })
-
-        startButton.htmlElement.addEventListener("click", async () => {
-            await this.buttons.animate(startButton);
-            this.hide();
-            menuScreen.hide();
-            flashCardScreen.show();
-        })
+        this.initializeButtons();
 
         // Build objects to the left and right checkboxes
         let leftCheckBoxElementList = this.checkBoxList.leftCheckBoxList;
         let rightCheckBoxElementList = this.checkBoxList.rightCheckBoxList;
 
-        modalMain.checkBoxList.leftCheckBoxList = checkBoxList.built(leftCheckBoxElementList);
-        modalMain.checkBoxList.rightCheckBoxList = checkBoxList.built(rightCheckBoxElementList);
+        modalMain.leftCheckBoxList = checkBoxList.built(leftCheckBoxElementList);
+        modalMain.rightCheckBoxList = checkBoxList.built(rightCheckBoxElementList, true);
 
-        let checkBoxLeftObjectList = modalMain.checkBoxList.leftCheckBoxList;
+        let checkBoxLeftObjectList = modalMain.leftCheckBoxList;
+        let checkBoxRightObjectList = modalMain.rightCheckBoxList;
 
-        for (let index = 0; index < leftCheckBoxElementList.length; index++) {
-            const checkBoxElement = leftCheckBoxElementList[index];
-            const checkMarkElement = checkBoxElement.children[0];
-            const checkMarkCircle = checkBoxElement.parentElement.children[0];
-            const checkBoxObject = modalMain.checkBoxList.leftCheckBoxList[index];
+        checkBoxList.initializeCheckboxList(checkBoxLeftObjectList);
+        checkBoxList.initializeCheckboxList(checkBoxRightObjectList);
+    },
 
-            // console.log(checkBoxElement)
-            //! Error when selecting the check box. It not animate some times
-            checkBoxElement.addEventListener(("click"), () => {
-                this.checkBoxList.animateCheckBoxAndCheckMarkCircle(checkBoxElement, checkMarkCircle);
+    initializeButtons() {
+        let backButton = this.buttons.backButton;
+        let startButton = this.buttons.startButton;
 
-                if (checkBoxList.canAnimate(checkBoxLeftObjectList, index) === true) {
+        backButton.addEventListener("click", async () => {
+            await this.buttons.animate(backButton);
+            this.hide();
+        })
 
-                    if (checkBoxObject.isChecked === true) {
-                        checkBoxObject.isChecked = false;
-                        this.checkBoxList.hideCheckBoxAndCheckMark(leftCheckBoxElementList[index], checkMarkElement)
-                    } else {
-                        checkBoxObject.isChecked = true;
-                        this.checkBoxList.showCheckBoxAndCheckMark(leftCheckBoxElementList[index], checkMarkElement)
+        startButton.addEventListener("click", async () => {
+            await this.buttons.animate(startButton);
+
+
+            let checkBoxHiragana = modalMain.leftCheckBoxList[0];
+            let checkBoxKatakana = modalMain.leftCheckBoxList[1];
+
+            let checkboxBasic = modalMain.rightCheckBoxList[0];
+            let checkboxVoiced = modalMain.rightCheckBoxList[1];
+            let checkboxCombo1 = modalMain.rightCheckBoxList[2];
+            let checkboxCombo2 = modalMain.rightCheckBoxList[3];
+
+            if (checkBoxHiragana.isChecked === true) {  // If checkbox hiragana is checked...
+                if (checkboxBasic.IsChecked === true) {
+                    if (checkboxBasic.dataset.edited === "false") {
+                        hiraganaBasicCheckboxCheckedList = [...kana.basic].map((kana) => wanakana.toHiragana(kana));
                     }
-
-                } else {
-                    setTimeout(() => {
-                        alert("At least one option must be selected!");
-                    }, 300);
                 }
-            })
 
+                if (checkboxVoiced.isChecked === true) {
+                    if (checkboxVoiced.dataset.edited === "false") {
+                        hiraganaVoicedCheckboxCheckedList = [...kana.voiced].map((kana) => wanakana.toHiragana(kana));
+                    }
+                }
+
+                if (checkboxCombo1.isChecked === true) {
+                    if (checkboxCombo1.dataset.edited === "false") {
+                        hiraganaCombo1CheckboxCheckedList = [...kana.combo1].map((kana) => wanakana.toHiragana(kana));
+                    }
+                }
+
+                if (checkboxCombo2.isChecked === true) {
+                    if (checkboxCombo2.dataset.edited === "false") {
+                        hiraganaCombo2CheckboxCheckedList = [...kana.combo2].map((kana) => wanakana.toHiragana(kana));
+                    }
+                }
+
+
+            }
+            if (checkBoxKatakana.IsChecked === true) { // If checkbox hiragana is not checked...
+                if (checkboxBasic.IsChecked === true) {
+                    if (checkboxBasic.dataset.edited === "false") {
+                        katakanaBasicCheckboxCheckedList = [...kana.basic].map((kana) => wanakana.toKatakana(kana));
+                    }
+                }
+
+                if (checkboxVoiced.IsChecked === true) {
+                    if (checkboxVoiced.dataset.edited === "false") {
+                        katakanaVoicedCheckboxCheckedList = [...kana.voiced].map((kana) => wanakana.toKatakana(kana));
+                    }
+                }
+
+                if (checkboxCombo1.IsChecked === true) {
+                    if (checkboxCombo1.dataset.edited === "false") {
+                        katakanaCombo1CheckboxCheckedList = [...kana.combo1].map((kana) => wanakana.toKatakana(kana));
+                    }
+                }
+
+                if (checkboxCombo2.IsChecked === true) {
+                    if (checkboxCombo2.dataset.edited === "false") {
+                        katakanaCombo2CheckboxCheckedList = [...kana.combo2].map((kana) => wanakana.toKatakana(kana));
+                    }
+                }
+            }
+
+            let cardsForFlashCards = [
+                [...hiraganaBasicCheckboxCheckedList],
+                [...hiraganaVoicedCheckboxCheckedList],
+                [...hiraganaCombo1CheckboxCheckedList],
+                [...hiraganaCombo2CheckboxCheckedList],
+                [...katakanaBasicCheckboxCheckedList],
+                [...katakanaVoicedCheckboxCheckedList],
+                [...katakanaCombo1CheckboxCheckedList],
+                [...katakanaCombo2CheckboxCheckedList]]
+
+            this.hide();
+            menuScreen.hide();
+            flashCardScreen.show(cardsForFlashCards);
+        })
+    },
+
+    checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index) {
+        checkBoxObject.animateCheckBoxAndCheckMarkCircle();
+
+        if (checkBoxList.canAnimate(checkBoxObjectList, index) === true) {
+
+            if (checkBoxObject.isChecked === true) {
+                checkBoxObject.isChecked = false;
+                checkBoxObject.hideCheckBoxAndCheckMark();
+                checkBoxObject.hideEditIcon();
+            } else {
+                checkBoxObject.isChecked = true;
+                checkBoxObject.showCheckBoxAndCheckMark();
+                checkBoxObject.showEditIcon();
+            }
+
+        } else {
+            setTimeout(() => {
+                alert("At least one option must be selected!");
+            }, 300);
         }
     },
+
+    async editIconClickEventListener(checkBoxObject) {
+        await checkBoxObject.animateEditIcon();
+        let title = checkBoxObject.name;
+        modalCustom.show(title, checkBoxObject);
+    }
 }
