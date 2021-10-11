@@ -1,6 +1,8 @@
-let modalCustom = {
+let modalCustomInterface = {
     htmlElement: document.querySelector(".modal-custom"),
     topText: document.querySelector(".modal-custom .modal-top h4"),
+    checkBoxElementList: undefined,
+    checkBoxObjectList: [],
     content: document.querySelector(".modal-custom .modal-content"),
 
     buttons: {
@@ -61,8 +63,8 @@ let modalCustom = {
         let showHiragana = false;
         let showKatakana = false;
 
-        let checkBoxHiragana = modalMain.leftCheckBoxList[0];
-        let checkBoxKatakana = modalMain.leftCheckBoxList[1];
+        let checkBoxHiragana = modalMainInterface.leftCheckBoxObjectList[0]
+        let checkBoxKatakana = modalMainInterface.leftCheckBoxObjectList[1];
 
         if (checkBoxHiragana.isChecked === true) {
             showHiragana = true;
@@ -71,7 +73,6 @@ let modalCustom = {
         if (checkBoxKatakana.isChecked === true) {
             showKatakana = true;
         }
-
 
         if (showHiragana === true) {
             this.insertFamilies(group, "hiragana");
@@ -95,8 +96,7 @@ let modalCustom = {
 
         finishButton.addEventListener("click", async () => {
             await this.buttons.animate(finishButton);
-            checkBoxObject.wasEdited = true;
-            console.log(checkBoxObject);
+            checkBoxObject.isEdited = true;
             this.hide();
         })
     },
@@ -143,6 +143,10 @@ let modalCustom = {
             familyElement.appendChild(familyContentElement);
             checkBoxElement.appendChild(checkMarkElement);
         }
-        modalCustomCheckBoxList = document.querySelectorAll(".modal-custom .checkbox");
+        this.checkBoxElementList = document.querySelectorAll(".modal-custom .checkbox");
+        
+        // Build objects for the checkboxes
+        this.checkBoxObjectList = checkBoxList.built(this.checkBoxElementList, false, alphabet);
+        checkBoxList.initializeCheckboxList(this. checkBoxObjectList);
     },
 }

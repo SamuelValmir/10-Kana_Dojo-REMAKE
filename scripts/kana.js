@@ -9,7 +9,7 @@ let kana = {
     combo1: [],
     combo2: [],
 
-    build() {
+    initialize() {
         for (let i = 0; i < Object.entries(kana.groups).length; i++) {
             let kanaTypes = Object.entries(kana.groups);
 
@@ -19,25 +19,50 @@ let kana = {
                 const family = kanaType[index];
                 family.forEach((kana) => {
 
-                    if (i === 0) {
-                        this.basicFamilies = kanaTypes[i][1];
-                        this.basic.push(kana);
+                    switch (i) {
+                        case 0:
+                            this.basicFamilies = kanaTypes[i][1];
+                            this.basic.push(kana);
+                            break;
+                        case 1:
+                            this.voicedFamilies = kanaTypes[i][1];
+                            this.voiced.push(kana);
+                            break;
 
-                    } else if (i === 1) {
-                        this.voicedFamilies = kanaTypes[i][1];
-                        this.voiced.push(kana);
+                        case 2:
+                            this.combo1Families = kanaTypes[i][1];
+                            this.combo1.push(kana);
+                            break;
 
-                    } else if (i === 2) {
-                        this.combo1Families = kanaTypes[i][1];
-                        this.combo1.push(kana);
+                        case 3:
+                            this.combo2Families = kanaTypes[i][1];
+                            this.combo2.push(kana);
+                            break;
 
-                    } else if (i === 3) {
-                        this.combo2Families = kanaTypes[i][1];
-                        this.combo2.push(kana);
+                        default:
+                            break;
                     }
                 })
             }
         }
+    },
+
+    onlyRomajiOf(group) {
+        let result = [];
+        group.map((kana) => result.push(kana));
+        return result;
+    },
+
+    toHiragana(list) {
+        let result = [];
+        list.forEach(kana => { result.push(wanakana.toHiragana(kana)) });
+        return result;
+    },
+
+    toKatakana(list) {
+        let result = [];
+        list.forEach(kana => { result.push(wanakana.toKatakana(kana)) });
+        return result;
     }
 }
 
@@ -47,6 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             kana.groups = data;
-            kana.build();
+            kana.initialize();
         })
 })

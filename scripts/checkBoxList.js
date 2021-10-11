@@ -13,11 +13,16 @@ let checkBoxList = {
 
     setCheckedAmount(list) {
         let checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
-        // console.log(checkBoxCheckedList.length)
         this.checkedAmount = checkBoxCheckedList.length;
     },
+    
+    getAllChecked(list){
+        let checkBoxCheckedList = [];
+        checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
+        return checkBoxCheckedList;
+    },
 
-    built(elementList, hasEditIcon = false) {
+    built(elementList, hasEditIcon = false, alphabet = undefined) {
         // Return an object list of check box that its first element is checked by default
         const objectList = [];
         for (let index = 0; index < elementList.length; index++) {
@@ -38,6 +43,11 @@ let checkBoxList = {
                 checkBoxObject.editIcon = checkBoxElement.parentElement.parentElement.children[1];
                 checkBoxObject.hasEditIcon = true;
             }
+
+            if (alphabet !== undefined){
+                checkBoxObject.alphabet = alphabet;
+            }
+
             objectList.push(checkBoxObject);
         }
         return objectList;

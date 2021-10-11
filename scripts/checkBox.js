@@ -1,13 +1,14 @@
 
 class CheckBox {
     isChecked = false;
-    wasEdited = false;
+    isEdited = false;
     name;
     htmlElement;
     checkMark;
     checkMarkCircle;
     hasEditIcon = false;
     editIcon;
+    alphabet;
     animateCheckBoxAndCheckMarkCircle() {
         this.htmlElement.animate([
             { transform: "scale(0.8)" }

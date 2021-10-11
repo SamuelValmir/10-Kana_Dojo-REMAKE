@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     menuScreen.show();
     referenceScreen.hide();
     modalMainInterface.hide();
-    modalCustom.hide();
+    modalCustomInterface.hide();
     flashCardScreen.hide();
     // document.querySelector(".quiz-screen").style.display = "none";
     // document.querySelector(".memory-game").style.display = "grid";
