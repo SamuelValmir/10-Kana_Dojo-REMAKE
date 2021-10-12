@@ -125,19 +125,19 @@ let referenceScreenInterface = {
         // When hiragana option is clicked
         hiraganaOption.htmlElement.addEventListener("click", () => {
             hiraganaOption.animate();
-            referenceScreen.drawCards(HIRAGANA);
+            referenceScreenInterface.drawCards(HIRAGANA);
         })
         
         // When katakana option is clicked
         katakanaOption.htmlElement.addEventListener("click", () => {
             katakanaOption.animate();
-            referenceScreen.drawCards(KATAKANA);
+            referenceScreenInterface.drawCards(KATAKANA);
         })
 
         // When return button is clicked
-        referenceScreen.returnButton.htmlElement.addEventListener("click", () => {
-            referenceScreen.hide();
-            menuScreen.show();
+        referenceScreenInterface.returnButton.htmlElement.addEventListener("click", () => {
+            referenceScreenInterface.hide();
+            menuScreenInterface.show();
         })
 
         this.setProgressBarTop();
@@ -149,17 +149,17 @@ let referenceScreenInterface = {
 
         // hiraganaOption.htmlElement.removeEventListener("click", () => {
         //     hiraganaOption.animate();
-        //     referenceScreen.drawCards(HIRAGANA);
+        //     referenceScreenInterface.drawCards(HIRAGANA);
         // })
 
         // katakanaOption.htmlElement.removeEventListener("click", () => {
         //     katakanaOption.animate();
-        //     referenceScreen.drawCards(KATAKANA);
+        //     referenceScreenInterface.drawCards(KATAKANA);
         // })
 
-        // referenceScreen.returnButton.htmlElement.removeEventListener("click", () => {
-        //     referenceScreen.hide();
-        //     menuScreen.show();
+        // referenceScreenInterface.returnButton.htmlElement.removeEventListener("click", () => {
+        //     referenceScreenInterface.hide();
+        //     menuScreenInterface.show();
         // })
 
     }
@@ -167,7 +167,7 @@ let referenceScreenInterface = {
 
 // It fills the 3 scrolls bar as long as the screen is scrolled
 window.onscroll = () => {
-    if (referenceScreen.isShowing) {
+    if (referenceScreenInterface.isShowing) {
 
         let winScroll = document.documentElement.scrollTop;
         let voicedTop = document.querySelector("#voiced").offsetTop;
@@ -220,12 +220,12 @@ window.onscroll = () => {
 
 function pinOnTop() {
     // If the top of the screen overflow the progress bars'top
-    if (window.pageYOffset >= referenceScreen.progressBarTop) {
-        referenceScreen.progressBar.classList.add("pinOnTop");
+    if (window.pageYOffset >= referenceScreenInterface.progressBarTop) {
+        referenceScreenInterface.progressBar.classList.add("pinOnTop");
         let progressContainerHeight = document.querySelector(".reference-screen-progress-container").offsetHeight;
         document.body.style.marginTop = progressContainerHeight + "px";
     } else {
-        referenceScreen.progressBar.classList.remove("pinOnTop");
+        referenceScreenInterface.progressBar.classList.remove("pinOnTop");
         document.body.style.marginTop = "0";
     }
 }

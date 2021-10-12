@@ -1,6 +1,8 @@
 let modalCustomInterface = {
     htmlElement: document.querySelector(".modal-custom"),
+    firstShow: true,
     topText: document.querySelector(".modal-custom .modal-top h4"),
+    currentlyCheckBox: undefined,
     checkBoxElementList: undefined,
     checkBoxObjectList: [],
     hiraganaCheckBoxObjectList: [],
@@ -27,17 +29,20 @@ let modalCustomInterface = {
         }
     },
 
-    show(title, checkBoxObject) {
+    show(title) {
         this.htmlElement.style.display = "flex";
-        this.initialize(title, checkBoxObject);
+        this.initialize(title);
     },
 
     hide() {
         this.htmlElement.style.display = "none";
     },
 
-    initialize(title, checkBoxObject) {
-        this.initializeButtons(checkBoxObject);
+    initialize(title) {
+        if (this.firstShow === true){
+            this.firstShow = false;
+            this.initializeButtons();
+        }
 
         this.topText.innerHTML = "Custom " + title;
         this.content.innerHTML = "";
@@ -88,7 +93,7 @@ let modalCustomInterface = {
         this.checkBoxObjectList = checkBoxList.built(this.checkBoxElementList, false, undefined, families);
     },
 
-    initializeButtons(checkBoxObject) {
+    initializeButtons() {
         let cancelButton = this.buttons.cancelButton;
         let finishButton = this.buttons.finishButton;
 
@@ -99,7 +104,9 @@ let modalCustomInterface = {
 
         finishButton.addEventListener("click", async () => {
             await this.buttons.animate(finishButton);
+            let checkBoxObject = this.currentlyCheckBox;
             checkBoxObject.isEdited = true;
+            console.log(checkBoxObject)
 
             switch (checkBoxObject.name) {
                 case "Basic":

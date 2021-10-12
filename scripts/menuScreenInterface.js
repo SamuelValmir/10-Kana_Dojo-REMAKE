@@ -1,13 +1,15 @@
 "use strict";
 let menuScreenInterface = {
     htmlElement: document.querySelector(".menu-screen"),
+    firstShow: true,
     navOptions: {
         // htmlElement: navOptions = document.querySelector(".menu-screen-nav").children,
         learnOption: {
             htmlElement: document.querySelector(".learn-option"),
             isSelected: true,
             animate() {
-                let playOption = menuScreen.navOptions.playOption;
+                console.log(123)
+                let playOption = menuScreenInterface.navOptions.playOption;
                 if (playOption.isSelected === true && this.isSelected === false) {
                     console.log(1)
                     this.isSelected = true;
@@ -27,7 +29,7 @@ let menuScreenInterface = {
             isSelected: false,
             animate() {
                 console.log(2)
-                let learnOption = menuScreen.navOptions.learnOption;
+                let learnOption = menuScreenInterface.navOptions.learnOption;
                 if (learnOption.isSelected === true && this.isSelected === false) {
                     this.isSelected = true;
                     learnOption.isSelected = false;
@@ -60,7 +62,6 @@ let menuScreenInterface = {
 
     hide() {
         this.htmlElement.style.display = "none";
-        this.reset();
     },
 
     initialize() {
@@ -78,53 +79,24 @@ let menuScreenInterface = {
         learnOption.htmlElement.classList.remove("highlight");
         playOption.htmlElement.classList.remove("highlight");
 
+        if (this.firstShow === true) {
+            this.firstShow = false;
+            learnOption.htmlElement.addEventListener("click", () => this.navOptions.learnOption.animate())
+            playOption.htmlElement.addEventListener("click", () => this.navOptions.playOption.animate())
 
-        learnOption.htmlElement.addEventListener("click", () => {
-            learnOption.animate();
-        })
-        playOption.htmlElement.addEventListener("click", () => {
-            playOption.animate();
-        })
-
-
-        // ----- Set study sections -----
-        let referenceSection = this.studySections.referenceSection;
-        let flashCardSection = this.studySections.flashCardSection;
+            // ----- Set study sections -----
+            let referenceSection = this.studySections.referenceSection;
+            let flashCardSection = this.studySections.flashCardSection;
 
 
-        referenceSection.htmlElement.addEventListener("click", () =>{
-            menuScreen.hide();
-            referenceScreen.show();
-        })
-                    
-        flashCardSection.htmlElement.addEventListener("click", () =>{
-            modalMainInterface.show();
-        })
-    },
+            referenceSection.htmlElement.addEventListener("click", () => {
+                menuScreenInterface.hide();
+                referenceScreenInterface.show();
+            })
 
-    reset() {
-        let learnOption = this.navOptions.learnOption;
-        let playOption = this.navOptions.playOption;
-
-        learnOption.htmlElement.removeEventListener("click", () => {
-            learnOption.animate();
-        })
-
-        playOption.htmlElement.removeEventListener("click", () => {
-            playOption.animate();
-        })
-
-        let referenceSection = this.studySections.referenceSection;
-        let flashCardSection = this.studySections.flashCardSection;
-
-
-        referenceSection.htmlElement.removeEventListener("click", () =>{
-            menuScreen.hide();
-            referenceScreen.show();
-        })
-                    
-        flashCardSection.htmlElement.removeEventListener("click", () =>{
-            modalMainInterface.show();
-        })
+            flashCardSection.htmlElement.addEventListener("click", () => {
+                modalMainInterface.show();
+            })
+        }
     }
 }

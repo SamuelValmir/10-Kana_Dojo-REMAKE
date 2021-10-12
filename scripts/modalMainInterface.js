@@ -41,16 +41,7 @@ let modalMainInterface = {
 
     show() {
         this.htmlElement.style.display = "flex";
-        if (this.firstShow === true){
-            this.initialize();
-            this.firstShow = false;
-        } else{
-            checkBoxList.reset(this.leftCheckBoxObjectList);
-            checkBoxList.reset(this.rightCheckBoxObjectList);
-            console.log(12)
-
-            //! Everybody is adding event listener more than one time. I must stop this!
-        }
+        this.initialize();
     },
 
     hide() {
@@ -66,16 +57,20 @@ let modalMainInterface = {
     },
 
     initialize() {
-        this.initializeButtons();
+        if (this.firstShow === true) {
+            this.firstShow = false;
+            this.initializeButtons();
 
-        // Build objects to the left and right checkboxes
-        let leftCheckBoxElementList = this.leftCheckBoxElementList;
-        let rightCheckBoxElementList = this.rightCheckBoxElementList;
+            // Build objects to the left and right checkboxes
+            let leftCheckBoxElementList = this.leftCheckBoxElementList;
+            let rightCheckBoxElementList = this.rightCheckBoxElementList;
 
-        this.leftCheckBoxObjectList = checkBoxList.built(leftCheckBoxElementList);
-        this.rightCheckBoxObjectList = checkBoxList.built(rightCheckBoxElementList, true);
-
-        console.log(this.rightCheckBoxObjectList)
+            this.leftCheckBoxObjectList = checkBoxList.built(leftCheckBoxElementList);
+            this.rightCheckBoxObjectList = checkBoxList.built(rightCheckBoxElementList, true);
+        } else {
+            checkBoxList.reset(this.leftCheckBoxObjectList);
+            checkBoxList.reset(this.rightCheckBoxObjectList);
+        }
     },
 
     initializeButtons() {
@@ -163,8 +158,17 @@ let modalMainInterface = {
                 [...this.katakanaCombo1List],
                 [...this.katakanaCombo2List]];
 
+                console.log(this.hiraganaBasicList)
+                console.log(this.hiraganaVoicedList)
+                console.log(this.hiraganaCombo1List)
+                console.log(this.hiraganaCombo2List)
+                console.log(this.katakanaBasicList)
+                console.log(this.katakanaVoicedList)
+                console.log(this.katakanaCombo1List)
+                console.log(this.katakanaCombo2List)
+                
             cardsForFlashCards = cardsForFlashCards.flat();
-            
+
             this.hide();
             menuScreenInterface.hide();
             flashCardScreenInterface.show(cardsForFlashCards);

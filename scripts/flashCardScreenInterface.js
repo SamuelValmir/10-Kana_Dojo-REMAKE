@@ -1,6 +1,7 @@
 "use strict";
 let flashCardScreenInterface = {
     htmlElement: document.querySelector(".flashCard-screen"),
+    firstShow: true,
     top: {
         htmlElement: document.querySelector(".flashCard-screen .top"),
         returnButton: {
@@ -49,12 +50,15 @@ let flashCardScreenInterface = {
 
         },
 
+        spotsToChangeCounter: [0],
+
         buildCards() {
             let topText = flashCardScreenInterface.top.text;
             topText.setTotal();
             topText.setText();
 
             let items = this.htmlElement;
+            items.innerHTML = "";
 
             this.shuffle();
 
@@ -90,7 +94,7 @@ let flashCardScreenInterface = {
 
             items.addEventListener("scroll", () => {
                 let spaceBetweenCards;
-                let spotsToChangeCounter = [0];
+                let spotsToChangeCounter = flashCardScreenInterface.items.spotsToChangeCounter;
                 let cardWidth;
 
                 // It defines the 'spaceBetweenCards', 'spotsToChangeCounter' and 'cardWidth' variables
@@ -103,15 +107,17 @@ let flashCardScreenInterface = {
                     }
 
                     if (i < this.flashCardList.length - 1) {
-                        let cardOffsetRight = card.offsetLeft + card.offsetWidth;
-                        spotsToChangeCounter.push(cardOffsetRight);
+                        if (spotsToChangeCounter.length < this.cards.length) {
+                            let cardOffsetRight = card.offsetLeft + card.offsetWidth;
+                            spotsToChangeCounter.push(cardOffsetRight);
+                        }
                     }
                 }
 
                 // It changes the text of the index in the top of the screen according to position of the items's scroll 
                 spotsToChangeCounter.forEach((spot) => {
                     if (items.scrollLeft >= spot - (cardWidth / 2) && items.scrollLeft <= spot + (cardWidth / 2)) {
-                        let indexOfCurrent = spotsToChangeCounter.findIndex((element) => element === spot) + 1;
+                        let indexOfCurrent = spotsToChangeCounter.findIndex((spotElement) => spotElement === spot) + 1;
                         topText.current = indexOfCurrent;
                     }
                     topText.setText();
@@ -146,14 +152,15 @@ let flashCardScreenInterface = {
 
     show(flashCards) {
         this.htmlElement.style.display = "grid";
-        console.log(flashCards)
         this.initialize(flashCards);
     },
 
     hide() {
         this.htmlElement.style.display = "none";
         this.items.cards = [];
-        this.items.htmlElement.scrollIntoView();
+        this.items.spotsToChangeCounter = [0];
+        this.items.flashCardList = [];
+        //! I must make the items scroll to begin 
     },
 
     initialize(flashCards) {

@@ -62,6 +62,7 @@ let checkBoxList = {
                 checkBoxObject.hideCheckBoxAndCheckMark();
                 checkBoxObject.hideEditIcon();
             }
+            checkBoxObject.isEdited = false;
         }
     },
 
@@ -113,7 +114,6 @@ let checkBoxList = {
     initializeCheckboxList(checkBoxObjectList) {
         for (let index = 0; index < checkBoxObjectList.length; index++) {
             const checkBoxObject = checkBoxObjectList[index];
-
             const checkBoxElement = checkBoxObject.htmlElement;
 
             // It checks the first checkbox as default
@@ -130,7 +130,7 @@ let checkBoxList = {
             // It adds click event in checkbox's edit icon
             if (checkBoxObject.hasEditIcon === true) {
                 checkBoxObject.editIcon.addEventListener("click", () => {
-                    this.editIconClickEventListener(checkBoxObject, checkBoxObjectList, index);
+                    this.editIconClickEventListener(checkBoxObject);
                 })
             }
         }
@@ -161,6 +161,8 @@ let checkBoxList = {
     async editIconClickEventListener(checkBoxObject) {
         await checkBoxObject.animateEditIcon();
         let title = checkBoxObject.name;
-        modalCustomInterface.show(title, checkBoxObject);
+        console.log(checkBoxObject)
+        modalCustomInterface.currentlyCheckBox = checkBoxObject;
+        modalCustomInterface.show(title);
     }
 }
