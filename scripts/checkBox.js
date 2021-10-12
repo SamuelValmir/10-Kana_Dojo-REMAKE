@@ -9,6 +9,7 @@ class CheckBox {
     hasEditIcon = false;
     editIcon;
     alphabet;
+    family;
     animateCheckBoxAndCheckMarkCircle() {
         this.htmlElement.animate([
             { transform: "scale(0.8)" }

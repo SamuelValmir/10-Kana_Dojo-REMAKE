@@ -15,16 +15,59 @@ let checkBoxList = {
         let checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
         this.checkedAmount = checkBoxCheckedList.length;
     },
-    
-    getAllChecked(list){
+
+    parseFamilyOfCheckedToHiragana(checkBoxObjectList) {
+        let result = [];
+        let checkBoxCheckedList = this.getAllChecked(checkBoxObjectList);
+        checkBoxCheckedList.forEach((checkBoxObject) => {
+            if (checkBoxObject.alphabet === "hiragana") {
+                checkBoxObject.family.forEach(element => {
+                    result.push(wanakana.toHiragana(element));
+                });
+            }
+        })
+        return result;
+    },
+
+    parseFamilyOfCheckedToKatakana(checkBoxObjectList) {
+        let result = [];
+        let checkBoxCheckedList = this.getAllChecked(checkBoxObjectList);
+        checkBoxCheckedList.forEach((checkBoxObject) => {
+            if (checkBoxObject.alphabet === "katakana") {
+                checkBoxObject.family.forEach(element => {
+                    result.push(wanakana.toKatakana(element));
+                });
+            }
+        })
+        return result;
+    },
+
+    getAllChecked(list) {
         let checkBoxCheckedList = [];
         checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
         return checkBoxCheckedList;
     },
 
-    built(elementList, hasEditIcon = false, alphabet = undefined) {
+    reset(checkBoxObjectList) {
         // Return an object list of check box that its first element is checked by default
-        const objectList = [];
+        for (let index = 0; index < checkBoxObjectList.length; index++) {
+            const checkBoxObject = checkBoxObjectList[index];
+
+            if (index === 0) {
+                checkBoxObject.isChecked = true;
+                checkBoxObject.showCheckBoxAndCheckMark();
+                checkBoxObject.showEditIcon();
+            } else {
+                checkBoxObject.isChecked = false;
+                checkBoxObject.hideCheckBoxAndCheckMark();
+                checkBoxObject.hideEditIcon();
+            }
+        }
+    },
+
+    built(elementList, hasEditIcon = false, alphabet = undefined, families = undefined) {
+        // Return an object list of check box that its first element is checked by default
+        const checkBoxObjectList = [];
         for (let index = 0; index < elementList.length; index++) {
             const checkBoxElement = elementList[index];
             const checkBoxObject = new CheckBox();
@@ -34,6 +77,7 @@ let checkBoxList = {
             } else {
                 checkBoxObject.isChecked = false;
             }
+
             checkBoxObject.name = checkBoxElement.getAttribute("name");
             checkBoxObject.htmlElement = checkBoxElement;
             checkBoxObject.checkMark = checkBoxElement.children[0];
@@ -44,13 +88,25 @@ let checkBoxList = {
                 checkBoxObject.hasEditIcon = true;
             }
 
-            if (alphabet !== undefined){
+            if (alphabet !== undefined) {
                 checkBoxObject.alphabet = alphabet;
             }
 
-            objectList.push(checkBoxObject);
+            if (families !== undefined) {
+                checkBoxObject.family = families[index];
+                if (index < (elementList.length / 2)) {
+                    checkBoxObject.alphabet = "hiragana";
+                } else {
+                    checkBoxObject.alphabet = "katakana"
+                }
+            }
+
+            checkBoxObjectList.push(checkBoxObject);
         }
-        return objectList;
+
+        this.initializeCheckboxList(checkBoxObjectList);
+
+        return checkBoxObjectList;
     },
 
     // It checks the first checkbox and inserts the click event in everyone 
@@ -68,15 +124,43 @@ let checkBoxList = {
 
             // It adds click event in checkbox
             checkBoxElement.addEventListener(("click"), () => {
-                modalMainInterface.checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index);
+                this.checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index);
             })
 
             // It adds click event in checkbox's edit icon
             if (checkBoxObject.hasEditIcon === true) {
                 checkBoxObject.editIcon.addEventListener("click", () => {
-                    modalMainInterface.editIconClickEventListener(checkBoxObject, checkBoxObjectList, index);
+                    this.editIconClickEventListener(checkBoxObject, checkBoxObjectList, index);
                 })
             }
         }
     },
+
+    checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index) {
+        checkBoxObject.animateCheckBoxAndCheckMarkCircle();
+
+        if (checkBoxList.canAnimate(checkBoxObjectList, index) === true) {
+
+            if (checkBoxObject.isChecked === true) {
+                checkBoxObject.isChecked = false;
+                checkBoxObject.hideCheckBoxAndCheckMark();
+                checkBoxObject.hideEditIcon();
+            } else {
+                checkBoxObject.isChecked = true;
+                checkBoxObject.showCheckBoxAndCheckMark();
+                checkBoxObject.showEditIcon();
+            }
+
+        } else {
+            setTimeout(() => {
+                alert("At least one option must be selected!");
+            }, 300);
+        }
+    },
+
+    async editIconClickEventListener(checkBoxObject) {
+        await checkBoxObject.animateEditIcon();
+        let title = checkBoxObject.name;
+        modalCustomInterface.show(title, checkBoxObject);
+    }
 }

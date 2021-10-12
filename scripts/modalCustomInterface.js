@@ -3,6 +3,8 @@ let modalCustomInterface = {
     topText: document.querySelector(".modal-custom .modal-top h4"),
     checkBoxElementList: undefined,
     checkBoxObjectList: [],
+    hiraganaCheckBoxObjectList: [],
+    katakanaCheckBoxObjectList: [],
     content: document.querySelector(".modal-custom .modal-content"),
 
     buttons: {
@@ -74,15 +76,16 @@ let modalCustomInterface = {
             showKatakana = true;
         }
 
+        let families = [];
         if (showHiragana === true) {
-            this.insertFamilies(group, "hiragana");
+            this.insertFamilies(group, "hiragana", families);
         }
 
         if (showKatakana === true) {
-            this.insertFamilies(group, "katakana");
+            this.insertFamilies(group, "katakana", families);
         }
 
-        // insertAnimationInModalCustomCheckbox();
+        this.checkBoxObjectList = checkBoxList.built(this.checkBoxElementList, false, undefined, families);
     },
 
     initializeButtons(checkBoxObject) {
@@ -97,14 +100,39 @@ let modalCustomInterface = {
         finishButton.addEventListener("click", async () => {
             await this.buttons.animate(finishButton);
             checkBoxObject.isEdited = true;
+
+            switch (checkBoxObject.name) {
+                case "Basic":
+                    modalMainInterface.hiraganaBasicList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                    modalMainInterface.katakanaBasicList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                    break;
+                case "Voiced":
+                    modalMainInterface.hiraganaVoicedList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                    modalMainInterface.katakanaVoicedList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+
+                    break;
+                case "Combo 1":
+                    modalMainInterface.hiraganaCombo1List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                    modalMainInterface.katakanaCombo1List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                    break;
+                case "Combo 2":
+                    modalMainInterface.hiraganaCombo2List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                    modalMainInterface.katakanaCombo2List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                    break;
+
+                default:
+                    alert("Error on switch casse of the execute modal button");
+                    break;
+            }
             this.hide();
         })
     },
 
-    insertFamilies(group, alphabet) {
+    insertFamilies(group, alphabet, families) {
         // It makes the content of the Modal Custom
         for (let i = 0; i < Object.values(group).length; i++) {
             const family = Object.values(group)[i];
+            families.push(family);
 
             let familyElement = document.createElement("span");
             familyElement.classList.add("family");
@@ -144,9 +172,5 @@ let modalCustomInterface = {
             checkBoxElement.appendChild(checkMarkElement);
         }
         this.checkBoxElementList = document.querySelectorAll(".modal-custom .checkbox");
-        
-        // Build objects for the checkboxes
-        this.checkBoxObjectList = checkBoxList.built(this.checkBoxElementList, false, alphabet);
-        checkBoxList.initializeCheckboxList(this. checkBoxObjectList);
     },
 }

@@ -13,11 +13,11 @@ let progressBarTop;
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    menuScreen.show();
-    referenceScreen.hide();
+    menuScreenInterface.show();
+    referenceScreenInterface.hide();
     modalMainInterface.hide();
     modalCustomInterface.hide();
-    flashCardScreen.hide();
+    flashCardScreenInterface.hide();
     // document.querySelector(".quiz-screen").style.display = "none";
     // document.querySelector(".memory-game").style.display = "grid";
 })

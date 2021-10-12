@@ -1,133 +1,130 @@
-// "use strict";
+"use strict";
+let menuScreenInterface = {
+    htmlElement: document.querySelector(".menu-screen"),
+    navOptions: {
+        // htmlElement: navOptions = document.querySelector(".menu-screen-nav").children,
+        learnOption: {
+            htmlElement: document.querySelector(".learn-option"),
+            isSelected: true,
+            animate() {
+                let playOption = menuScreen.navOptions.playOption;
+                if (playOption.isSelected === true && this.isSelected === false) {
+                    console.log(1)
+                    this.isSelected = true;
+                    playOption.isSelected = false;
 
-// let modalCustomm;
+                    this.htmlElement.classList.add("highlight");
+                    playOption.htmlElement.classList.remove("highlight");
 
-// let checkBoxListt;
-// let checkBoxLeftList;
-// let checkBoxRightList;
+                    this.htmlElement.style.borderBottom = "5px solid white";
+                    playOption.htmlElement.style.borderBottom = "none";
+                }
+            }
 
-// let checkBoxHiragana
-// let checkBoxKatakana
+        },
+        playOption: {
+            htmlElement: document.querySelector(".play-option"),
+            isSelected: false,
+            animate() {
+                console.log(2)
+                let learnOption = menuScreen.navOptions.learnOption;
+                if (learnOption.isSelected === true && this.isSelected === false) {
+                    this.isSelected = true;
+                    learnOption.isSelected = false;
 
-// let checkboxBasic
-// let checkboxVoiced
-// let checkboxCombo1
-// let checkboxCombo2
+                    this.htmlElement.classList.add("highlight");
+                    learnOption.htmlElement.classList.remove("highlight");
 
-// let hiraganaBasicCheckboxCheckedList = [];
-// let hiraganaVoicedCheckboxCheckedList = [];
-// let hiraganaCombo1CheckboxCheckedList = [];
-// let hiraganaCombo2CheckboxCheckedList = [];
+                    this.htmlElement.style.borderBottom = "5px solid white";
+                    learnOption.htmlElement.style.borderBottom = "none";
+                }
+            }
+        }
+    },
 
-// let katakanaBasicCheckboxCheckedList = [];
-// let katakanaVoicedCheckboxCheckedList = [];
-// let katakanaCombo1CheckboxCheckedList = [];
-// let katakanaCombo2CheckboxCheckedList = [];
+    studySections: {
+        htmlElement: document.querySelectorAll(".menu-screen .container .study-section"),
+        referenceSection: {
+            htmlElement: document.querySelector(".study-section-reference")
+        },
+        flashCardSection: {
+            htmlElement: document.querySelector(".study-section-flash-card")
+        }
+    },
 
-// let modalCustommCheckBoxList = [];
 
-// let currentEditIcon;
+    show() {
+        this.htmlElement.style.display = "block";
+        this.initialize();
+    },
 
-// let executeModalButton = (modalButton) => {
+    hide() {
+        this.htmlElement.style.display = "none";
+        this.reset();
+    },
 
-//     function filter(callback, alphabet, type) {
-//         let filteredCheckBoxList = [];
-//         let result = [];
+    initialize() {
 
-//         // It adds in filteredCheckBoxList all the families of the alphabet that are checked in the checkbox 
-//         for (let checkBox of this) {
-//             if (callback(checkBox)) {
-//                 if (checkBox.getAttribute("alphabet") === alphabet) {
-//                     for (let i = 0; i < type.length; i++) {
-//                         if (type[i][0] === checkBox.getAttribute("family")) {
-//                             filteredCheckBoxList.push(type[i][1]);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
+        // ----- Set the options of the learn option ----- 
+        let learnOption = this.navOptions.learnOption;
+        let playOption = this.navOptions.playOption;
 
-//         // It adds in result array all element of the families that are in filteredCheckBoxList 
-//         if (filteredCheckBoxList.length > 0) {
-//             for (let i1 = 0; i1 < filteredCheckBoxList.length; i1++) {
-//                 let family = filteredCheckBoxList[i1];
-//                 for (let i2 = 0; i2 < family.length; i2++) {
-//                     let kana = family[i2];
+        learnOption.isSelected = true;
+        playOption.isSelected = false;
 
-//                     if (alphabet === "hiragana") {
-//                         kana = wanakana.toHiragana(kana)
+        learnOption.htmlElement.style.borderBottom = "5px solid white";
+        playOption.htmlElement.style.borderBottom = "none";
 
-//                     } else if (alphabet === "katakana") {
-//                         kana = wanakana.toKatakana(kana);
-//                     }
+        learnOption.htmlElement.classList.remove("highlight");
+        playOption.htmlElement.classList.remove("highlight");
 
-//                     result.push(kana);
-//                 }
 
-//             }
+        learnOption.htmlElement.addEventListener("click", () => {
+            learnOption.animate();
+        })
+        playOption.htmlElement.addEventListener("click", () => {
+            playOption.animate();
+        })
 
-//         }
-//         return result;
-//     }
 
-//     if (modalCustommCheckBoxList !== []) {
-//         modalCustommCheckBoxList.filter = filter;
-//     }
+        // ----- Set study sections -----
+        let referenceSection = this.studySections.referenceSection;
+        let flashCardSection = this.studySections.flashCardSection;
 
-//     if (modalButton.classList.contains("modal-main-button-start")) {
 
-//         cardsForFlashCards = cardsForFlashCards.flat();
+        referenceSection.htmlElement.addEventListener("click", () =>{
+            menuScreen.hide();
+            referenceScreen.show();
+        })
+                    
+        flashCardSection.htmlElement.addEventListener("click", () =>{
+            modalMainInterface.show();
+        })
+    },
 
-//         // Initialize the flashCardScreen
-//         // I must make the flashCardScreen do this 
-//         flashCardScreen.items.cards = cardsForFlashCards;
-//         flashCardScreen.setItemsEventListener();
-//         flashCardScreen.items.buildCards();
-//         document.querySelector(".menu-screen").style.display = "none";
-//         flashCardScreen.show();
+    reset() {
+        let learnOption = this.navOptions.learnOption;
+        let playOption = this.navOptions.playOption;
 
-//     } else if (modalButton.classList.contains("modal-custom-button-cancel")) {
-//         modalCustomm.style.display = "none";
+        learnOption.htmlElement.removeEventListener("click", () => {
+            learnOption.animate();
+        })
 
-//     } else if (modalButton.classList.contains("modal-custom-button-finish")) {
-//         modalCustomm.style.display = "none";
+        playOption.htmlElement.removeEventListener("click", () => {
+            playOption.animate();
+        })
 
-//         // It changes the dataset-edit of the checkbox of the edit icon that was clicked to show the modal custom
-//         currentEditIcon.parentElement.children[0].children[1].dataset.edited = "true";
+        let referenceSection = this.studySections.referenceSection;
+        let flashCardSection = this.studySections.flashCardSection;
 
-//         switch (currentEditIcon.name) {
-//             case "Basic":
-//                 hiraganaBasicCheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.basicFamilies));
-//                 katakanaBasicCheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.basicFamilies));
-//                 break;
-//             case "Voiced":
-//                 hiraganaVoicedCheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.voicedFamilies));
-//                 katakanaVoicedCheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.voicedFamilies));
-//                 break;
-//             case "Combo 1":
-//                 hiraganaCombo1CheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.combo1Families));
-//                 katakanaCombo1CheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.combo1Families));
-//                 break;
-//             case "Combo 2":
-//                 hiraganaCombo2CheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "hiragana", Object.entries(kana.combo2Families));
-//                 katakanaCombo2CheckboxCheckedList = modalCustommCheckBoxList.filter(isChecked, "katakana", Object.entries(kana.combo2Families));
-//                 break;
 
-//             default:
-//                 alert("Error on switch casse of the execute modal button");
-//                 break;
-//         }
-//     }
-// }
-
-// let isChecked = e => e.dataset.checked === "true";
-
-// function filter(callback) {
-//     let checkedNumber = 0;
-//     this.forEach((e) => {
-//         if (callback(e) === true) {
-//             checkedNumber++;
-//         }
-//     })
-//     return checkedNumber;
-// }
+        referenceSection.htmlElement.removeEventListener("click", () =>{
+            menuScreen.hide();
+            referenceScreen.show();
+        })
+                    
+        flashCardSection.htmlElement.removeEventListener("click", () =>{
+            modalMainInterface.show();
+        })
+    }
+}

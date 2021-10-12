@@ -1,14 +1,14 @@
 "use strict";
-let flashCardScreen = {
+let flashCardScreenInterface = {
     htmlElement: document.querySelector(".flashCard-screen"),
     top: {
         htmlElement: document.querySelector(".flashCard-screen .top"),
-        returnButton:{
+        returnButton: {
             htmlElement: document.querySelector(".flashCard-screen .top .return-icon"),
-            addEventListener(){
-                this.htmlElement.addEventListener("click", ()=>{
-                    menuScreen.show();
-                    flashCardScreen.hide();
+            addEventListener() {
+                this.htmlElement.addEventListener("click", () => {
+                    flashCardScreenInterface.hide();
+                    menuScreenInterface.show();
                 })
             }
         },
@@ -17,7 +17,7 @@ let flashCardScreen = {
             current: 1,
             total: 0,
             setTotal() {
-                this.total = flashCardScreen.items.cards.length;
+                this.total = flashCardScreenInterface.items.cards.length;
             },
             setText() {
                 this.htmlElement.innerHTML = this.current + " / " + this.total;
@@ -49,17 +49,15 @@ let flashCardScreen = {
 
         },
 
-        setCards(cards) {
-            this.cards = cards;
-        },
-
         buildCards() {
-            let topText = flashCardScreen.top.text;
+            let topText = flashCardScreenInterface.top.text;
             topText.setTotal();
             topText.setText();
 
-
             let items = this.htmlElement;
+
+            this.shuffle();
+
             this.cards.forEach(kana => {
                 let card = this.flashCard;
                 let flashCardList = this.flashCardList;
@@ -120,10 +118,22 @@ let flashCardScreen = {
                 })
             })
         },
+
+        shuffle() {
+            let cards = this.cards;
+            let currentIndex = cards.length;
+            let randomIndex = 0;
+
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
+            }
+        }
     },
 
-    setItemsEventListener: function () {
-        let items = this.items.htmlElement
+    setItemsWheelEventListener: function () {
+        let items = this.items.htmlElement;
         items.addEventListener("wheel", event => {
             // If the mouse has been scrolled down...
             if (event.deltaY > 0) {
@@ -134,14 +144,23 @@ let flashCardScreen = {
         })
     },
 
-    show() {
+    show(flashCards) {
         this.htmlElement.style.display = "grid";
+        console.log(flashCards)
+        this.initialize(flashCards);
     },
 
     hide() {
         this.htmlElement.style.display = "none";
+        this.items.cards = [];
+        this.items.htmlElement.scrollIntoView();
+    },
+
+    initialize(flashCards) {
+        flashCardScreenInterface.items.cards = flashCards;
+        flashCardScreenInterface.setItemsWheelEventListener();
+        flashCardScreenInterface.items.buildCards();
     }
 }
 
-flashCardScreen.top.returnButton.addEventListener();
-// console.log(flashCardScreen.flashCard.cards)
+flashCardScreenInterface.top.returnButton.addEventListener();

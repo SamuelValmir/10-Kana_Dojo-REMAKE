@@ -4,8 +4,20 @@ let modalMainInterface = {
     htmlElement: document.querySelector(".modal-main"),
     leftCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-left .checkbox"),
     rightCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-right .checkbox"),
+    firstShow: true,
+
     leftCheckBoxObjectList: [],
     rightCheckBoxObjectList: [],
+
+    hiraganaBasicList: [],
+    hiraganaVoicedList: [],
+    hiraganaCombo1List: [],
+    hiraganaCombo2List: [],
+
+    katakanaBasicList: [],
+    katakanaVoicedList: [],
+    katakanaCombo1List: [],
+    katakanaCombo2List: [],
 
     buttons: {
         backButton: document.querySelector(".modal-main-button-back"),
@@ -29,11 +41,28 @@ let modalMainInterface = {
 
     show() {
         this.htmlElement.style.display = "flex";
-        this.initialize();
+        if (this.firstShow === true){
+            this.initialize();
+            this.firstShow = false;
+        } else{
+            checkBoxList.reset(this.leftCheckBoxObjectList);
+            checkBoxList.reset(this.rightCheckBoxObjectList);
+            console.log(12)
+
+            //! Everybody is adding event listener more than one time. I must stop this!
+        }
     },
 
     hide() {
         this.htmlElement.style.display = "none";
+        this.hiraganaBasicList = [];
+        this.hiraganaVoicedList = [];
+        this.hiraganaCombo1List = [];
+        this.hiraganaCombo2List = [];
+        this.katakanaBasicList = [];
+        this.katakanaVoicedList = [];
+        this.katakanaCombo1List = [];
+        this.katakanaCombo2List = [];
     },
 
     initialize() {
@@ -46,11 +75,7 @@ let modalMainInterface = {
         this.leftCheckBoxObjectList = checkBoxList.built(leftCheckBoxElementList);
         this.rightCheckBoxObjectList = checkBoxList.built(rightCheckBoxElementList, true);
 
-        let checkBoxLeftObjectList = this.leftCheckBoxObjectList;
-        let checkBoxRightObjectList = this.rightCheckBoxObjectList;
-
-        checkBoxList.initializeCheckboxList(checkBoxLeftObjectList);
-        checkBoxList.initializeCheckboxList(checkBoxRightObjectList);
+        console.log(this.rightCheckBoxObjectList)
     },
 
     initializeButtons() {
@@ -73,16 +98,6 @@ let modalMainInterface = {
             let checkboxCombo1 = this.rightCheckBoxObjectList[2];
             let checkboxCombo2 = this.rightCheckBoxObjectList[3];
 
-            let hiraganaBasicCheckboxCheckedList = [];
-            let hiraganaVoicedCheckboxCheckedList = [];
-            let hiraganaCombo1CheckboxCheckedList = [];
-            let hiraganaCombo2CheckboxCheckedList = [];
-
-            let katakanaBasicCheckboxCheckedList = [];
-            let katakanaVoicedCheckboxCheckedList = [];
-            let katakanaCombo1CheckboxCheckedList = [];
-            let katakanaCombo2CheckboxCheckedList = [];
-
             let onlyRomaji;
 
             if (checkboxBasic.isChecked === true) {
@@ -90,10 +105,10 @@ let modalMainInterface = {
                     onlyRomaji = kana.onlyRomajiOf([...kana.basic]);
 
                     if (checkBoxHiragana.isChecked === true) {
-                        hiraganaBasicCheckboxCheckedList = kana.toHiragana(onlyRomaji);
+                        this.hiraganaBasicList = kana.toHiragana(onlyRomaji);
                     }
                     if (checkBoxKatakana.isChecked === true) {
-                        katakanaBasicCheckboxCheckedList = kana.toKatakana(onlyRomaji);
+                        this.katakanaBasicList = kana.toKatakana(onlyRomaji);
                     }
                 }
             }
@@ -104,10 +119,10 @@ let modalMainInterface = {
                     onlyRomaji = kana.onlyRomajiOf([...kana.voiced]);
 
                     if (checkBoxHiragana.isChecked === true) {
-                        hiraganaVoicedCheckboxCheckedList = kana.toHiragana(onlyRomaji);
+                        this.hiraganaVoicedList = kana.toHiragana(onlyRomaji);
                     }
                     if (checkBoxKatakana.isChecked === true) {
-                        katakanaVoicedCheckboxCheckedList = kana.toKatakana(onlyRomaji);
+                        this.katakanaVoicedList = kana.toKatakana(onlyRomaji);
                     }
                 }
             }
@@ -117,10 +132,10 @@ let modalMainInterface = {
                     onlyRomaji = kana.onlyRomajiOf([...kana.combo1]);
 
                     if (checkBoxHiragana.isChecked === true) {
-                        hiraganaCombo1CheckboxCheckedList = kana.toHiragana(onlyRomaji);
+                        this.hiraganaCombo1List = kana.toHiragana(onlyRomaji);
                     }
                     if (checkBoxKatakana.isChecked === true) {
-                        katakanaCombo1CheckboxCheckedList = kana.toKatakana(onlyRomaji);
+                        this.katakanaCombo1List = kana.toKatakana(onlyRomaji);
                     }
                 }
             }
@@ -130,56 +145,30 @@ let modalMainInterface = {
                     onlyRomaji = kana.onlyRomajiOf([...kana.combo2]);
 
                     if (checkBoxHiragana.isChecked === true) {
-                        hiraganaCombo2CheckboxCheckedList = kana.toHiragana(onlyRomaji);
+                        this.hiraganaCombo2List = kana.toHiragana(onlyRomaji);
                     }
                     if (checkBoxKatakana.isChecked === true) {
-                        katakanaCombo2CheckboxCheckedList = kana.toKatakana(onlyRomaji);
+                        this.katakanaCombo2List = kana.toKatakana(onlyRomaji);
                     }
                 }
             }
 
             let cardsForFlashCards = [
-                [...hiraganaBasicCheckboxCheckedList],
-                [...hiraganaVoicedCheckboxCheckedList],
-                [...hiraganaCombo1CheckboxCheckedList],
-                [...hiraganaCombo2CheckboxCheckedList],
-                [...katakanaBasicCheckboxCheckedList],
-                [...katakanaVoicedCheckboxCheckedList],
-                [...katakanaCombo1CheckboxCheckedList],
-                [...katakanaCombo2CheckboxCheckedList]]
+                [...this.hiraganaBasicList],
+                [...this.hiraganaVoicedList],
+                [...this.hiraganaCombo1List],
+                [...this.hiraganaCombo2List],
+                [...this.katakanaBasicList],
+                [...this.katakanaVoicedList],
+                [...this.katakanaCombo1List],
+                [...this.katakanaCombo2List]];
 
-            // this.hide();
-            // menuScreen.hide();
-            console.log(cardsForFlashCards)
-            // flashCardScreen.show(cardsForFlashCards);
+            cardsForFlashCards = cardsForFlashCards.flat();
+            
+            this.hide();
+            menuScreenInterface.hide();
+            flashCardScreenInterface.show(cardsForFlashCards);
+
         })
     },
-
-    checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index) {
-        checkBoxObject.animateCheckBoxAndCheckMarkCircle();
-
-        if (checkBoxList.canAnimate(checkBoxObjectList, index) === true) {
-
-            if (checkBoxObject.isChecked === true) {
-                checkBoxObject.isChecked = false;
-                checkBoxObject.hideCheckBoxAndCheckMark();
-                checkBoxObject.hideEditIcon();
-            } else {
-                checkBoxObject.isChecked = true;
-                checkBoxObject.showCheckBoxAndCheckMark();
-                checkBoxObject.showEditIcon();
-            }
-
-        } else {
-            setTimeout(() => {
-                alert("At least one option must be selected!");
-            }, 300);
-        }
-    },
-
-    async editIconClickEventListener(checkBoxObject) {
-        await checkBoxObject.animateEditIcon();
-        let title = checkBoxObject.name;
-        modalCustomInterface.show(title, checkBoxObject);
-    }
 }
