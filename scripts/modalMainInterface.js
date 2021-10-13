@@ -157,15 +157,6 @@ let modalMainInterface = {
                 [...this.katakanaVoicedList],
                 [...this.katakanaCombo1List],
                 [...this.katakanaCombo2List]];
-
-                console.log(this.hiraganaBasicList)
-                console.log(this.hiraganaVoicedList)
-                console.log(this.hiraganaCombo1List)
-                console.log(this.hiraganaCombo2List)
-                console.log(this.katakanaBasicList)
-                console.log(this.katakanaVoicedList)
-                console.log(this.katakanaCombo1List)
-                console.log(this.katakanaCombo2List)
                 
             cardsForFlashCards = cardsForFlashCards.flat();
 

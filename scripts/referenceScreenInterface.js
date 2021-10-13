@@ -13,7 +13,6 @@ let referenceScreenInterface = {
 
     navOptions: {
         htmlElement: document.querySelector(".reference-screen-nav").children,
-
         hiraganaOption: {
             htmlElement: document.querySelector(".hiragana-option"),
             isSelected: true,

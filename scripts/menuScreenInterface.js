@@ -3,7 +3,6 @@ let menuScreenInterface = {
     htmlElement: document.querySelector(".menu-screen"),
     firstShow: true,
     navOptions: {
-        // htmlElement: navOptions = document.querySelector(".menu-screen-nav").children,
         learnOption: {
             htmlElement: document.querySelector(".learn-option"),
             isSelected: true,
@@ -89,8 +88,13 @@ let menuScreenInterface = {
 
         if (this.firstShow === true) {
             this.firstShow = false;
-            learnOption.htmlElement.addEventListener("click", () => this.navOptions.learnOption.animate())
-            playOption.htmlElement.addEventListener("click", () => this.navOptions.playOption.animate())
+            learnOption.htmlElement.addEventListener("click", () => {
+                this.navOptions.learnOption.animate();
+
+            })
+            playOption.htmlElement.addEventListener("click", () => {
+                this.navOptions.playOption.animate()
+            })
 
             // ----- Set study sections -----
             let referenceSection = this.studySections.referenceSection;
