@@ -8,10 +8,8 @@ let menuScreenInterface = {
             htmlElement: document.querySelector(".learn-option"),
             isSelected: true,
             animate() {
-                console.log(123)
                 let playOption = menuScreenInterface.navOptions.playOption;
                 if (playOption.isSelected === true && this.isSelected === false) {
-                    console.log(1)
                     this.isSelected = true;
                     playOption.isSelected = false;
 
@@ -28,7 +26,6 @@ let menuScreenInterface = {
             htmlElement: document.querySelector(".play-option"),
             isSelected: false,
             animate() {
-                console.log(2)
                 let learnOption = menuScreenInterface.navOptions.learnOption;
                 if (learnOption.isSelected === true && this.isSelected === false) {
                     this.isSelected = true;
@@ -62,6 +59,8 @@ let menuScreenInterface = {
 
     hide() {
         this.htmlElement.style.display = "none";
+        document.querySelector(".menu-screen .header").style.setProperty("position", "none");
+        document.querySelector(".menu-screen .containers").style.setProperty("margin-top", "1000px")
     },
 
     initialize() {
@@ -78,6 +77,15 @@ let menuScreenInterface = {
 
         learnOption.htmlElement.classList.remove("highlight");
         playOption.htmlElement.classList.remove("highlight");
+
+        // It places the .container right after the .header
+        let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
+        document.querySelector(".menu-screen .containers").style.setProperty("margin-top", menuHeaderHeight + "px")
+
+        window.onresize = () => {
+            let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
+            document.querySelector(".menu-screen .containers").style.setProperty("margin-top", menuHeaderHeight + "px")
+        }
 
         if (this.firstShow === true) {
             this.firstShow = false;

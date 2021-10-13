@@ -1,12 +1,13 @@
 let referenceScreenInterface = {
     htmlElement: document.querySelector(".reference-screen"),
     isShowing: false,
-    returnButton:{
+    firstShow: true,
+    returnButton: {
         htmlElement: document.querySelector(".reference-screen .return-icon")
     },
     progressBar: document.querySelector(".reference-screen-progress-container"),
     progressBarTop: "",
-    setProgressBarTop(){
+    setProgressBarTop() {
         this.progressBarTop = this.progressBar.offsetTop;
     },
 
@@ -17,7 +18,7 @@ let referenceScreenInterface = {
             htmlElement: document.querySelector(".hiragana-option"),
             isSelected: true,
             animate() {
-                let katakanaOption = referenceScreen.navOptions.katakanaOption;
+                let katakanaOption = referenceScreenInterface.navOptions.katakanaOption;
                 if (katakanaOption.isSelected === true && this.isSelected === false) {
                     this.isSelected = true;
                     katakanaOption.isSelected = false;
@@ -34,7 +35,7 @@ let referenceScreenInterface = {
             htmlElement: document.querySelector(".katakana-option"),
             isSelected: false,
             animate() {
-                let hiraganaOption = referenceScreen.navOptions.hiraganaOption;
+                let hiraganaOption = referenceScreenInterface.navOptions.hiraganaOption;
                 if (hiraganaOption.isSelected === true && this.isSelected === false) {
                     this.isSelected = true;
                     hiraganaOption.isSelected = false;
@@ -59,7 +60,6 @@ let referenceScreenInterface = {
 
     hide() {
         this.htmlElement.style.display = "none";
-        this.reset();
         this.isShowing = false;
     },
 
@@ -122,47 +122,27 @@ let referenceScreenInterface = {
         hiraganaOption.htmlElement.classList.remove("highlight");
         katakanaOption.htmlElement.classList.remove("highlight");
 
-        // When hiragana option is clicked
-        hiraganaOption.htmlElement.addEventListener("click", () => {
-            hiraganaOption.animate();
-            referenceScreenInterface.drawCards(HIRAGANA);
-        })
-        
-        // When katakana option is clicked
-        katakanaOption.htmlElement.addEventListener("click", () => {
-            katakanaOption.animate();
-            referenceScreenInterface.drawCards(KATAKANA);
-        })
+        if (this.firstShow === true) {
+            this.firstShow = false;
 
-        // When return button is clicked
-        referenceScreenInterface.returnButton.htmlElement.addEventListener("click", () => {
-            referenceScreenInterface.hide();
-            menuScreenInterface.show();
-        })
+            hiraganaOption.htmlElement.addEventListener("click", () => {
+                hiraganaOption.animate();
+                referenceScreenInterface.drawCards(HIRAGANA);
+            })
+
+            katakanaOption.htmlElement.addEventListener("click", () => {
+                katakanaOption.animate();
+                referenceScreenInterface.drawCards(KATAKANA);
+            })
+
+            referenceScreenInterface.returnButton.htmlElement.addEventListener("click", () => {
+                referenceScreenInterface.hide();
+                menuScreenInterface.show();
+            })
+        }
 
         this.setProgressBarTop();
     },
-
-    reset() {
-        let hiraganaOption = this.navOptions.hiraganaOption;
-        let katakanaOption = this.navOptions.katakanaOption;
-
-        // hiraganaOption.htmlElement.removeEventListener("click", () => {
-        //     hiraganaOption.animate();
-        //     referenceScreenInterface.drawCards(HIRAGANA);
-        // })
-
-        // katakanaOption.htmlElement.removeEventListener("click", () => {
-        //     katakanaOption.animate();
-        //     referenceScreenInterface.drawCards(KATAKANA);
-        // })
-
-        // referenceScreenInterface.returnButton.htmlElement.removeEventListener("click", () => {
-        //     referenceScreenInterface.hide();
-        //     menuScreenInterface.show();
-        // })
-
-    }
 }
 
 // It fills the 3 scrolls bar as long as the screen is scrolled

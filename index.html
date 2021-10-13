@@ -21,7 +21,7 @@
     The Flash Card study can choice hiragana and katakana in the same time and also has division between kana combo with and without dakuten and handakuten.
     -->
 
-    <!-- BUGS FIXED:
+<!-- BUGS FIXED:
         Bug when dragging flash cards with two fingers-->
 
 <head>
@@ -54,46 +54,68 @@
                 <div class="nav-option right-option play-option" data-selected="false">PLAY</div>
             </nav>
         </div>
+        <div class="containers-wrapper">
+            <div class="containers">
+                <div class="container">
+                    <div class="study-section study-section-reference">
+                        <img src=" ./assets/icon/reference_icon.png" alt="reference">
+                        <div class="description">
+                            <h2>Reference</h2>
+                            <p>Look up kana</p>
+                        </div>
+                    </div>
+                    <div class="study-section study-section-flash-card">
+                        <img src="./assets/icon/flash_icon.png" alt="flashcards">
+                        <div class="description">
+                            <h2>Flash Cards</h2>
+                            <p>Study at your own pace</p>
+                        </div>
+                    </div>
+                    <div class="study-section study-section-quiz">
+                        <img src="./assets/icon/quiz_icon.png" alt="quiz">
+                        <div class="description">
+                            <h2>Quiz</h2>
+                            <p>Test your knowledge</p>
+                        </div>
+                    </div>
 
-        <div class="container">
-            <div class="study-section study-section-reference" ">
-                <img src=" ./assets/icon/reference_icon.png" alt="reference">
-                <div class="description">
-                    <h2>Reference</h2>
-                    <p>Look up kana</p>
-                </div>
-            </div>
-            <div class="study-section study-section-flash-card">
-                <img src="./assets/icon/flash_icon.png" alt="flashcards">
-                <div class="description">
-                    <h2>Flash Cards</h2>
-                    <p>Study at your own pace</p>
-                </div>
-            </div>
-            <div class="study-section study-section-quiz">
-                <img src="./assets/icon/quiz_icon.png" alt="quiz">
-                <div class="description">
-                    <h2>Quiz</h2>
-                    <p>Test your knowledge</p>
-                </div>
-            </div>
+                    <div class="progress-container">
+                        <h3 class="title">Hiragana</h3>
+                        <div class="top">
+                            <p class="progress-text">Advanced</p>
+                            <p class="progress-number">50%</p>
+                        </div>
+                        <div class="progress-bar"></div>
+                    </div>
 
-            <div class="progress-container">
-                <h3 class="title">Hiragana</h3>
-                <div class="top">
-                    <p class="progress-text">Advanced</p>
-                    <p class="progress-number">50%</p>
+                    <div class="progress-container">
+                        <h3 class="title">Katakana</h3>
+                        <div class="top">
+                            <p class="progress-text">Beginner</p>
+                            <p class="progress-number">50%</p>
+                        </div>
+                        <div class="progress-bar"></div>
+                    </div>
                 </div>
-                <div class="progress-bar"></div>
-            </div>
 
-            <div class="progress-container">
-                <h3 class="title">Katakana</h3>
-                <div class="top">
-                    <p class="progress-text">Beginner</p>
-                    <p class="progress-number">50%</p>
+                <div class="container">
+                    <div class="study-section study-section-flash-card">
+                        <img src="./assets/icon/eye-icon.jpg" alt="eye spy">
+                        <div class="description">
+                            <h2>Eye Spy</h2>
+                            <p>Test your agility</p>
+                        </div>
+                    </div>
+
+                    <div class="study-section study-section-quiz">
+                        <img src="./assets/icon/heart-icon.png" alt="match maker">
+                        <div class="description">
+                            <h2>Match Maker</h2>
+                            <p>Test your memory</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="progress-bar"></div>
+
             </div>
         </div>
     </div>
@@ -258,19 +280,6 @@
         </div>
         <div class="items-wrapper">
             <div class="items">
-                <!--
-                <div class="flashCard">
-                    <div class="flashCard-front">3</div>
-                    <div class="flashCard-back">4</div>
-                </div>
-                <div class="flashCard">
-                    <div class="flashCard-front">5</div>
-                    <div class="flashCard-back">6</div>
-                </div>
-                <div class="flashCard">
-                    <div class="flashCard-front">7</div>
-                    <div class="flashCard-back">8</div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -300,16 +309,16 @@
     <script src="./scripts/referenceScreenInterface.js"></script>
 
     <script src="./scripts/menuScreenInterface.js"></script>
-    
+
     <script src="./scripts/flashCardScreenInterface.js"></script>
 
     <script src="./scripts/checkBox.js"></script>
     <script src="./scripts/checkBoxList.js"></script>
     <script src="./scripts/modalMainInterface.js"></script>
-    
+
     <script src="./scripts/modalCustomInterface.js"></script>
-    
-    <script src="./scripts/generalInterface.js" ></script>
+
+    <script src="./scripts/generalInterface.js"></script>
 
 
     <script src="./scripts/game.js"></script>

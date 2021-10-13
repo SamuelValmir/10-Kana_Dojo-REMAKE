@@ -63,12 +63,17 @@ svg circle:last-child {
 /** ----- MENU ----- */
 .menu-screen{
     display: none;
+    overflow-y: hidden;
 }
+
 .title{
     font-size: 6vw;
 }
 
-.header{
+.menu-screen .header{
+    position: fixed;
+    top: 0;
+    width: 100vw;
     background-color: rgb(245, 73, 73);
     box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.5);
 }
@@ -122,6 +127,56 @@ svg circle:last-child {
     
 }
 
+.menu-screen .containers-wrapper{
+    display: grid;
+    width: 100vw;
+}
+
+.menu-screen .containers{
+    display: grid;
+    grid-template-columns: auto auto;
+    width: 100vw;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.menu-screen .container{
+    width: 100vw;
+    scroll-snap-align: center;
+}
+
+.flashCard-screen ::-webkit-scrollbar{
+    height: 2vw;
+}
+
+.flashCard-screen ::-webkit-scrollbar-thumb{
+    background-color: #4f4e28;
+
+    border-radius: 1vw;
+}
+
+.flashCard-screen ::-webkit-scrollbar-thumb:hover{
+    background-color: #925f17;
+}
+
+@supports (scrollbar-color: #4f4e28 #dba102){
+    .flashCard-screen{
+        scrollbar-color: #4f4e28 #dba102;
+
+    }
+
+    *:not(:root){
+        scrollbar-width: thin;
+    }
+}
+
+
+
+
+
+
 .menu-screen .container{
     color: #999;
     display: flex;
@@ -136,7 +191,7 @@ svg circle:last-child {
 }
 
 .study-section img {
-    --imgSize: 15%;
+    --imgSize: 15vw;
     width: var(--imgSize);
     height: var(--imgSize);
 }
@@ -387,7 +442,6 @@ label{
     transform: translate(-50%, -20%) rotate(40deg);  
 }
 
-
 .checkmark-circle{
     width: 5vw;
     height: 5vw;
@@ -525,13 +579,13 @@ label{
 .flashCard-screen .items{
     display: flex;
 
-
     gap: 2rem;
     padding: 0 2rem;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    --scrollBehavior: smooth;
+    scroll-behavior: var(--scrollBehavior);
 }
 
 .flashCard {
@@ -564,7 +618,6 @@ label{
     backface-visibility: hidden;
 
 }
-
 
 .flashCard-back{
     transform: rotateY(180deg);

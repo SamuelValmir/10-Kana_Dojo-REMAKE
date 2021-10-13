@@ -93,6 +93,7 @@ let flashCardScreenInterface = {
             });
 
             items.addEventListener("scroll", () => {
+               
                 let spaceBetweenCards;
                 let spotsToChangeCounter = flashCardScreenInterface.items.spotsToChangeCounter;
                 let cardWidth;
@@ -160,13 +161,17 @@ let flashCardScreenInterface = {
         this.items.cards = [];
         this.items.spotsToChangeCounter = [0];
         this.items.flashCardList = [];
-        //! I must make the items scroll to begin 
     },
 
     initialize(flashCards) {
         flashCardScreenInterface.items.cards = flashCards;
         flashCardScreenInterface.setItemsWheelEventListener();
         flashCardScreenInterface.items.buildCards();
+
+        // It scrolls until the start
+        this.items.htmlElement.style.setProperty("--scrollBehavior", "none"); // This is for now scroll too slow. That way the scroll will occurs as fast as it can
+        this.items.htmlElement.scrollLeft = 0;
+        this.items.htmlElement.style.setProperty("--scrollBehavior", "smooth");
     }
 }
 
