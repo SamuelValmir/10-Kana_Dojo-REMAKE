@@ -85,6 +85,12 @@ svg circle:last-child {
     padding: 15px;
 }
 
+.menu-screen .scroll-bar, .reference-screen .scroll-bar{
+    background-color: white;
+    height: 2vw;
+    width: 100%;
+}
+
 .top .menu-icon{
     transform: rotate(90deg);
     font-size: 7vw;
@@ -102,6 +108,13 @@ svg circle:last-child {
     padding: 10px;
 }
 
+.left-option, .right-option{
+    width: 50vw;
+}
+
+.right-option{
+    color: rgba(255, 255, 255, .5);
+}
 
 .left-option::after, .right-option::after{
     content: "";
@@ -127,12 +140,12 @@ svg circle:last-child {
     
 }
 
-.menu-screen .containers-wrapper{
+.menu-screen .containers-wrapper, .reference-screen .containers-wrapper{
     display: grid;
     width: 100vw;
 }
 
-.menu-screen .containers{
+.menu-screen .containers, .reference-screen .containers{
     display: grid;
     grid-template-columns: auto auto;
     width: 100vw;
@@ -142,11 +155,11 @@ svg circle:last-child {
     scroll-behavior: smooth;
 }
 
-.menu-screen .containers-wrapper ::-webkit-scrollbar{
+.menu-screen .containers-wrapper ::-webkit-scrollbar, .reference-screen .containers-wrapper ::-webkit-scrollbar{
     height: 0;
 }
 
-.menu-screen .container{
+.menu-screen .container, .reference-screen .container{
     width: 100vw;
     scroll-snap-align: center;
 }

@@ -3,42 +3,17 @@ let menuScreenInterface = {
     htmlElement: document.querySelector(".menu-screen"),
     firstShow: true,
     navOptions: {
-        learnOption: {
-            htmlElement: document.querySelector(".learn-option"),
-            isSelected: true,
-            animate() {
-                let playOption = menuScreenInterface.navOptions.playOption;
-                if (playOption.isSelected === true && this.isSelected === false) {
-                    this.isSelected = true;
-                    playOption.isSelected = false;
-
-                    this.htmlElement.classList.add("highlight");
-                    playOption.htmlElement.classList.remove("highlight");
-
-                    this.htmlElement.style.borderBottom = "5px solid white";
-                    playOption.htmlElement.style.borderBottom = "none";
-                }
-            }
-
-        },
-        playOption: {
-            htmlElement: document.querySelector(".play-option"),
-            isSelected: false,
-            animate() {
-                let learnOption = menuScreenInterface.navOptions.learnOption;
-                if (learnOption.isSelected === true && this.isSelected === false) {
-                    this.isSelected = true;
-                    learnOption.isSelected = false;
-
-                    this.htmlElement.classList.add("highlight");
-                    learnOption.htmlElement.classList.remove("highlight");
-
-                    this.htmlElement.style.borderBottom = "5px solid white";
-                    learnOption.htmlElement.style.borderBottom = "none";
-                }
-            }
-        }
+        learnOption: document.querySelector(".learn-option"),
+        playOption: document.querySelector(".play-option"),
     },
+
+    screens: {
+        learnScreen: document.querySelector(".menu-screen .learn-screen"),
+        playScreen: document.querySelector(".menu-screen .play-screen"),
+    },
+
+    containersElement: document.querySelector(".menu-screen .containers"),
+    scrollBar: document.querySelector(".menu-screen-nav .scroll-bar"),
 
     studySections: {
         htmlElement: document.querySelectorAll(".menu-screen .container .study-section"),
@@ -50,7 +25,6 @@ let menuScreenInterface = {
         }
     },
 
-
     show() {
         this.htmlElement.style.display = "block";
         this.initialize();
@@ -58,43 +32,45 @@ let menuScreenInterface = {
 
     hide() {
         this.htmlElement.style.display = "none";
-        document.querySelector(".menu-screen .header").style.setProperty("position", "none");
-        document.querySelector(".menu-screen .containers").style.setProperty("margin-top", "1000px")
     },
 
     initialize() {
-
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;
 
-        learnOption.isSelected = true;
-        playOption.isSelected = false;
+        let learnScreen = this.screens.learnScreen;
+        let playScreen = this.screens.playScreen;
 
-        learnOption.htmlElement.style.borderBottom = "5px solid white";
-        playOption.htmlElement.style.borderBottom = "none";
-
-        learnOption.htmlElement.classList.remove("highlight");
-        playOption.htmlElement.classList.remove("highlight");
+        let navModel = new NavModel;
+        let navController = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar);
 
         // It places the .container right after the .header
         let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
-        document.querySelector(".menu-screen .containers").style.setProperty("margin-top", menuHeaderHeight + "px")
-
-        window.onresize = () => {
-            let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
-            document.querySelector(".menu-screen .containers").style.setProperty("margin-top", menuHeaderHeight + "px")
-        }
+        this.containersElement.style.setProperty("margin-top", menuHeaderHeight + "px");
 
         if (this.firstShow === true) {
             this.firstShow = false;
-            learnOption.htmlElement.addEventListener("click", () => {
-                this.navOptions.learnOption.animate();
+
+            window.onresize = () => {
+                let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
+                this.containersElement.style.setProperty("margin-top", menuHeaderHeight + "px")
+            }
+
+            learnOption.addEventListener("click", () => {
+                if (navModel.canAnimateLeftOption() === true) {
+                    navController.animateLeftOption();
+                }
 
             })
-            playOption.htmlElement.addEventListener("click", () => {
-                this.navOptions.playOption.animate()
+            playOption.addEventListener("click", () => {
+                if (navModel.canAnimateRightOption() === true) {
+                    navController.animateRightOption();
+                }
             })
+
+            // It makes the nav's scroll bar to move when container is scrolled
+            this.containersElement.addEventListener("scroll", () => { navController.scrollListener(navModel) })
 
             // ----- Set study sections -----
             let referenceSection = this.studySections.referenceSection;

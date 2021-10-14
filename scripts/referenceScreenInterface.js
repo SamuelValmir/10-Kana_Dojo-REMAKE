@@ -2,9 +2,7 @@ let referenceScreenInterface = {
     htmlElement: document.querySelector(".reference-screen"),
     isShowing: false,
     firstShow: true,
-    returnButton: {
-        htmlElement: document.querySelector(".reference-screen .return-icon")
-    },
+    returnButton: document.querySelector(".reference-screen .return-icon"),
     progressBar: document.querySelector(".reference-screen-progress-container"),
     progressBarTop: "",
     setProgressBarTop() {
@@ -12,49 +10,21 @@ let referenceScreenInterface = {
     },
 
     navOptions: {
-        htmlElement: document.querySelector(".reference-screen-nav").children,
-        hiraganaOption: {
-            htmlElement: document.querySelector(".hiragana-option"),
-            isSelected: true,
-            animate() {
-                let katakanaOption = referenceScreenInterface.navOptions.katakanaOption;
-                if (katakanaOption.isSelected === true && this.isSelected === false) {
-                    this.isSelected = true;
-                    katakanaOption.isSelected = false;
-
-                    this.htmlElement.classList.add("highlight");
-                    katakanaOption.htmlElement.classList.remove("highlight");
-
-                    this.htmlElement.style.borderBottom = "5px solid white";
-                    katakanaOption.htmlElement.style.borderBottom = "none";
-                }
-            }
-        },
-        katakanaOption: {
-            htmlElement: document.querySelector(".katakana-option"),
-            isSelected: false,
-            animate() {
-                let hiraganaOption = referenceScreenInterface.navOptions.hiraganaOption;
-                if (hiraganaOption.isSelected === true && this.isSelected === false) {
-                    this.isSelected = true;
-                    hiraganaOption.isSelected = false;
-
-                    this.htmlElement.classList.add("highlight");
-                    hiraganaOption.htmlElement.classList.remove("highlight");
-
-                    this.htmlElement.style.borderBottom = "5px solid white";
-                    hiraganaOption.htmlElement.style.borderBottom = "none";
-
-                }
-            }
-        }
+        hiraganaOption: document.querySelector(".reference-screen .hiragana-option"),
+        katakanaOption: document.querySelector(".reference-screen .katakana-option"),
     },
+
+    screens: {
+        hiraganaScreen: document.querySelector(".reference-screen .hiragana-screen"),
+        katakanaScreen: document.querySelector(".reference-screen .katakana-screen"),
+    },
+    containers: document.querySelector(".reference-screen .containers"),
+    scrollBar: document.querySelector(".reference-screen-nav .scroll-bar"),
 
     show() {
         this.htmlElement.style.display = "block";
         this.initialize();
         this.isShowing = true;
-        this.drawCards(HIRAGANA);
     },
 
     hide() {
@@ -62,8 +32,8 @@ let referenceScreenInterface = {
         this.isShowing = false;
     },
 
-    drawCards(option) {
-        let referenceScreenContainer = document.querySelector(".reference-screen .container");
+    drawCards(option, containerScreen) {
+        let referenceScreenContainer = containerScreen;
         referenceScreenContainer.innerHTML = "";
         for (const group of Object.entries(kana.groups)) {
             let familyName = document.createElement("div");
@@ -112,32 +82,36 @@ let referenceScreenInterface = {
         let hiraganaOption = this.navOptions.hiraganaOption;
         let katakanaOption = this.navOptions.katakanaOption;
 
-        hiraganaOption.isSelected = true;
-        katakanaOption.isSelected = false;
+        let hiraganaScreen = this.screens.hiraganaScreen;
+        let katakanaScreen = this.screens.katakanaScreen;
 
-        hiraganaOption.htmlElement.style.borderBottom = "5px solid white";
-        katakanaOption.htmlElement.style.borderBottom = "none";
-
-        hiraganaOption.htmlElement.classList.remove("highlight");
-        katakanaOption.htmlElement.classList.remove("highlight");
+        let navModel = new NavModel;
+        let navController = new NavController(hiraganaOption, katakanaOption, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar);
 
         if (this.firstShow === true) {
             this.firstShow = false;
 
-            hiraganaOption.htmlElement.addEventListener("click", () => {
-                hiraganaOption.animate();
-                referenceScreenInterface.drawCards(HIRAGANA);
+            referenceScreenInterface.drawCards(HIRAGANA, hiraganaScreen);
+            referenceScreenInterface.drawCards(KATAKANA, katakanaScreen);
+
+            hiraganaOption.addEventListener("click", () => {
+                if (navModel.canAnimateLeftOption() === true) {
+                    navController.animateLeftOption();
+                }
             })
 
-            katakanaOption.htmlElement.addEventListener("click", () => {
-                katakanaOption.animate();
-                referenceScreenInterface.drawCards(KATAKANA);
+            katakanaOption.addEventListener("click", () => {
+                if (navModel.canAnimateRightOption() === true) {
+                    navController.animateRightOption();
+                }
             })
 
-            referenceScreenInterface.returnButton.htmlElement.addEventListener("click", () => {
+            referenceScreenInterface.returnButton.addEventListener("click", () => {
                 referenceScreenInterface.hide();
                 menuScreenInterface.show();
             })
+
+            this.containers.addEventListener("scroll", () => { navController.scrollListener(navModel) })
         }
 
         this.setProgressBarTop();

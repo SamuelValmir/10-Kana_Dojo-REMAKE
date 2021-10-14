@@ -52,11 +52,12 @@
             <nav class='menu-screen-nav'>
                 <div class='nav-option left-option learn-option' data-selected='true'>LEARN</div>
                 <div class='nav-option right-option play-option' data-selected='false'>PLAY</div>
+                <span class="scroll-bar"></span>
             </nav>
         </div>
         <div class="containers-wrapper">
             <div class="containers">
-                <div class="container">
+                <div class="container learn-screen">
                     <div class="study-section study-section-reference">
                         <img src=" ./assets/icon/reference_icon.png" alt="reference">
                         <div class="description">
@@ -96,9 +97,10 @@
                         </div>
                         <div class="progress-bar"></div>
                     </div>
+
                 </div>
 
-                <div class="container">
+                <div class="container play-screen">
                     <div class="study-section study-section-flash-card">
                         <img src="./assets/icon/eye-icon.jpg" alt="eye spy">
                         <div class="description">
@@ -130,10 +132,12 @@
             <nav class="reference-screen-nav">
                 <div class="nav-option left-option hiragana-option" data-selected="true">HIRAGANA</div>
                 <div class="nav-option right-option katakana-option" data-selected="false">KATAKANA</div>
+                <span class="scroll-bar"></span>
             </nav>
         </div>
 
         <div class="reference-screen-progress-container">
+
             <div class="basic-scroll-container">
                 <span>Basic</span>
                 <div id="basic-scroll" class="scroll-progress-bar"></div>
@@ -149,12 +153,12 @@
                 <div id="combo-scroll1" class="scroll-progress-bar"></div>
             </div>
 
-
             <div class="combo-scroll-container2">
                 <span>Combo 2</span>
                 <div id="combo-scroll2" class="scroll-progress-bar"></div>
             </div>
         </div>
+
         <!-- <div class="progress">
             <div class="scroll-progress">
                 <svg>
@@ -170,8 +174,13 @@
             </div>
         </div> -->
 
-        <!-- It's filled by Javascript -->
-        <div class="container"></div>
+        <span class="containers-wrapper">
+            <span class="containers">
+                <!-- It's filled by Javascript -->
+                <span class="container hiragana-screen"></span>
+                <span class="container katakana-screen"></span>
+            </span>
+        </span>
 
     </div>
 
@@ -306,6 +315,8 @@
     <script src="./scripts/constants.js"></script>
     <script src="./scripts/kana.js"></script>
     <!-- <script src="./scripts/header.js"></script> -->
+    <script src="./scripts/navModel.js"></script>
+    <script src="./scripts/navController.js"></script>
 
     <script src="./scripts/referenceScreenInterface.js"></script>
 
