@@ -1,10 +1,12 @@
 "use strict";
 let menuScreenInterface = {
     htmlElement: document.querySelector(".menu-screen"),
+    isShowing: false,
     firstShow: true,
+    menuButton: document.querySelector(".menu-screen .menu-button"),
     navOptions: {
-        learnOption: document.querySelector(".learn-option"),
-        playOption: document.querySelector(".play-option"),
+        learnOption: document.querySelector(".menu-screen .learn-option"),
+        playOption: document.querySelector(".menu-screen .play-option"),
     },
 
     screens: {
@@ -18,20 +20,22 @@ let menuScreenInterface = {
     studySections: {
         htmlElement: document.querySelectorAll(".menu-screen .container .study-section"),
         referenceSection: {
-            htmlElement: document.querySelector(".study-section-reference")
+            htmlElement: document.querySelector(".menu-screen .study-section-reference")
         },
         flashCardSection: {
-            htmlElement: document.querySelector(".study-section-flash-card")
+            htmlElement: document.querySelector(".menu-screen .study-section-flash-card")
         }
     },
 
     show() {
         this.htmlElement.style.display = "block";
+        this.isShowing = true;
         this.initialize();
     },
 
     hide() {
         this.htmlElement.style.display = "none";
+        this.isShowing = false;
     },
 
     initialize() {
@@ -42,8 +46,8 @@ let menuScreenInterface = {
         let learnScreen = this.screens.learnScreen;
         let playScreen = this.screens.playScreen;
 
-        let navModel = new NavModel;
-        let navController = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar);
+        const NavModelObject = new NavModel;
+        const NavControllerObject = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
 
         // It places the .container right after the .header
         let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
@@ -57,20 +61,35 @@ let menuScreenInterface = {
                 this.containersElement.style.setProperty("margin-top", menuHeaderHeight + "px")
             }
 
+            this.menuButton.addEventListener("click", async () => {
+                await NavControllerObject.animateMenuButton();
+                NavModelObject.menuContentIsShowing = true;
+            })
+
             learnOption.addEventListener("click", () => {
-                if (navModel.canAnimateLeftOption() === true) {
-                    navController.animateLeftOption();
+                if (NavModelObject.canAnimateLeftOption() === true) {
+                    NavControllerObject.animateLeftOption();
                 }
 
             })
             playOption.addEventListener("click", () => {
-                if (navModel.canAnimateRightOption() === true) {
-                    navController.animateRightOption();
+                if (NavModelObject.canAnimateRightOption() === true) {
+                    NavControllerObject.animateRightOption();
+                }
+            })
+
+            window.addEventListener("click", (event) => {
+                if (this.isShowing === true) {
+                    if (NavModelObject.menuContentIsShowing === true){
+                        NavControllerObject.tryCloseMenuContent(event.target);
+                        //! I must try to animate the menuContent
+                        NavModelObject.menuContentIsShowing = false;
+                    }
                 }
             })
 
             // It makes the nav's scroll bar to move when container is scrolled
-            this.containersElement.addEventListener("scroll", () => { navController.scrollListener(navModel) })
+            this.containersElement.addEventListener("scroll", () => { NavControllerObject.scrollListener(NavModelObject) })
 
             // ----- Set study sections -----
             let referenceSection = this.studySections.referenceSection;

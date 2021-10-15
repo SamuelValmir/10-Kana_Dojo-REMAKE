@@ -84,9 +84,9 @@ let referenceScreenInterface = {
 
         let hiraganaScreen = this.screens.hiraganaScreen;
         let katakanaScreen = this.screens.katakanaScreen;
-
-        let navModel = new NavModel;
-        let navController = new NavController(hiraganaOption, katakanaOption, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar);
+        
+        const NavModelObject = new NavModel;
+        const NavControllerObject = new NavController(hiraganaOption, katakanaOption, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
 
         if (this.firstShow === true) {
             this.firstShow = false;
@@ -95,14 +95,14 @@ let referenceScreenInterface = {
             referenceScreenInterface.drawCards(KATAKANA, katakanaScreen);
 
             hiraganaOption.addEventListener("click", () => {
-                if (navModel.canAnimateLeftOption() === true) {
-                    navController.animateLeftOption();
+                if (NavModelObject.canAnimateLeftOption() === true) {
+                    NavControllerObject.animateLeftOption();
                 }
             })
 
             katakanaOption.addEventListener("click", () => {
-                if (navModel.canAnimateRightOption() === true) {
-                    navController.animateRightOption();
+                if (NavModelObject.canAnimateRightOption() === true) {
+                    NavControllerObject.animateRightOption();
                 }
             })
 
@@ -111,7 +111,7 @@ let referenceScreenInterface = {
                 menuScreenInterface.show();
             })
 
-            this.containers.addEventListener("scroll", () => { navController.scrollListener(navModel) })
+            this.containers.addEventListener("scroll", () => { NavControllerObject.scrollListener(NavModelObject) })
         }
 
         this.setProgressBarTop();

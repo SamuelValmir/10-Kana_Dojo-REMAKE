@@ -91,9 +91,47 @@ svg circle:last-child {
     width: 100%;
 }
 
-.top .menu-icon{
-    transform: rotate(90deg);
-    font-size: 7vw;
+.top .menu-button{
+    display: flex;
+    position: relative;
+}
+
+.top .menu-button img{
+    width: 7vw;
+}
+
+.top .about{
+    background-color: var(--white);
+    color: #131517;
+
+    display: flex;
+    opacity: 0;
+    right: 0;
+    position: absolute;
+    place-self: center;
+    align-items: center;
+    justify-content: center;
+    width: 300%;
+    height: 200%;
+
+    border-radius: .2rem;
+    box-shadow: 3px -3px 8px rgba(0, 0, 0, 0.5);
+}
+
+.top .about .about-text{
+    position: absolute;
+    left: 0;
+    padding-left: 10%;
+}
+
+.top .about-highlight{
+    background-color: rgba(0, 0, 0, 0.1);
+    
+    display: none;
+    width: 30%;
+    height: 100%;
+    
+    border-radius: 50%;
 }
 
 .header nav{

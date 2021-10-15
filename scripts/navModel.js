@@ -21,4 +21,5 @@ class NavModel {
 
         return false;
     }
+    menuContentIsShowing = false;
 }
