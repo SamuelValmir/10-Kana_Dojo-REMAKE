@@ -47,7 +47,7 @@
         <div class='header'>
             <div class='top'>
                 <div class='title'> Kana Dojo </div>
-                <span class='menu-button'> <img src="./assets/icon/more_vert_white_24dp.svg" alt="">
+                <span class='menu-button'> <img src="./assets/icon/more_vert_white_24dp.svg" alt="about menu">
                     <span class="about">
                         <span class="about-text">About</span>
                         <span class="about-highlight"></span>
@@ -127,11 +127,36 @@
         </div>
     </div>
 
+    <!------- ABOUT SCREEN ------->
+
+    <span class="about-screen">
+        <span class="header">
+            <span class="return-icon">
+                <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
+                <span class="return-icon-highlight"></span>
+            </span>
+            <div class="title"> About </div>
+        </span>
+
+        <span class="container">
+            <span class="app-logo"><img src="./assets/icon/logo.png" alt="logo"></span>
+            <span class="app-name">Kana Dojo</span>
+            <span class="app-version">1.0.1</span>
+        </span>
+
+        <span class="footer">
+            <span class="thanks">Thank you for using Kana Dojo!</span>
+        </span>
+    </span>
+
     <!------- REFERENCE SCREEN ------->
     <div class="reference-screen">
         <div class="header">
             <div class="top">
-                <span class="return-icon"><img src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
+                <span class="return-icon">
+                    <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
+                    <span class="return-icon-highlight"></span>
+                </span>
                 <div class="title"> Reference </div>
             </div>
             <nav class="reference-screen-nav">
@@ -323,9 +348,14 @@
     <script src="./scripts/navModel.js"></script>
     <script src="./scripts/navController.js"></script>
 
-    <script src="./scripts/referenceScreenInterface.js"></script>
+    <script src="./scripts/headerController.js"></script>
 
     <script src="./scripts/menuScreenInterface.js"></script>
+
+    <script src="./scripts/aboutScreenInterface.js"></script>
+
+    <script src="./scripts/referenceScreenInterface.js"></script>
+
 
     <script src="./scripts/flashCardScreenInterface.js"></script>
 

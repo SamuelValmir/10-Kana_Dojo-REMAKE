@@ -48,6 +48,7 @@ let menuScreenInterface = {
 
         const NavModelObject = new NavModel;
         const NavControllerObject = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
+        const HeaderControllerObject = new HeaderController(undefined, NavControllerObject);
 
         // It places the .container right after the .header
         let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
@@ -62,34 +63,44 @@ let menuScreenInterface = {
             }
 
             this.menuButton.addEventListener("click", async () => {
-                await NavControllerObject.animateMenuButton();
+                await HeaderControllerObject.nav.animateMenuButton();
                 NavModelObject.menuContentIsShowing = true;
             })
 
             learnOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateLeftOption() === true) {
-                    NavControllerObject.animateLeftOption();
+                    HeaderControllerObject.nav.animateLeftOption();
                 }
 
             })
             playOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateRightOption() === true) {
-                    NavControllerObject.animateRightOption();
+                    HeaderControllerObject.nav.animateRightOption();
                 }
             })
 
-            window.addEventListener("click", (event) => {
+            window.addEventListener("click", async (event) => {
+                let elementClicked = event.target;
                 if (this.isShowing === true) {
-                    if (NavModelObject.menuContentIsShowing === true){
-                        NavControllerObject.tryCloseMenuContent(event.target);
-                        //! I must try to animate the menuContent
+                    if (NavModelObject.menuContentIsShowing === true) {
+    
+                        // If is clicked on about element
+                        if (elementClicked.classList.contains("about") || elementClicked.classList.contains("about-text") || elementClicked.classList.contains("menu-button")) {
+                            await HeaderControllerObject.nav.animateMenuContent();
+                            HeaderControllerObject.nav.closeMenuContent();
+                            this.hide();
+                            aboutScreenInterface.show();
+                        } else{
+                            HeaderControllerObject.nav.closeMenuContent();
+                        }
+
                         NavModelObject.menuContentIsShowing = false;
                     }
                 }
             })
 
             // It makes the nav's scroll bar to move when container is scrolled
-            this.containersElement.addEventListener("scroll", () => { NavControllerObject.scrollListener(NavModelObject) })
+            this.containersElement.addEventListener("scroll", () => { HeaderControllerObject.nav.scrollListener(NavModelObject) })
 
             // ----- Set study sections -----
             let referenceSection = this.studySections.referenceSection;

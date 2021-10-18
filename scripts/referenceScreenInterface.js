@@ -3,6 +3,8 @@ let referenceScreenInterface = {
     isShowing: false,
     firstShow: true,
     returnButton: document.querySelector(".reference-screen .return-icon"),
+    returnButtonHighlight: document.querySelector(".reference-screen .return-icon-highlight"),
+
     progressBar: document.querySelector(".reference-screen-progress-container"),
     progressBarTop: "",
     setProgressBarTop() {
@@ -84,9 +86,11 @@ let referenceScreenInterface = {
 
         let hiraganaScreen = this.screens.hiraganaScreen;
         let katakanaScreen = this.screens.katakanaScreen;
-        
+
         const NavModelObject = new NavModel;
         const NavControllerObject = new NavController(hiraganaOption, katakanaOption, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
+
+        const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, NavControllerObject)
 
         if (this.firstShow === true) {
             this.firstShow = false;
@@ -96,22 +100,23 @@ let referenceScreenInterface = {
 
             hiraganaOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateLeftOption() === true) {
-                    NavControllerObject.animateLeftOption();
+                    HeaderControllerObject.nav.animateLeftOption();
                 }
             })
 
             katakanaOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateRightOption() === true) {
-                    NavControllerObject.animateRightOption();
+                    HeaderControllerObject.nav.animateRightOption();
                 }
             })
 
-            referenceScreenInterface.returnButton.addEventListener("click", () => {
+            referenceScreenInterface.returnButton.addEventListener("click", async () => {
+                await HeaderControllerObject.animateButton();
                 referenceScreenInterface.hide();
                 menuScreenInterface.show();
             })
 
-            this.containers.addEventListener("scroll", () => { NavControllerObject.scrollListener(NavModelObject) })
+            this.containers.addEventListener("scroll", () => {HeaderControllerObject.nav.scrollListener(NavModelObject) })
         }
 
         this.setProgressBarTop();

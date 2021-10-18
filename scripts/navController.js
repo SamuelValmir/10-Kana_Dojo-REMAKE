@@ -42,22 +42,18 @@ class NavController {
         return promise;
     }
 
-    tryCloseMenuContent(elementCLiked) {
-        if (elementCLiked.classList.contains("about") || elementCLiked.classList.contains("about-text") || elementCLiked.classList.contains("menu-button")) {
-            this.animateMenuContent();
-        } else {
-            let aboutElement = this.menuButton.children[1];
+    closeMenuContent() {
+        let aboutElement = this.menuButton.children[1];
 
-            let animation = aboutElement.animate([
-                { opacity: "0" }
-            ], { duration: 300, easing: "ease-out" });
+        let animation = aboutElement.animate([
+            { opacity: "0" }
+        ], { duration: 300, easing: "ease-out" });
 
-            animation.addEventListener("finish", () => {
-                aboutElement.style.opacity = "0";
-                aboutElement.style.display = "none";
-                aboutElement.style.width = "300%";
-            })
-        }
+        animation.addEventListener("finish", () => {
+            aboutElement.style.opacity = "0";
+            aboutElement.style.display = "none";
+            aboutElement.style.width = "300%";
+        })
     }
 
     animateMenuContent() {
