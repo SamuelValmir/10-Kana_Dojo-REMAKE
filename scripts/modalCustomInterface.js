@@ -106,7 +106,6 @@ let modalCustomInterface = {
             await this.buttons.animate(finishButton);
             let checkBoxObject = this.currentlyCheckBox;
             checkBoxObject.isEdited = true;
-            console.log(checkBoxObject)
 
             switch (checkBoxObject.name) {
                 case "Basic":

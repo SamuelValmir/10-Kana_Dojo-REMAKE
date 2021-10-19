@@ -161,7 +161,6 @@ let checkBoxList = {
     async editIconClickEventListener(checkBoxObject) {
         await checkBoxObject.animateEditIcon();
         let title = checkBoxObject.name;
-        console.log(checkBoxObject)
         modalCustomInterface.currentlyCheckBox = checkBoxObject;
         modalCustomInterface.show(title);
     }

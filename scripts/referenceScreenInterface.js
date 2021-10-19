@@ -2,8 +2,8 @@ let referenceScreenInterface = {
     htmlElement: document.querySelector(".reference-screen"),
     isShowing: false,
     firstShow: true,
-    returnButton: document.querySelector(".reference-screen .return-icon"),
-    returnButtonHighlight: document.querySelector(".reference-screen .return-icon-highlight"),
+    returnButton: document.querySelector(".reference-screen .return-button"),
+    returnButtonHighlight: document.querySelector(".reference-screen .return-button-highlight"),
 
     progressBar: document.querySelector(".reference-screen-progress-container"),
     progressBarTop: "",

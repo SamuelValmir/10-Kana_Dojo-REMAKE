@@ -1,8 +1,8 @@
 let aboutScreenInterface = {
     HTMLElement: document.querySelector(".about-screen"),
     firstShow: true,
-    returnButton: document.querySelector(".about-screen .return-icon"),
-    returnButtonHighlight: document.querySelector(".about-screen .return-icon-highlight"),
+    returnButton: document.querySelector(".about-screen .return-button"),
+    returnButtonHighlight: document.querySelector(".about-screen .return-button-highlight"),
 
     show() {
         this.HTMLElement.style.display = "block";

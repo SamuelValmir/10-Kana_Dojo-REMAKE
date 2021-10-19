@@ -4,6 +4,8 @@ let menuScreenInterface = {
     isShowing: false,
     firstShow: true,
     menuButton: document.querySelector(".menu-screen .menu-button"),
+    headerObject: undefined,
+    navModel: undefined,
     navOptions: {
         learnOption: document.querySelector(".menu-screen .learn-option"),
         playOption: document.querySelector(".menu-screen .play-option"),
@@ -19,23 +21,26 @@ let menuScreenInterface = {
 
     studySections: {
         htmlElement: document.querySelectorAll(".menu-screen .container .study-section"),
-        referenceSection: {
-            htmlElement: document.querySelector(".menu-screen .study-section-reference")
-        },
-        flashCardSection: {
-            htmlElement: document.querySelector(".menu-screen .study-section-flash-card")
-        }
+        referenceSection: document.querySelector(".menu-screen .study-section-reference"),
+        flashCardSection: document.querySelector(".menu-screen .study-section-flash-card"),
+        quizSection: document.querySelector(".menu-screen .study-section-quiz"),
+
     },
 
     show() {
         this.htmlElement.style.display = "block";
         this.isShowing = true;
         this.initialize();
+
+
     },
 
     hide() {
         this.htmlElement.style.display = "none";
         this.isShowing = false;
+
+        this.headerController.nav.closeMenuContent();
+        this.navModel.menuContentIsShowing = false;
     },
 
     initialize() {
@@ -49,6 +54,10 @@ let menuScreenInterface = {
         const NavModelObject = new NavModel;
         const NavControllerObject = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
         const HeaderControllerObject = new HeaderController(undefined, NavControllerObject);
+
+        this.headerController = HeaderControllerObject;
+        this.navModel = NavModelObject;
+
 
         // It places the .container right after the .header
         let menuHeaderHeight = document.querySelector(".menu-screen .header").clientHeight;
@@ -83,14 +92,14 @@ let menuScreenInterface = {
                 let elementClicked = event.target;
                 if (this.isShowing === true) {
                     if (NavModelObject.menuContentIsShowing === true) {
-    
+
                         // If is clicked on about element
                         if (elementClicked.classList.contains("about") || elementClicked.classList.contains("about-text") || elementClicked.classList.contains("menu-button")) {
                             await HeaderControllerObject.nav.animateMenuContent();
                             HeaderControllerObject.nav.closeMenuContent();
                             this.hide();
                             aboutScreenInterface.show();
-                        } else{
+                        } else {
                             HeaderControllerObject.nav.closeMenuContent();
                         }
 
@@ -105,15 +114,23 @@ let menuScreenInterface = {
             // ----- Set study sections -----
             let referenceSection = this.studySections.referenceSection;
             let flashCardSection = this.studySections.flashCardSection;
+            let quizSection = this.studySections.quizSection;
 
 
-            referenceSection.htmlElement.addEventListener("click", () => {
+
+            referenceSection.addEventListener("click", () => {
                 menuScreenInterface.hide();
                 referenceScreenInterface.show();
             })
 
-            flashCardSection.htmlElement.addEventListener("click", () => {
+            flashCardSection.addEventListener("click", () => {
                 modalMainInterface.show();
+                modalMainInterface.leadsTo = FLASH_CARD_SCREEN;
+            })
+
+            quizSection.addEventListener("click", () => {
+                modalMainInterface.show();
+                modalMainInterface.leadsTo = QUIZ_SCREEN;
             })
         }
     }

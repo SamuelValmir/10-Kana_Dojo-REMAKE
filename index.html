@@ -131,9 +131,9 @@
 
     <span class="about-screen">
         <span class="header">
-            <span class="return-icon">
+            <span class="return-button">
                 <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
-                <span class="return-icon-highlight"></span>
+                <span class="return-button-highlight"></span>
             </span>
             <div class="title"> About </div>
         </span>
@@ -153,9 +153,9 @@
     <div class="reference-screen">
         <div class="header">
             <div class="top">
-                <span class="return-icon">
+                <span class="return-button">
                     <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
-                    <span class="return-icon-highlight"></span>
+                    <span class="return-button-highlight"></span>
                 </span>
                 <div class="title"> Reference </div>
             </div>
@@ -313,7 +313,7 @@
 
     <div class="flashCard-screen">
         <div class="top">
-            <span class="return-icon"><img src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
+            <span class="return-button"><img src="assets/icon/arrow_back_white_svg.svg" alt="return"></span>
             <div class="text"></div>
             <span></span>
         </div>
@@ -322,6 +322,34 @@
             </div>
         </div>
     </div>
+
+    <!------- QUIZ SCREEN ------->
+
+    <span class="quiz-screen">
+        <span class="header">
+            <span class="return-button">
+                <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
+                <span class="return-button-highlight"></span>
+            </span>
+            <div class="title"> Quiz </div>
+        </span>
+
+        <span class="container">
+            <span class="top">
+                <span class="wrong-counter">0</span>
+                <span class="cards-counter">1/12</span>
+                <span class="right-counter">0</span>
+            </span>
+
+            <span class="kana">123</span>
+
+            <span class="footer">
+                <input type="text" maxlength="3">
+                <span class="text"></span>
+                <span class="vertical-line"></span>
+            </span>
+        </span>
+    </span>
 
     <!------- MEMORY GAME ------->
     <div class="memory-game">
@@ -356,8 +384,9 @@
 
     <script src="./scripts/referenceScreenInterface.js"></script>
 
-
     <script src="./scripts/flashCardScreenInterface.js"></script>
+
+    <script src="./scripts/quizScreenInterface.js"></script>
 
     <script src="./scripts/checkBox.js"></script>
     <script src="./scripts/checkBoxList.js"></script>

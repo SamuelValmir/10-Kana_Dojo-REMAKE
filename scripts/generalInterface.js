@@ -8,8 +8,8 @@ let progressBar;
 let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
-    menuScreenInterface.show();
-    // document.querySelector(".quiz-screen").style.display = "none";
+    // menuScreenInterface.show();
+    quizScreenInterface.show();
     // document.querySelector(".memory-game").style.display = "grid";
 })
 

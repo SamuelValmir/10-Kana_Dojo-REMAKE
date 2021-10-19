@@ -5,7 +5,7 @@ let flashCardScreenInterface = {
     top: {
         htmlElement: document.querySelector(".flashCard-screen .top"),
         returnButton: {
-            htmlElement: document.querySelector(".flashCard-screen .top .return-icon"),
+            htmlElement: document.querySelector(".flashCard-screen .top .return-button"),
             addEventListener() {
                 this.htmlElement.addEventListener("click", () => {
                     flashCardScreenInterface.hide();
@@ -89,11 +89,13 @@ let flashCardScreenInterface = {
 
                 cardElement.addEventListener("click", () => {
                     cardElement.classList.toggle("flip");
+                    // cardElement.focus();
+                    // cardElement.scrollIntoView();
                 });
             });
 
             items.addEventListener("scroll", () => {
-               
+
                 let spaceBetweenCards;
                 let spotsToChangeCounter = flashCardScreenInterface.items.spotsToChangeCounter;
                 let cardWidth;
@@ -165,8 +167,11 @@ let flashCardScreenInterface = {
 
     initialize(flashCards) {
         flashCardScreenInterface.items.cards = flashCards;
-        flashCardScreenInterface.setItemsWheelEventListener();
         flashCardScreenInterface.items.buildCards();
+        if (this.firstShow === true) {
+            this.firstShow = false;
+            flashCardScreenInterface.setItemsWheelEventListener();
+        }
 
         // It scrolls until the start
         this.items.htmlElement.style.setProperty("--scrollBehavior", "none"); // This is for now scroll too slow. That way the scroll will occurs as fast as it can

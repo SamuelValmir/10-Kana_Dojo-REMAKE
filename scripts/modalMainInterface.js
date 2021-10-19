@@ -5,6 +5,7 @@ let modalMainInterface = {
     leftCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-left .checkbox"),
     rightCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-right .checkbox"),
     firstShow: true,
+    leadsTo: undefined,
 
     leftCheckBoxObjectList: [],
     rightCheckBoxObjectList: [],
@@ -148,7 +149,7 @@ let modalMainInterface = {
                 }
             }
 
-            let cardsForFlashCards = [
+            let cards = [
                 [...this.hiraganaBasicList],
                 [...this.hiraganaVoicedList],
                 [...this.hiraganaCombo1List],
@@ -157,12 +158,22 @@ let modalMainInterface = {
                 [...this.katakanaVoicedList],
                 [...this.katakanaCombo1List],
                 [...this.katakanaCombo2List]];
-                
-            cardsForFlashCards = cardsForFlashCards.flat();
+
+            cards = cards.flat();
 
             this.hide();
             menuScreenInterface.hide();
-            flashCardScreenInterface.show(cardsForFlashCards);
+
+            switch (this.leadsTo) {
+                case FLASH_CARD_SCREEN: {
+                    flashCardScreenInterface.show(cards);
+                } break;
+
+                case QUIZ_SCREEN :{
+                    quizScreenInterface.show();
+                } break;
+
+            }
 
         })
     },
