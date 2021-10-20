@@ -60,8 +60,6 @@ let flashCardScreenInterface = {
             let items = this.htmlElement;
             items.innerHTML = "";
 
-            this.shuffle();
-
             this.cards.forEach(kana => {
                 let card = this.flashCard;
                 let flashCardList = this.flashCardList;
@@ -127,18 +125,6 @@ let flashCardScreenInterface = {
                 })
             })
         },
-
-        shuffle() {
-            let cards = this.cards;
-            let currentIndex = cards.length;
-            let randomIndex = 0;
-
-            while (currentIndex !== 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
-                [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
-            }
-        }
     },
 
     setItemsWheelEventListener: function () {

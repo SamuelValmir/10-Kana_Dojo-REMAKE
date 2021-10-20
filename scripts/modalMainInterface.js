@@ -160,6 +160,7 @@ let modalMainInterface = {
                 [...this.katakanaCombo2List]];
 
             cards = cards.flat();
+            cards = Cards.shuffle(cards);
 
             this.hide();
             menuScreenInterface.hide();
@@ -170,7 +171,8 @@ let modalMainInterface = {
                 } break;
 
                 case QUIZ_SCREEN :{
-                    quizScreenInterface.show();
+                    quizScreenInterface.show(cards);
+                    console.log(cards);
                 } break;
 
             }

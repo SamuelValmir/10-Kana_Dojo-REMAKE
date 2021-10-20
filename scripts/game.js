@@ -61,7 +61,7 @@ let game = {
         for (let index = 0; index < 90; index++) {
             this.cards.pop();
         }
-        this.shuffle();
+        this.cards = Cards.shuffle(this.cards);
     },
 
     createPairOf(kana) { // Duplicate a card and return an object with the copies
@@ -71,17 +71,17 @@ let game = {
         ];
     },
 
-    shuffle() {
-        let cards = this.cards;
-        let currentIndex = cards.length;
-        let randomIndex = 0;
+    // shuffle() {
+    //     let cards = this.cards;
+    //     let currentIndex = cards.length;
+    //     let randomIndex = 0;
 
-        while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-            [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
-        }
-    },
+    //     while (currentIndex !== 0) {
+    //         randomIndex = Math.floor(Math.random() * currentIndex);
+    //         currentIndex--;
+    //         [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
+    //     }
+    // },
 
     createId(kana) {
         let num = Math.random() * 1000

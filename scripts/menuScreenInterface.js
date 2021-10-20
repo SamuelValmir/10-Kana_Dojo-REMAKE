@@ -31,8 +31,6 @@ let menuScreenInterface = {
         this.htmlElement.style.display = "block";
         this.isShowing = true;
         this.initialize();
-
-
     },
 
     hide() {
