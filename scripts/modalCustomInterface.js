@@ -1,17 +1,17 @@
 let modalCustomInterface = {
     htmlElement: document.querySelector(".modal-custom"),
     firstShow: true,
-    topText: document.querySelector(".modal-custom .modal-top h4"),
+    topText: document.querySelector(".modal-custom .top h4"),
     currentlyCheckBox: undefined,
     checkBoxElementList: undefined,
     checkBoxObjectList: [],
     hiraganaCheckBoxObjectList: [],
     katakanaCheckBoxObjectList: [],
-    content: document.querySelector(".modal-custom .modal-content"),
+    content: document.querySelector(".modal-custom .content"),
 
     buttons: {
-        cancelButton: document.querySelector(".modal-custom-button-cancel"),
-        finishButton: document.querySelector(".modal-custom-button-finish"),
+        cancelButton: document.querySelector(".modal-custom .cancel-button"),
+        finishButton: document.querySelector(".modal-custom .finish-button"),
 
         animate(button) {
             let promise = new Promise((resolve) => {

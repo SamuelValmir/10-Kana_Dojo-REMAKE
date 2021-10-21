@@ -55,8 +55,14 @@
                 </span>
             </div>
             <nav class='menu-screen-nav'>
-                <div class='nav-option left-option learn-option' data-selected='true'>LEARN</div>
-                <div class='nav-option right-option play-option' data-selected='false'>PLAY</div>
+                <div class='nav-option left-option learn-option' data-selected='true'>LEARN
+                    <span class="option-highlight"></span>
+                </div>
+
+                <div class='nav-option right-option play-option' data-selected='false'>PLAY
+                    <span class="option-highlight"></span>
+                </div>
+
                 <span class="scroll-bar"></span>
             </nav>
         </div>
@@ -160,8 +166,12 @@
                 <div class="title"> Reference </div>
             </div>
             <nav class="reference-screen-nav">
-                <div class="nav-option left-option hiragana-option" data-selected="true">HIRAGANA</div>
-                <div class="nav-option right-option katakana-option" data-selected="false">KATAKANA</div>
+                <div class="nav-option left-option hiragana-option" data-selected="true">HIRAGANA
+                    <span class="option-highlight"></span>
+                </div>
+                <div class="nav-option right-option katakana-option" data-selected="false">KATAKANA
+                    <span class="option-highlight"></span>
+                </div>
                 <span class="scroll-bar"></span>
             </nav>
         </div>
@@ -216,12 +226,12 @@
 
     <!------- MODAL MAIN ------->
     <div class="modal modal-main">
-        <div class="modal-container">
-            <div class="modal-top">
+        <div class="container">
+            <div class="top">
                 <h4>New Flash Cards</h4>
             </div>
-            <div class="modal-content">
-                <div class="modal-content-left">
+            <div class="content">
+                <div class="content-left">
 
                     <label class="checkbox-container">
                         <span class="checkmark-circle"></span>
@@ -242,7 +252,7 @@
 
                 </div>
 
-                <div class="modal-content-right">
+                <div class="content-right">
                     <span>
                         <label class="checkbox-container">
                             <span class="checkmark-circle"></span>
@@ -285,9 +295,9 @@
                     </span>
                 </div>
             </div>
-            <div class="modal-bottom">
-                <div class="modal-button modal-main-button-back">BACK</div>
-                <div class="modal-button modal-main-button-start">START</div>
+            <div class="bottom">
+                <span class="button main-button-back">BACK</span>
+                <span class="button main-button-start">START</span>
             </div>
         </div>
     </div>
@@ -295,16 +305,16 @@
     <!------- MODAL CUSTOM ------->
 
     <div class="modal modal-custom">
-        <div class="modal-container">
-            <div class="modal-top">
+        <div class="container">
+            <div class="top">
                 <h4></h4>
             </div>
 
-            <div class="modal-content"></div>
+            <div class="content"></div>
 
-            <div class="modal-bottom">
-                <div class="modal-button modal-custom-button-cancel">CANCEL</div>
-                <div class="modal-button modal-custom-button-finish">FINISH</div>
+            <div class="bottom">
+                <span class="button cancel-button">CANCEL</span>
+                <span class="button finish-button">FINISH</span>
             </div>
         </div>
     </div>
@@ -350,6 +360,28 @@
             </span>
         </span>
     </span>
+
+
+    <!------- QUIZ MODAL ------->
+    <div class="modal modal-quiz">
+        <div class="container">
+            <span class=top>Results</span>
+
+            <div class="content">
+                <span class="right-container"><span>RIGHT</span> <span>1</span></span>
+                <span class="wrong-container"><span>WRONG</span> <span>2</span></span>
+                <span class="score-container"><span>SCORE</span> <span>50%</span></span>
+            </div>
+
+            <div class="bottom">
+                <span></span>
+                <span class="retake-button">RETAKE</span>
+                <span class="exit-button">EXIT</span>
+            </div>
+        </div>
+
+    </div>
+
 
     <!------- MEMORY GAME ------->
     <div class="memory-game">

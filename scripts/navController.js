@@ -1,7 +1,9 @@
 class NavController {
-    constructor(leftOption, rightOption, leftScreen, rightScreen, containers, scrollBar, menuButton) {
+    constructor(leftOption, leftOptionHighlight, rightOption, rightOptionHighlight, leftScreen, rightScreen, containers, scrollBar, menuButton) {
         this.leftOption = leftOption;
         this.rightOption = rightOption;
+        this.leftOptionHighlight = leftOptionHighlight;
+        this.rightOptionHighlight = rightOptionHighlight;
         this.leftScreen = leftScreen;
         this.rightScreen = rightScreen;
         this.containers = containers;
@@ -10,15 +12,17 @@ class NavController {
     }
 
     animateLeftOption() {
-        this.leftOption.classList.add("highlight");
-        this.rightOption.classList.remove("highlight");
+        this.leftOptionHighlight.animate([
+            {width: "100%", zIndex: 1}
+        ], {duration: 200, easing: "ease-out"})
         this.containers.scrollTo(0, 0);
     };
 
     animateRightOption() {
-        this.rightOption.classList.add("highlight");
-        this.leftOption.classList.remove("highlight");
-        this.containers.scrollBy((this.containers.scrollWidth / 2), 0);
+        this.rightOptionHighlight.animate([
+            {width: "100%", zIndex: 1}
+        ], {duration: 200, easing: "ease-out"})
+        this.containers.scrollTo((this.containers.scrollWidth / 2), 0);
     };
 
     animateMenuButton() {
@@ -86,14 +90,12 @@ class NavController {
 
             this.rightOption.style.color = "rgba(255, 255, 255, .5)";
             this.leftOption.style.color = "white";
-            this.leftOption.classList.remove("highlight");
         } else {
             navModel.isLeftOptionSelected = false;
             navModel.isRightOptionSelected = true;
 
             this.leftOption.style.color = "rgba(255, 255, 255, .5)";
             this.rightOption.style.color = "white";
-            this.rightOption.classList.remove("highlight");
         }
     }
 }

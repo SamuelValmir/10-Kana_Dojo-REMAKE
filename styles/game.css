@@ -148,36 +148,27 @@ svg circle:last-child {
 }
 
 .left-option, .right-option{
+    position: relative;
     width: 50vw;
+    display: flex;
+    place-content: center;
 }
 
 .right-option{
     color: rgba(255, 255, 255, .5);
 }
 
-.left-option::after, .right-option::after{
-    content: "";
-    background-color: rgba(255, 255, 255, 1);
+.left-option .option-highlight, .right-option .option-highlight{
+    background-color: rgba(255, 255, 255, .2);
 
     height: 100%;
+    width: 0;
+    display: block;
     position: absolute;
-    z-index: -1;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    z-index: -1;
 }
 
-.highlight::after{
-    animation: hightButton .5s;
-    animation-fill-mode: forwards;
-}
-
-@keyframes hightButton {
-    0%{width: 0px; z-index: 1;}
-    99%{width: 100%;}
-    to{background-color: rgba(255, 255, 255, 0);}
-    
-}
 
 .menu-screen .containers-wrapper, .reference-screen .containers-wrapper{
     display: grid;
@@ -513,11 +504,14 @@ svg circle:last-child {
 
 
 .quiz-screen .footer{
-    height: 8vw;
+    width: 100vw;
+    height: 10vw;
     display: flex;
     text-align: center;
     position: relative;
     justify-content: center;
+    align-self: center;
+    font-size: 8vw;
 }
 
 .quiz-screen .footer input{
@@ -575,12 +569,12 @@ svg circle:last-child {
     z-index: 1;
 }
 
-.modal-top{
+.modal .top{
     display: flex;
     justify-items: start;
 }
 
-.modal-container{
+.modal .container{
     width: fit-content;
     background-color: var(--white);
 
@@ -594,7 +588,7 @@ svg circle:last-child {
 }
 
 
-.modal-content{
+.modal .content{
     display: flex;
     gap: 10px;
 }
@@ -609,20 +603,20 @@ svg circle:last-child {
     position: relative;
 }
 
-.modal-content-left, .modal-content-right{
+.modal .content-left, .modal .content-right{
     display: flex;
     gap: 5px;
     flex-direction: column;
     align-items: start;
 }
 
-.modal-content-right span{
+.modal .content-right span{
     display: flex;
     flex-direction: row;
     gap: 5px;
 }
 
-.modal-content-right img{
+.modal .content-right img{
     display: none;
     width: 6vw;
 }
@@ -674,11 +668,11 @@ label{
 
 /** ----- MODAL CUSTOM ----- */
 
-.modal-custom .modal-container{
+.modal-custom .container{
     height: fit-content;
 }
 
-.modal-custom .modal-content{
+.modal-custom .content{
     max-height: 50vw;
     width: 100%;
     flex-direction: column;
@@ -726,12 +720,12 @@ label{
 }
 
 @media screen and (min-width: 300px) {
-    .modal-container{    
+    .modal .container{    
         gap: 20px;
         padding: 4vw;
     }
 
-    .modal-content{
+    .modal .content{
         display: flex;
         gap: 20px;
     }
@@ -742,14 +736,14 @@ label{
 
 }
 
-.modal-bottom{
+.modal .bottom{
     color: var(--primaryColor);
 
     display: flex;
     justify-content: space-between;
 }
 
-.modal-bottom div{
+.modal .bottom span{
     padding: 8px;
 }
 
@@ -868,6 +862,22 @@ label{
         scrollbar-width: thin;
     }
 }
+
+
+
+
+/** ----- MODAL QUIZ ----- */
+
+.modal-quiz{
+    /* width: 90vw; */
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+.modal-quiz .top{
+    /* align-self: start; */
+}
+
 /* ----------------------------------------------------------- */
 
 /** ----- MEMORY GAME ----- */

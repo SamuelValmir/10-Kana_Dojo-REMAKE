@@ -2,8 +2,8 @@
 
 let modalMainInterface = {
     htmlElement: document.querySelector(".modal-main"),
-    leftCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-left .checkbox"),
-    rightCheckBoxElementList: document.querySelectorAll(".modal-main .modal-content-right .checkbox"),
+    leftCheckBoxElementList: document.querySelectorAll(".modal-main .content-left .checkbox"),
+    rightCheckBoxElementList: document.querySelectorAll(".modal-main .content-right .checkbox"),
     firstShow: true,
     leadsTo: undefined,
 
@@ -21,8 +21,8 @@ let modalMainInterface = {
     katakanaCombo2List: [],
 
     buttons: {
-        backButton: document.querySelector(".modal-main-button-back"),
-        startButton: document.querySelector(".modal-main-button-start"),
+        backButton: document.querySelector(".modal-main .main-button-back"),
+        startButton: document.querySelector(".modal-main .main-button-start"),
 
         animate(button) {
             let promise = new Promise((resolve) => {
@@ -172,7 +172,6 @@ let modalMainInterface = {
 
                 case QUIZ_SCREEN :{
                     quizScreenInterface.show(cards);
-                    console.log(cards);
                 } break;
 
             }

@@ -49,10 +49,6 @@ let quizScreenInterface = {
                 }
             })
 
-            this.inputText.addEventListener("blur", () => {
-                this.nextCard();
-            })
-
             this.inputText.addEventListener("keypress", event => {
                 if (event.key === "Enter" || event.keyCode === "13") {
                     this.nextCard();
@@ -62,6 +58,7 @@ let quizScreenInterface = {
             this.inputText.focus();
             this.setCurrentCard();
             this.updateCardsCounter();
+            this.showCardAnimation();
         }
     },
 
@@ -77,20 +74,123 @@ let quizScreenInterface = {
         const currentPosition = this.quizScreenModelObject.currentPosition;
         const cardsLength = this.quizScreenModelObject.cards.length;
         this.cardsCounter.innerHTML = currentPosition + " / " + cardsLength;
-
     },
 
     setCurrentCard() {
         this.card.innerHTML = this.quizScreenModelObject.currentCard;
     },
 
-    nextCard() {
+    hideCardAnimation() {
+        const promise = new Promise(resolve=>{
+
+            let animation = this.card.animate([
+                { transform: "scale(.5)" }
+            ], { duration: 300, easing: "linear" })
+
+            animation.addEventListener("finish", ()=>{
+                resolve();
+            })
+        })
+
+        return promise;
+    },
+
+    showCardAnimation() {
+        // console.log("animation")
+        this.card.style.transform = "scale(1.5)";
+        let animation = this.card.animate([
+            { transform: "scale(1)" }
+        ], { duration: 200, easing: "linear" })
+
+        animation.addEventListener("finish", () => {
+            this.card.style.transform = "scale(1)";
+        })
+
+        this.card.style.color = "#555";
+    },
+
+     showRightAnswer(){
+        const promise = new Promise(resolve=>{
+            this.text.innerHTML = wanakana.toRomaji(this.card.innerHTML);
+
+            let animation = this.text.animate([
+                {background: "rgb(230, 230, 0)"},
+            ], { duration: 1250, easing: "ease-out"})
+
+            animation.addEventListener("finish", ()=>{
+                resolve();
+            })
+        })
+
+        return promise;
+    },
+
+    wrongAnimation(){
+        const promise = new Promise(resolve=>{
+            let animation = this.card.animate([
+                { transform: "translate(1rem, 0)"},
+                { transform: "translate(-1rem, 0)"},
+                { transform: "translate(1rem, 0)"},
+                { transform: "translate(-1rem, 0)"},
+                { transform: "translate(1rem, 0)"},
+                { transform: "translate(-1rem, 0)"},
+                { transform: "translate(1rem, 0)"},
+                { transform: "translate(-1rem, 0)"},
+                { transform: "translate(0, 0)"},
+                { transform: "translate(0, 0)"},
+                { transform: "translate(0, 0)"},
+                { transform: "translate(0, 0)"},
+                { transform: "translate(0, 0)"},
+                { transform: "translate(0, 0)"},
+         
+            ], { duration: 700, easing: "cubic-bezier(.7, 0, 0.3 , 1)"})
+
+            animation.addEventListener("finish", ()=>{
+                resolve();
+            })
+        })
+
+        return promise;
+    },
+
+    rightAnimation(){
+        const promise = new Promise(resolve=>{
+            let animation = this.card.animate([
+                { transform: "scale(1)"},
+                { transform: "scale(1.4)"},
+                { transform: "scale(1)"},
+            ], { duration: 600, easing: "cubic-bezier(.40, 1, 0.15, 1)"})
+
+            animation.addEventListener("finish", ()=>{
+                resolve();
+            })
+        })
+
+        return promise;
+    },
+
+    makeCardGreen(){
+        this.card.style.color = "#00CA00";
+    },
+    
+    makeCardRed(){
+        this.card.style.color = getComputedStyle(document.documentElement).getPropertyValue("--primaryColor");
+    },
+
+    async nextCard() {
         if (this.quizScreenModelObject.checkAnswer(this.inputText.value) === true) {
             this.updateRightCounter();
+            this.makeCardGreen();
+            await this.rightAnimation();
         } else {
+            this.makeCardRed();
             this.updateWrongCounter();
+            await this.wrongAnimation();
+            await this.showRightAnswer();
         }
-
+        
+        await this.hideCardAnimation();
+        this.showCardAnimation();
         this.setCurrentCard();
         this.updateCardsCounter();
         this.inputText.value = '';

@@ -9,6 +9,8 @@ let menuScreenInterface = {
     navOptions: {
         learnOption: document.querySelector(".menu-screen .learn-option"),
         playOption: document.querySelector(".menu-screen .play-option"),
+        learnOptionHighlight: document.querySelector(".menu-screen .learn-option .option-highlight"),
+        playOptionHighlight: document.querySelector(".menu-screen .play-option .option-highlight"),
     },
 
     screens: {
@@ -45,12 +47,14 @@ let menuScreenInterface = {
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;
+        let learnOptionHighlight = this.navOptions.learnOptionHighlight;
+        let playOptionHighlight = this.navOptions.playOptionHighlight;
 
         let learnScreen = this.screens.learnScreen;
         let playScreen = this.screens.playScreen;
 
         const NavModelObject = new NavModel;
-        const NavControllerObject = new NavController(learnOption, playOption, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
+        const NavControllerObject = new NavController(learnOption, learnOptionHighlight, playOption, playOptionHighlight, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
         const HeaderControllerObject = new HeaderController(undefined, NavControllerObject);
 
         this.headerController = HeaderControllerObject;
