@@ -9,6 +9,7 @@ let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
     menuScreenInterface.show();
+    // modalQuizInterface.show();
     // quizScreenInterface.show();
     // document.querySelector(".memory-game").style.display = "grid";
 })

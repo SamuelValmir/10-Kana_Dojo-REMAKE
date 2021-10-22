@@ -31,14 +31,13 @@ let quizScreenInterface = {
             const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, undefined);
             // this.headerController = HeaderControllerObject;    
 
-            this.quizScreenModelObject = new QuizScreenModel(cards)
-
+            
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
                 this.hide();
                 menuScreenInterface.show();
             })
-
+            
             this.inputText.addEventListener("input", () => {
                 this.text.innerHTML = this.inputText.value;
 
@@ -51,15 +50,23 @@ let quizScreenInterface = {
 
             this.inputText.addEventListener("keypress", event => {
                 if (event.key === "Enter" || event.keyCode === "13") {
-                    this.nextCard();
+                    if (this.quizScreenModelObject.animationIsShowing === false) {
+                        this.nextCard();
+                    }
                 }
             })
 
-            this.inputText.focus();
-            this.setCurrentCard();
-            this.updateCardsCounter();
-            this.showCardAnimation();
         }
+        console.log(cards)
+
+        this.quizScreenModelObject = new QuizScreenModel(cards)
+        
+        this.inputText.focus();
+        this.updateWrongCounter();
+        this.updateRightCounter();
+        this.setCurrentCard();
+        this.updateCardsCounter();
+        this.showCardAnimation();
     },
 
     updateWrongCounter() {
@@ -81,13 +88,13 @@ let quizScreenInterface = {
     },
 
     hideCardAnimation() {
-        const promise = new Promise(resolve=>{
+        const promise = new Promise(resolve => {
 
             let animation = this.card.animate([
                 { transform: "scale(.5)" }
             ], { duration: 300, easing: "linear" })
 
-            animation.addEventListener("finish", ()=>{
+            animation.addEventListener("finish", () => {
                 resolve();
             })
         })
@@ -109,15 +116,15 @@ let quizScreenInterface = {
         this.card.style.color = "#555";
     },
 
-     showRightAnswer(){
-        const promise = new Promise(resolve=>{
+    showRightAnswer() {
+        const promise = new Promise(resolve => {
             this.text.innerHTML = wanakana.toRomaji(this.card.innerHTML);
 
             let animation = this.text.animate([
-                {background: "rgb(230, 230, 0)"},
-            ], { duration: 1250, easing: "ease-out"})
+                { background: "rgb(230, 230, 0)" },
+            ], { duration: 1250, easing: "ease-out" })
 
-            animation.addEventListener("finish", ()=>{
+            animation.addEventListener("finish", () => {
                 resolve();
             })
         })
@@ -125,27 +132,27 @@ let quizScreenInterface = {
         return promise;
     },
 
-    wrongAnimation(){
-        const promise = new Promise(resolve=>{
+    wrongAnimation() {
+        const promise = new Promise(resolve => {
             let animation = this.card.animate([
-                { transform: "translate(1rem, 0)"},
-                { transform: "translate(-1rem, 0)"},
-                { transform: "translate(1rem, 0)"},
-                { transform: "translate(-1rem, 0)"},
-                { transform: "translate(1rem, 0)"},
-                { transform: "translate(-1rem, 0)"},
-                { transform: "translate(1rem, 0)"},
-                { transform: "translate(-1rem, 0)"},
-                { transform: "translate(0, 0)"},
-                { transform: "translate(0, 0)"},
-                { transform: "translate(0, 0)"},
-                { transform: "translate(0, 0)"},
-                { transform: "translate(0, 0)"},
-                { transform: "translate(0, 0)"},
-         
-            ], { duration: 700, easing: "cubic-bezier(.7, 0, 0.3 , 1)"})
+                { transform: "translate(1rem, 0)" },
+                { transform: "translate(-1rem, 0)" },
+                { transform: "translate(1rem, 0)" },
+                { transform: "translate(-1rem, 0)" },
+                { transform: "translate(1rem, 0)" },
+                { transform: "translate(-1rem, 0)" },
+                { transform: "translate(1rem, 0)" },
+                { transform: "translate(-1rem, 0)" },
+                { transform: "translate(0, 0)" },
+                { transform: "translate(0, 0)" },
+                { transform: "translate(0, 0)" },
+                { transform: "translate(0, 0)" },
+                { transform: "translate(0, 0)" },
+                { transform: "translate(0, 0)" },
 
-            animation.addEventListener("finish", ()=>{
+            ], { duration: 700, easing: "cubic-bezier(.7, 0, 0.3 , 1)" })
+
+            animation.addEventListener("finish", () => {
                 resolve();
             })
         })
@@ -153,15 +160,15 @@ let quizScreenInterface = {
         return promise;
     },
 
-    rightAnimation(){
-        const promise = new Promise(resolve=>{
+    rightAnimation() {
+        const promise = new Promise(resolve => {
             let animation = this.card.animate([
-                { transform: "scale(1)"},
-                { transform: "scale(1.4)"},
-                { transform: "scale(1)"},
-            ], { duration: 600, easing: "cubic-bezier(.40, 1, 0.15, 1)"})
+                { transform: "scale(1)" },
+                { transform: "scale(1.4)" },
+                { transform: "scale(1)" },
+            ], { duration: 600, easing: "cubic-bezier(.40, 1, 0.15, 1)" })
 
-            animation.addEventListener("finish", ()=>{
+            animation.addEventListener("finish", () => {
                 resolve();
             })
         })
@@ -169,18 +176,19 @@ let quizScreenInterface = {
         return promise;
     },
 
-    makeCardGreen(){
+    makeCardGreen() {
         this.card.style.color = "#00CA00";
     },
-    
-    makeCardRed(){
+
+    makeCardRed() {
         this.card.style.color = getComputedStyle(document.documentElement).getPropertyValue("--primaryColor");
     },
 
     async nextCard() {
+        this.quizScreenModelObject.animationIsShowing = true;
         if (this.quizScreenModelObject.checkAnswer(this.inputText.value) === true) {
-            this.updateRightCounter();
             this.makeCardGreen();
+            this.updateRightCounter();
             await this.rightAnimation();
         } else {
             this.makeCardRed();
@@ -188,15 +196,16 @@ let quizScreenInterface = {
             await this.wrongAnimation();
             await this.showRightAnswer();
         }
-        
+
         await this.hideCardAnimation();
-        this.showCardAnimation();
+        await this.showCardAnimation();
         this.setCurrentCard();
         this.updateCardsCounter();
         this.inputText.value = '';
         this.text.innerHTML = '';
         this.inputText.focus();
         this.verticalLine.style.display = "block";
+        this.quizScreenModelObject.animationIsShowing = false;
     }
 
 }

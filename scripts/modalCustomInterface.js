@@ -9,25 +9,10 @@ let modalCustomInterface = {
     katakanaCheckBoxObjectList: [],
     content: document.querySelector(".modal-custom .content"),
 
-    buttons: {
-        cancelButton: document.querySelector(".modal-custom .cancel-button"),
-        finishButton: document.querySelector(".modal-custom .finish-button"),
+    cancelButton: document.querySelector(".modal-custom .cancel-button"),
+    finishButton: document.querySelector(".modal-custom .finish-button"),
 
-        animate(button) {
-            let promise = new Promise((resolve) => {
-                let animation = button.animate([
-                    { backgroundColor: "#ddd" },
-                    { backgroundColor: "var(--white)" },
-                ], 300);
-
-                // When animation is finished the button execute it function
-                animation.addEventListener('finish', () => {
-                    resolve();
-                })
-            })
-            return promise;
-        }
-    },
+    modalControllerObject: undefined,
 
     show(title) {
         this.htmlElement.style.display = "flex";
@@ -39,10 +24,12 @@ let modalCustomInterface = {
     },
 
     initialize(title) {
-        if (this.firstShow === true){
+        if (this.firstShow === true) {
             this.firstShow = false;
             this.initializeButtons();
         }
+
+        this.modalControllerObject = new ModalController(this.cancelButton, this.finishButton);
 
         this.topText.innerHTML = "Custom " + title;
         this.content.innerHTML = "";
@@ -94,16 +81,16 @@ let modalCustomInterface = {
     },
 
     initializeButtons() {
-        let cancelButton = this.buttons.cancelButton;
-        let finishButton = this.buttons.finishButton;
+        let cancelButton = this.cancelButton;
+        let finishButton = this.finishButton;
 
         cancelButton.addEventListener("click", async () => {
-            await this.buttons.animate(cancelButton);
+            await this.modalControllerObject.animateLeftButton();
             this.hide();
         })
-
+        
         finishButton.addEventListener("click", async () => {
-            await this.buttons.animate(finishButton);
+            await this.modalControllerObject.animateRightButton();
             let checkBoxObject = this.currentlyCheckBox;
             checkBoxObject.isEdited = true;
 

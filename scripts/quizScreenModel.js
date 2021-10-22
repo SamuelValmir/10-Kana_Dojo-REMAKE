@@ -6,6 +6,7 @@ class QuizScreenModel {
     wrongCounter = 0;
     rightCounter = 0;
     currentPosition = 1;
+    animationIsShowing = false;
 
     increaseWrongCounter() {
         this.wrongCounter++;
@@ -18,10 +19,6 @@ class QuizScreenModel {
     increaseCurrentPosition() {
         this.currentPosition++;
     }
-    
-    updateCardsCounter() {
-
-    }
 
     updateCurrentCard(){
         this.currentCard = this.cards[this.currentPosition - 1];
@@ -30,8 +27,9 @@ class QuizScreenModel {
     checkAnswer(answer){
         let result;
         let answerString = new String(answer);
-        answerString = answerString.trim();
-
+        answerString = answerString.trim(); //remove the left and right whitespace
+        answerString = answerString.toLowerCase();
+        
         if (answerString === wanakana.toRomaji(this.currentCard)) {
             this.increaseRightCounter();
             result = true;

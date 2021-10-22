@@ -20,25 +20,10 @@ let modalMainInterface = {
     katakanaCombo1List: [],
     katakanaCombo2List: [],
 
-    buttons: {
-        backButton: document.querySelector(".modal-main .main-button-back"),
-        startButton: document.querySelector(".modal-main .main-button-start"),
+    backButton: document.querySelector(".modal-main  .back-button"),
+    startButton: document.querySelector(".modal-main .start-button"),
 
-        animate(button) {
-            let promise = new Promise((resolve) => {
-                let animation = button.animate([
-                    { backgroundColor: "#ddd" },
-                    { backgroundColor: "var(--white)" },
-                ], 300);
-
-                // When animation is finished the button execute it function
-                animation.addEventListener('finish', () => {
-                    resolve();
-                })
-            })
-            return promise;
-        }
-    },
+    modalControllerObject: undefined,
 
     show() {
         this.htmlElement.style.display = "flex";
@@ -62,6 +47,8 @@ let modalMainInterface = {
             this.firstShow = false;
             this.initializeButtons();
 
+            this.modalControllerObject = new ModalController(this.backButton, this.startButton);
+
             // Build objects to the left and right checkboxes
             let leftCheckBoxElementList = this.leftCheckBoxElementList;
             let rightCheckBoxElementList = this.rightCheckBoxElementList;
@@ -75,16 +62,16 @@ let modalMainInterface = {
     },
 
     initializeButtons() {
-        let backButton = this.buttons.backButton;
-        let startButton = this.buttons.startButton;
+        let backButton = this.backButton;
+        let startButton = this.startButton;
 
         backButton.addEventListener("click", async () => {
-            await this.buttons.animate(backButton);
+            await this.modalControllerObject.animateLeftButton();
             this.hide();
         })
-
+        
         startButton.addEventListener("click", async () => {
-            await this.buttons.animate(startButton);
+            await this.modalControllerObject.animateRightButton();
 
             let checkBoxHiragana = this.leftCheckBoxObjectList[0];
             let checkBoxKatakana = this.leftCheckBoxObjectList[1];
@@ -170,7 +157,7 @@ let modalMainInterface = {
                     flashCardScreenInterface.show(cards);
                 } break;
 
-                case QUIZ_SCREEN :{
+                case QUIZ_SCREEN: {
                     quizScreenInterface.show(cards);
                 } break;
 

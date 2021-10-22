@@ -296,8 +296,8 @@
                 </div>
             </div>
             <div class="bottom">
-                <span class="button main-button-back">BACK</span>
-                <span class="button main-button-start">START</span>
+                <span class="button back-button">BACK</span>
+                <span class="button start-button">START</span>
             </div>
         </div>
     </div>
@@ -346,9 +346,9 @@
 
         <span class="container">
             <span class="top">
-                <span class="wrong-counter">0</span>
+                <span class="wrong-counter"></span>
                 <span class="cards-counter"></span>
-                <span class="right-counter">0</span>
+                <span class="right-counter"></span>
             </span>
 
             <span class="card"></span>
@@ -368,15 +368,26 @@
             <span class=top>Results</span>
 
             <div class="content">
-                <span class="right-container"><span>RIGHT</span> <span>1</span></span>
-                <span class="wrong-container"><span>WRONG</span> <span>2</span></span>
-                <span class="score-container"><span>SCORE</span> <span>50%</span></span>
+                <span class="container right-container">
+                    <span class="top">RIGHT</span>
+                    <span class="bottom">1</span>
+                </span>
+
+                <span class="container wrong-container">
+                    <span class="top">WRONG</span>
+                    <span class="bottom">2</span>
+                </span>
+
+                <span class="container score-container">
+                    <span class="top">SCORE</span>
+                    <span class="bottom">50%</span>
+                </span>
             </div>
 
             <div class="bottom">
                 <span></span>
-                <span class="retake-button">RETAKE</span>
-                <span class="exit-button">EXIT</span>
+                <span class="button retake-button">RETAKE</span>
+                <span class="button exit-button">EXIT</span>
             </div>
         </div>
 
@@ -420,8 +431,10 @@
 
     <script src="./scripts/flashCardScreenInterface.js"></script>
 
+    <script src="./scripts/modalController.js"></script>
     <script src="./scripts/quizScreenModel.js"></script>
     <script src="./scripts/quizScreenInterface.js"></script>
+    <script src="./scripts/modalQuizInterface.js"></script>
 
     <script src="./scripts/checkBox.js"></script>
     <script src="./scripts/checkBoxList.js"></script>

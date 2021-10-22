@@ -10,6 +10,7 @@
 
 :root{
     --primaryColor: rgb(213, 3, 3);
+    --quizScreenColor: rgb(48, 107, 255);
     --secondary: #e1e5e7;
     --white: #fefefe;
     --scrollbarThumbColor: rgb(213, 3, 3);
@@ -470,7 +471,7 @@ svg circle:last-child {
 }
 
 .quiz-screen .header{
-    background-color: rgb(48, 107, 255);
+    background-color: var(--quizScreenColor);
 }
 
 .quiz-screen .container{
@@ -868,14 +869,71 @@ label{
 
 /** ----- MODAL QUIZ ----- */
 
-.modal-quiz{
-    /* width: 90vw; */
-    /* display: flex; */
-    /* flex-direction: column; */
+.modal-quiz .container{
+    gap: 2rem;
 }
 
-.modal-quiz .top{
-    /* align-self: start; */
+.modal-quiz .content{
+    gap: 0.5rem;
+}
+
+.modal-quiz .content .container{
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    gap:0;
+    padding: 0;
+    
+    box-shadow: none;
+}
+
+.modal-quiz .content .container .top{
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    padding: 2vw;
+    border-radius: .5rem .5rem 0 0;
+}
+
+.modal-quiz .content .container .bottom{
+    display: flex;
+    justify-content: center;
+    padding: 4vw;
+    
+    font-size: 7vw;
+    border-radius: 0 0 .5rem .5rem;
+}
+
+.modal-quiz .content .right-container .top{
+    background-color: rgb(34, 172, 0);
+}
+
+.modal-quiz .content .right-container .bottom{
+    background-color: rgba(34, 172, 0, 0.15);
+    color: rgb(34, 172, 0);
+}
+
+.modal-quiz .content .wrong-container .top{
+    background-color: rgb(213, 3, 3);
+}
+
+.modal-quiz .content .wrong-container .bottom{
+    background-color: rgba(213, 3, 3, 0.15);
+    color: rgb(213, 3, 3);
+}
+
+.modal-quiz .content .score-container .top{
+    background-color: rgb(82, 81, 81);
+}
+.modal-quiz .content .score-container .bottom{
+    background-color: rgba(82, 81, 81, 0.15);
+    color: rgb(82, 81, 81);
+}
+
+
+.modal-quiz .button{
+    color: var(--quizScreenColor);
 }
 
 /* ----------------------------------------------------------- */
