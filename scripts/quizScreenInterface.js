@@ -1,6 +1,8 @@
+"use strict";
 let quizScreenInterface = {
     htmlElement: document.querySelector(".quiz-screen"),
     firstShow: true,
+    cards: undefined,
     inputText: document.querySelector(".quiz-screen .footer input"),
     text: document.querySelector('.quiz-screen .footer .text'),
     verticalLine: document.querySelector(".quiz-screen .vertical-line"),
@@ -17,27 +19,33 @@ let quizScreenInterface = {
 
     show(cards) {
         this.htmlElement.style.display = "flex";
-        this.initialize(cards);
+        this.cards = cards;
+        this.initialize();
     },
 
     hide() {
         this.htmlElement.style.display = "none";
     },
 
-    initialize(cards) {
+    initialize() {
+        this.card.style.display = "block";
+        this.wrongCounter.style.display = "block";
+        this.cardsCounter.style.display = "block";
+        this.rightCounter.style.display = "block";
+        this.text.style.display = "block";
+        this.verticalLine.style.display = "block";
+
         if (this.firstShow === true) {
             this.firstShow = false;
 
             const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, undefined);
-            // this.headerController = HeaderControllerObject;    
 
-            
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
                 this.hide();
                 menuScreenInterface.show();
             })
-            
+
             this.inputText.addEventListener("input", () => {
                 this.text.innerHTML = this.inputText.value;
 
@@ -55,12 +63,10 @@ let quizScreenInterface = {
                     }
                 }
             })
-
         }
-        console.log(cards)
 
-        this.quizScreenModelObject = new QuizScreenModel(cards)
-        
+        this.quizScreenModelObject = new QuizScreenModel(this.cards)
+
         this.inputText.focus();
         this.updateWrongCounter();
         this.updateRightCounter();
@@ -198,14 +204,27 @@ let quizScreenInterface = {
         }
 
         await this.hideCardAnimation();
-        await this.showCardAnimation();
-        this.setCurrentCard();
-        this.updateCardsCounter();
-        this.inputText.value = '';
-        this.text.innerHTML = '';
-        this.inputText.focus();
-        this.verticalLine.style.display = "block";
-        this.quizScreenModelObject.animationIsShowing = false;
+
+        if (this.quizScreenModelObject.isOnLastCard === true) {
+            this.card.style.display = "none";
+            this.wrongCounter.style.display = "none";
+            this.cardsCounter.style.display = "none";
+            this.rightCounter.style.display = "none";
+            this.text.style.display = "none";
+            this.inputText.value = "";
+            this.text.innerHTML = "";
+            modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
+
+        } else {
+            await this.showCardAnimation();
+            this.setCurrentCard();
+            this.updateCardsCounter();
+            this.inputText.value = '';
+            this.text.innerHTML = '';
+            this.verticalLine.style.display = "block";
+            this.inputText.focus();
+            this.quizScreenModelObject.animationIsShowing = false;
+        }
     }
 
 }

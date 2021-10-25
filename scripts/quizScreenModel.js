@@ -1,12 +1,16 @@
+"use strict";
+
 class QuizScreenModel {
     constructor(cards) {
         this.cards = cards;
         this.currentCard = cards[0];
     }
+
     wrongCounter = 0;
     rightCounter = 0;
     currentPosition = 1;
     animationIsShowing = false;
+    isOnLastCard = false;
 
     increaseWrongCounter() {
         this.wrongCounter++;
@@ -37,9 +41,14 @@ class QuizScreenModel {
             this.increaseWrongCounter();
             result = false;
         }
-        
+
         this.increaseCurrentPosition();
         this.updateCurrentCard();
+
+        if(this.currentPosition - 1 === this.cards.length){
+            this.isOnLastCard = true;
+        }
+    
         return result;
     }
 }

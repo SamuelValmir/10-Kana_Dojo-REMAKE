@@ -14,6 +14,8 @@ let referenceScreenInterface = {
     navOptions: {
         hiraganaOption: document.querySelector(".reference-screen .hiragana-option"),
         katakanaOption: document.querySelector(".reference-screen .katakana-option"),
+        hiraganaOptionHighlight: document.querySelector(".reference-screen .hiragana-option .option-highlight"),
+        katakanaOptionHighlight: document.querySelector(".reference-screen .katakana-option .option-highlight")
     },
 
     screens: {
@@ -83,12 +85,14 @@ let referenceScreenInterface = {
     initialize() {
         let hiraganaOption = this.navOptions.hiraganaOption;
         let katakanaOption = this.navOptions.katakanaOption;
+        let hiraganaOptionHighlight = this.navOptions.hiraganaOptionHighlight;
+        let katakanaOptionHighlight = this.navOptions.katakanaOptionHighlight;
 
         let hiraganaScreen = this.screens.hiraganaScreen;
         let katakanaScreen = this.screens.katakanaScreen;
 
         const NavModelObject = new NavModel;
-        const NavControllerObject = new NavController(hiraganaOption, katakanaOption, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
+        const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
 
         const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, NavControllerObject)
 

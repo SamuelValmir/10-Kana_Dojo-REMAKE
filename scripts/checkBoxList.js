@@ -92,14 +92,10 @@ let checkBoxList = {
             if (alphabet !== undefined) {
                 checkBoxObject.alphabet = alphabet;
             }
-
+            
             if (families !== undefined) {
                 checkBoxObject.family = families[index];
-                if (index < (elementList.length / 2)) {
-                    checkBoxObject.alphabet = "hiragana";
-                } else {
-                    checkBoxObject.alphabet = "katakana"
-                }
+                checkBoxObject.alphabet = checkBoxElement.getAttribute("alphabet")
             }
 
             checkBoxObjectList.push(checkBoxObject);
@@ -160,8 +156,6 @@ let checkBoxList = {
 
     async editIconClickEventListener(checkBoxObject) {
         await checkBoxObject.animateEditIcon();
-        let title = checkBoxObject.name;
-        modalCustomInterface.currentlyCheckBox = checkBoxObject;
-        modalCustomInterface.show(title);
+        modalCustomInterface.show(checkBoxObject);
     }
 }

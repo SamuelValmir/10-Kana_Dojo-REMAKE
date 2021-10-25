@@ -2,7 +2,7 @@ let modalCustomInterface = {
     htmlElement: document.querySelector(".modal-custom"),
     firstShow: true,
     topText: document.querySelector(".modal-custom .top h4"),
-    currentlyCheckBox: undefined,
+    currentCheckBox: undefined,
     checkBoxElementList: undefined,
     checkBoxObjectList: [],
     hiraganaCheckBoxObjectList: [],
@@ -14,16 +14,17 @@ let modalCustomInterface = {
 
     modalControllerObject: undefined,
 
-    show(title) {
+    show(currentCheckBox) {
         this.htmlElement.style.display = "flex";
-        this.initialize(title);
+        this.currentCheckBox = currentCheckBox;
+        this.initialize();
     },
 
     hide() {
         this.htmlElement.style.display = "none";
     },
 
-    initialize(title) {
+    initialize() {
         if (this.firstShow === true) {
             this.firstShow = false;
             this.initializeButtons();
@@ -31,6 +32,7 @@ let modalCustomInterface = {
 
         this.modalControllerObject = new ModalController(this.cancelButton, this.finishButton);
 
+        const title = this.currentCheckBox.name;
         this.topText.innerHTML = "Custom " + title;
         this.content.innerHTML = "";
 
@@ -63,7 +65,7 @@ let modalCustomInterface = {
         if (checkBoxHiragana.isChecked === true) {
             showHiragana = true;
         }
-
+        
         if (checkBoxKatakana.isChecked === true) {
             showKatakana = true;
         }
@@ -91,10 +93,9 @@ let modalCustomInterface = {
         
         finishButton.addEventListener("click", async () => {
             await this.modalControllerObject.animateRightButton();
-            let checkBoxObject = this.currentlyCheckBox;
-            checkBoxObject.isEdited = true;
-
-            switch (checkBoxObject.name) {
+            this.currentCheckBox.isEdited = true;
+            
+            switch (this.currentCheckBox.name) {
                 case "Basic":
                     modalMainInterface.hiraganaBasicList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
                     modalMainInterface.katakanaBasicList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
