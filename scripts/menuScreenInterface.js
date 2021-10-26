@@ -26,7 +26,11 @@ let menuScreenInterface = {
         referenceSection: document.querySelector(".menu-screen .study-section-reference"),
         flashCardSection: document.querySelector(".menu-screen .study-section-flash-card"),
         quizSection: document.querySelector(".menu-screen .study-section-quiz"),
+    },
 
+    progress: {
+        hiraganaProgress: document.querySelector(".menu-screen .progress-container-hiragana"),
+        katakanaProgress: document.querySelector(".menu-screen .progress-container-katakana"),
     },
 
     show() {
@@ -119,7 +123,6 @@ let menuScreenInterface = {
             let quizSection = this.studySections.quizSection;
 
 
-
             referenceSection.addEventListener("click", () => {
                 menuScreenInterface.hide();
                 referenceScreenInterface.show();
@@ -133,6 +136,17 @@ let menuScreenInterface = {
             quizSection.addEventListener("click", () => {
                 modalMainInterface.show();
                 modalMainInterface.leadsTo = QUIZ_SCREEN;
+            })
+
+            this.progress.hiraganaProgress.addEventListener("click", () => {
+                this.hide();
+                statsScreenInterface.show();
+            })
+            
+            this.progress.katakanaProgress.addEventListener("click", () => {
+                this.hide();
+                statsScreenInterface.show();
+                //! I must start with katakana selected!
             })
         }
     }

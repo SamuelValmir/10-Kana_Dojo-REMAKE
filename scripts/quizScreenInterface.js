@@ -66,13 +66,14 @@ let quizScreenInterface = {
         }
 
         this.quizScreenModelObject = new QuizScreenModel(this.cards)
-
+        
         this.inputText.focus();
         this.updateWrongCounter();
         this.updateRightCounter();
         this.setCurrentCard();
         this.updateCardsCounter();
         this.showCardAnimation();
+        this.text.scrollIntoView();
     },
 
     updateWrongCounter() {
@@ -202,9 +203,9 @@ let quizScreenInterface = {
             await this.wrongAnimation();
             await this.showRightAnswer();
         }
-
+        
         await this.hideCardAnimation();
-
+        
         if (this.quizScreenModelObject.isOnLastCard === true) {
             this.card.style.display = "none";
             this.wrongCounter.style.display = "none";
@@ -214,7 +215,7 @@ let quizScreenInterface = {
             this.inputText.value = "";
             this.text.innerHTML = "";
             modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
-
+            
         } else {
             await this.showCardAnimation();
             this.setCurrentCard();
@@ -222,6 +223,7 @@ let quizScreenInterface = {
             this.inputText.value = '';
             this.text.innerHTML = '';
             this.verticalLine.style.display = "block";
+            this.text.scrollIntoView();
             this.inputText.focus();
             this.quizScreenModelObject.animationIsShowing = false;
         }

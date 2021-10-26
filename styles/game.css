@@ -87,7 +87,7 @@ svg circle:last-child {
     padding: 15px;
 }
 
-.menu-screen .scroll-bar, .reference-screen .scroll-bar{
+.menu-screen .scroll-bar, .reference-screen .scroll-bar, .stats-screen .scroll-bar{
     background-color: white;
     height: 2vw;
     width: 100%;
@@ -98,7 +98,7 @@ svg circle:last-child {
     position: relative;
 }
 
-.top .menu-button img, .about-screen .header img{
+.top .menu-button img, .header img{
     width: 7vw;
 }
 
@@ -171,12 +171,12 @@ svg circle:last-child {
 }
 
 
-.menu-screen .containers-wrapper, .reference-screen .containers-wrapper{
+.menu-screen .containers-wrapper, .reference-screen .containers-wrapper, .stats-screen .containers-wrapper{
     display: grid;
     width: 100vw;
 }
 
-.menu-screen .containers, .reference-screen .containers{
+.menu-screen .containers, .reference-screen .containers, .stats-screen .containers{
     display: grid;
     grid-template-columns: auto auto;
     width: 100vw;
@@ -186,11 +186,11 @@ svg circle:last-child {
     scroll-behavior: smooth;
 }
 
-.menu-screen .containers-wrapper ::-webkit-scrollbar, .reference-screen .containers-wrapper ::-webkit-scrollbar{
+.menu-screen .containers-wrapper ::-webkit-scrollbar, .reference-screen .containers-wrapper ::-webkit-scrollbar, .stats-screen .containers-wrapper::-webkit-scrollbar{
     height: 0;
 }
 
-.menu-screen .container, .reference-screen .container{
+.menu-screen .container, .reference-screen .container, .stats-screen .container{
     width: 100vw;
     scroll-snap-align: center;
 }
@@ -363,52 +363,44 @@ svg circle:last-child {
     background-color: rgb(0, 175, 117);   
 }
 
-.reference-screen .header .top, .about-screen .header, .quiz-screen .header {
+.reference-screen .header .top, .about-screen .header, .quiz-screen .header, .stats-screen .header .top{
     display: flex;
     justify-content: start;
     gap: 10px;
 }
 
-.reference-screen .header img, .quiz-screen .header img{
+.reference-screen .header img, .quiz-screen .header img, .stats-screen .header .img{
     width: 7vw;
 }
 
-.reference-screen-progress-container{
-    background-color: #aaa;
-    width: 100%;
-    display: flex;
+.reference-screen .progress-container{
+    background-color: rgb(0, 175, 117); 
 }
 
-.reference-screen-progress-container > div{
+.reference-screen .progress-container, .stats-screen .progress-container{
+    width: 100%;
+    display: flex;
+    gap: 2px;
+}
+
+.reference-screen .progress-container > div{
+    background-color: #74E332;
+}
+
+.reference-screen .progress-container > div, .stats-screen .progress-container > div{
     display: flex;
     flex-flow: column;
     flex-grow: 1;
     text-align: center;
 }
 
-.basic-scroll-container{
-    background-color: #74E332;
-}
-
-.voiced-scroll-container{
-    background-color: #42B200;
-}
-
-.combo-scroll-container1{
-    background-color: #348C00;
-}
-
-.combo-scroll-container2{
-    background-color: #125C00;
-}
-
 .scroll-progress-bar{
     width: 0;
-    background-color: #FF7B38 ;
-    /* #28B587
-    #00885B
-    #006B48 */
     height: 8px;
+}
+
+.reference-screen .scroll-progress-bar{
+    background-color: #348C00 ;
 }
 
 #voiced-scroll{
@@ -423,7 +415,7 @@ svg circle:last-child {
     background-color: #403600;
 }
 
-.reference-screen .container{
+.reference-screen .container, .stats-screen .container{
     background-color: #f1f1f1;
     color: #777;
 
@@ -438,11 +430,11 @@ svg circle:last-child {
     padding: 8px;
 }
 
-.reference-screen .container .family{
+.reference-screen .container .family, .stats-screen .container .family{
     display: flex;
 }
 
-.reference-screen .container .card{
+.reference-screen .container .card, .stats-screen .container .card{
     background-color: #f1f1f1;
 
     width: 20vw;
@@ -548,6 +540,32 @@ svg circle:last-child {
 @keyframes showHide {
     from{opacity: 0;}
     to{opacity: 1;}
+}
+
+
+
+
+
+/** ----- STATS SCREEN ----- */
+
+.stats-screen{
+    display: none;
+}
+
+.stats-screen .header{
+    background-color: var(--quizScreenColor);
+}
+
+.stats-screen .progress-container{
+    background-color: var(--quizScreenColor);
+}
+
+.stats-screen .progress-container > div{
+    background-color: aqua;
+}
+
+.stats-screen .scroll-progress-bar{
+    background-color: rgb(0, 140, 255) ;
 }
 
 

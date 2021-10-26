@@ -13,6 +13,7 @@
     Tab navigator,
     Scroll bar progress,
     Horizontal carousel,
+    Use metadata to improve the SEO,
     -->
 
 <!-- News (changes):
@@ -27,17 +28,31 @@
 
 <head>
     <meta charset="utl-8">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="cache-control" content="public">
+    <meta http-equiv="content-language" content="en-US, jp">
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    
+    <meta name="description" content="Application for learn japanese with tests and games">
+    <meta name="keywords" content="kana dojo, aprender japonês, learn japanese">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="rgb(250, 60, 60)">
+    <meta name="robot" content="index">
+    <meta name="generator" content="Visual Studio Code">
+    <meta name="rating" content="general">
+    <meta name="author" content="Samuel V S Tavares">
+    <meta name="" content="">
+
     <link rel="icon" href="./assets/icon/logo.png" type="img/png">
     <link rel="stylesheet" href="./styles/game.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
     <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
-        or if you have enabled the javaScript in your browser! </noscript>
+        or if you have enabled the javaScript in your browser! </noscript>        
     <title>Game</title>
 </head>
 
@@ -92,7 +107,7 @@
                         </div>
                     </div>
 
-                    <div class="progress-container">
+                    <div class="progress-container progress-container-hiragana">
                         <h3 class="title">Hiragana</h3>
                         <div class="top">
                             <p class="progress-text">Advanced</p>
@@ -101,7 +116,7 @@
                         <div class="progress-bar"></div>
                     </div>
 
-                    <div class="progress-container">
+                    <div class="progress-container progress-container-katakana">
                         <h3 class="title">Katakana</h3>
                         <div class="top">
                             <p class="progress-text">Beginner</p>
@@ -166,7 +181,7 @@
                 </span>
                 <div class="title"> Reference </div>
             </div>
-            <nav class="reference-screen-nav">
+            <nav class="nav">
                 <div class="nav-option left-option hiragana-option" data-selected="true">HIRAGANA
                     <span class="option-highlight"></span>
                 </div>
@@ -177,26 +192,26 @@
             </nav>
         </div>
 
-        <div class="reference-screen-progress-container">
+        <div class="progress-container">
 
             <div class="basic-scroll-container">
                 <span>Basic</span>
-                <div id="basic-scroll" class="scroll-progress-bar"></div>
+                <div class="basic-scroll scroll-progress-bar"></div>
             </div>
 
             <div class="voiced-scroll-container">
                 <span>Voiced</span>
-                <div id="voiced-scroll" class="scroll-progress-bar"></div>
+                <div class="voiced-scroll scroll-progress-bar"></div>
             </div>
 
-            <div class="combo-scroll-container1">
+            <div class="combo1-scroll-container">
                 <span>Combo 1</span>
-                <div id="combo-scroll1" class="scroll-progress-bar"></div>
+                <div class="combo-scroll1 scroll-progress-bar"></div>
             </div>
 
-            <div class="combo-scroll-container2">
+            <div class="combo2-scroll-container">
                 <span>Combo 2</span>
-                <div id="combo-scroll2" class="scroll-progress-bar"></div>
+                <div class="combo-scroll2 scroll-progress-bar"></div>
             </div>
         </div>
 
@@ -391,6 +406,59 @@
                 <span class="button exit-button">EXIT</span>
             </div>
         </div>
+    </div>
+
+    <!------- STATS SCREEN ------->
+    <div class="stats-screen">
+        <div class="header">
+            <div class="top">
+                <span class="return-button">
+                    <img src="assets/icon/arrow_back_white_svg.svg" alt="return">
+                    <span class="return-button-highlight"></span>
+                </span>
+                <div class="title"> Stats </div>
+            </div>
+            <nav class="nav">
+                <div class="nav-option left-option hiragana-option">HIRAGANA
+                    <span class="option-highlight"></span>
+                </div>
+                <div class="nav-option right-option katakana-option">KATAKANA
+                    <span class="option-highlight"></span>
+                </div>
+                <span class="scroll-bar"></span>
+            </nav>
+        </div>
+
+        <div class="progress-container">
+
+            <div class="basic-scroll-container">
+                <span>Basic</span>
+                <div class="basic-scroll scroll-progress-bar"></div>
+            </div>
+
+            <div class="voiced-scroll-container">
+                <span>Voiced</span>
+                <div class="voiced-scroll scroll-progress-bar"></div>
+            </div>
+
+            <div class="combo1-scroll-container">
+                <span>Combo 1</span>
+                <div class="combo-scroll1 scroll-progress-bar"></div>
+            </div>
+
+            <div class="combo2-scroll-container">
+                <span>Combo 2</span>
+                <div class="combo-scroll2 scroll-progress-bar"></div>
+            </div>
+        </div>
+
+        <span class="containers-wrapper">
+            <span class="containers">
+                <!-- It's filled by Javascript -->
+                <span class="container hiragana-screen"></span>
+                <span class="container katakana-screen"></span>
+            </span>
+        </span>
 
     </div>
 
@@ -436,6 +504,8 @@
     <script src="./scripts/quizScreenModel.js"></script>
     <script src="./scripts/quizScreenInterface.js"></script>
     <script src="./scripts/modalQuizInterface.js"></script>
+
+    <script src="./scripts/statsScreenInterface.js"></script>
 
     <script src="./scripts/checkBox.js"></script>
     <script src="./scripts/checkBoxList.js"></script>
