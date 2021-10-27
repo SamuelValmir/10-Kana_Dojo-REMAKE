@@ -1,15 +1,11 @@
 "use strict";
 
-// Global variables
-var leftOption;
-var rightOption;
-
 let progressBar;
 let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
     menuScreenInterface.show();
-    statsScreenInterface.hide();
+    // statsScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
     // modalQuizInterface.show();
     // quizScreenInterface.show();

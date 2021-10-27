@@ -25,9 +25,9 @@ let statsScreenInterface = {
     containers: document.querySelector(".stats-screen .containers"),
     scrollBar: document.querySelector(".stats-screen .nav .scroll-bar"),
 
-    show() {
+    show(navOptionSelected) {
         this.htmlElement.style.display = "block";
-        this.initialize();
+        this.initialize(navOptionSelected);
         this.isShowing = true;
     },
 
@@ -39,51 +39,83 @@ let statsScreenInterface = {
     drawCards(option, containerScreen) {
         let statsScreenContainer = containerScreen;
         // statsScreenContainer.innerHTML = "";
-        console.log(kana.groups)
+        let rowElement;
+        rowElement = document.createElement("div");
+        rowElement.classList.add("row");
+        rowElement.classList.add("top");
+
+        let kanaElement = document.createElement("span");
+        kanaElement.innerHTML = "Kana";
+
+        let rightElement = document.createElement("span");
+        rightElement.innerHTML = "Right";
+
+        let wrongElement = document.createElement("span");
+        wrongElement.innerHTML = "Wrong";
+
+        let accuracyElement = document.createElement("span");
+        accuracyElement.innerHTML = "Accuracy";
+
+        statsScreenContainer.appendChild(rowElement);
+        rowElement.appendChild(kanaElement);
+        rowElement.appendChild(rightElement);
+        rowElement.appendChild(wrongElement);
+        rowElement.appendChild(accuracyElement);
+
         for (const group of Object.entries(kana.groups)) {
-            let familyName = document.createElement("div");
-            familyName.classList.add("family-name");
-            familyName.classList.add(group[0]);
-            group[0][0].toUpperCase;
-            familyName.innerHTML = capitalizeFirstLetter(group[0]);
-            statsScreenContainer.appendChild(familyName);
+
 
             for (const family of Object.values(group[1])) {
-                let familyElement = document.createElement("div");
-                familyElement.classList.add("family");
-                for (let kana of family) {
-                    let cardElement = document.createElement("div");
-                    cardElement.classList.add("card");
+                let rowElement;
 
+                for (let kana of family) {
+                    let addTop = true;
+                    
+                    rowElement = document.createElement("div");
+                    rowElement.classList.add("row");
+
+                    if (addTop === true){
+                        addTop = false;
+
+                        
+                    }
+                    
+                    let kanaElement = document.createElement("span");
+                    kanaElement.classList.add("kana");
                     let cardTop = document.createElement("span");
-                    cardTop.classList.add("top");
 
                     if (option === "hiragana") {
-                        cardTop.innerHTML = wanakana.toHiragana(kana);
+                        kanaElement.innerHTML = wanakana.toHiragana(kana);
                     } else if (option === "katakana") {
-                        cardTop.innerHTML = wanakana.toKatakana(kana);
+                        kanaElement.innerHTML = wanakana.toKatakana(kana);
                     }
 
-                    let cardBottom = document.createElement("span");
-                    cardBottom.classList.add("bottom");
-                    if (kana === "du") {
-                        kana = "dzu";
-                    }
-                    cardBottom.innerHTML = kana;
+                    let rightElement = document.createElement("span");
+                    rightElement.classList.add("right");
+                    rightElement.innerHTML = "4";
 
-                    statsScreenContainer.appendChild(familyElement);
-                    familyElement.appendChild(cardElement);
-                    cardElement.appendChild(cardTop);
-                    cardElement.appendChild(cardBottom);
+                    let wrongElement = document.createElement("span");
+                    wrongElement.classList.add("wrong");
+                    wrongElement.innerHTML = "5";
+
+                    let accuracyElement = document.createElement("span");
+                    accuracyElement.classList.add("accuracy");
+                    accuracyElement.innerHTML = "44%";
+
+                    statsScreenContainer.appendChild(rowElement);
+                    rowElement.appendChild(kanaElement);
+                    rowElement.appendChild(rightElement);
+                    rowElement.appendChild(wrongElement);
+                    rowElement.appendChild(accuracyElement);
                 }
-                if (familyElement.childElementCount == 2 || familyElement.childElementCount == 3) {
-                    familyElement.style.justifyContent = "space-between";
+                if (rowElement.childElementCount == 2 || rowElement.childElementCount == 3) {
+                    rowElement.style.justifyContent = "space-between";
                 }
             }
         }
     },
 
-    initialize() {
+    initialize(navOptionSelected) {
         let hiraganaOption = this.navOptions.hiraganaOption;
         let katakanaOption = this.navOptions.katakanaOption;
         let hiraganaOptionHighlight = this.navOptions.hiraganaOptionHighlight;
@@ -92,8 +124,8 @@ let statsScreenInterface = {
         let hiraganaScreen = this.screens.hiraganaScreen;
         let katakanaScreen = this.screens.katakanaScreen;
 
-        const NavModelObject = new NavModel;
-        const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
+        const NavModelObject = new NavModel(navOptionSelected);
+        const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, navOptionSelected, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
 
         const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, NavControllerObject)
 
@@ -125,61 +157,6 @@ let statsScreenInterface = {
         }
 
         this.setProgressBarTop();
-
-        // // It fills the 3 scrolls bar as long as the screen is scrolled
-        // window.onscroll = () => {
-        //     console.log(123356)
-
-        //     if (statsScreenInterface.isShowing) {
-
-        //         let winScroll = document.documentElement.scrollTop;
-        //         let voicedTop = document.querySelector(".stats-screen .voiced").offsetTop;
-        //         let comboTop1 = document.querySelector(".stats-screen .combo1").offsetTop;
-        //         let comboTop2 = document.querySelector(".stats-screen .combo2").offsetTop;
-        //         let winHeight = document.documentElement.scrollHeight;
-
-        //         let basicBarHeight = voicedTop - document.documentElement.clientHeight;
-        //         let voicedBarHeight = comboTop1 - voicedTop;
-        //         let comboBarHeight1 = comboTop2 - comboTop1;
-        //         let comboBarHeight2 = winHeight - comboTop2;
-
-        //         let basicScrolled = (winScroll / basicBarHeight) * 100;
-        //         let voicedScrolled = ((winScroll - basicBarHeight) / voicedBarHeight) * 100;
-        //         let comboScrolled1 = ((winScroll - voicedBarHeight - basicBarHeight) / comboBarHeight1) * 100;
-        //         let comboScrolled2 = ((winScroll - comboBarHeight1 - voicedBarHeight - basicBarHeight) / comboBarHeight2) * 100;
-
-        //         // This is to not overflow the value between 0 and 100
-        //         if (basicScrolled < 0) {
-        //             basicScrolled = 0;
-        //         } else if (basicScrolled > 100) {
-        //             basicScrolled = 100;
-        //         }
-
-        //         if (voicedScrolled < 0) {
-        //             voicedScrolled = 0;
-        //         } else if (voicedScrolled > 100) {
-        //             voicedScrolled = 100;
-        //         }
-
-        //         if (comboScrolled1 < 0) {
-        //             comboScrolled1 = 0;
-        //         } else if (comboScrolled1 > 100) {
-        //             comboScrolled1 = 100;
-        //         }
-
-        //         if (comboScrolled2 < 0) {
-        //             comboScrolled2 = 0;
-        //         } else if (comboScrolled2 > 100) {
-        //             comboScrolled2 = 100;
-        //         }
-
-        //         document.querySelector(".stats-screen .basic-scroll").style.width = basicScrolled + "%";
-        //         document.querySelector(".stats-screen .voiced-scroll").style.width = voicedScrolled + "%";
-        //         document.querySelector(".stats-screen .combo-scroll1").style.width = comboScrolled1 + "%";
-        //         document.querySelector(".stats-screen .combo-scroll2").style.width = comboScrolled2 + "%";
-        //         pinOnTop();
-        //     }
-        // }
     },
 }
 

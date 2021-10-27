@@ -1,6 +1,13 @@
 class NavModel {
-    isLeftOptionSelected = true;
-    isRightOptionSelected = false;
+    constructor(optionSelected){
+        if (optionSelected === "left"){
+            this.isLeftOptionSelected = true;
+            this.isRightOptionSelected = false;
+        } else if (optionSelected === "right"){
+            this.isLeftOptionSelected = false;
+            this.isRightOptionSelected = true;
+        }
+    }
 
     canAnimateLeftOption(){
         if (this.isLeftOptionSelected === false){

@@ -57,8 +57,8 @@ let menuScreenInterface = {
         let learnScreen = this.screens.learnScreen;
         let playScreen = this.screens.playScreen;
 
-        const NavModelObject = new NavModel;
-        const NavControllerObject = new NavController(learnOption, learnOptionHighlight, playOption, playOptionHighlight, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
+        const NavModelObject = new NavModel("left");
+        const NavControllerObject = new NavController(learnOption, learnOptionHighlight, playOption, playOptionHighlight, "left", learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
         const HeaderControllerObject = new HeaderController(undefined, NavControllerObject);
 
         this.headerController = HeaderControllerObject;
@@ -140,13 +140,12 @@ let menuScreenInterface = {
 
             this.progress.hiraganaProgress.addEventListener("click", () => {
                 this.hide();
-                statsScreenInterface.show();
+                statsScreenInterface.show("left");
             })
             
             this.progress.katakanaProgress.addEventListener("click", () => {
                 this.hide();
-                statsScreenInterface.show();
-                //! I must start with katakana selected!
+                statsScreenInterface.show("right");
             })
         }
     }

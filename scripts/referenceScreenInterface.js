@@ -91,8 +91,8 @@ let referenceScreenInterface = {
         let hiraganaScreen = this.screens.hiraganaScreen;
         let katakanaScreen = this.screens.katakanaScreen;
 
-        const NavModelObject = new NavModel;
-        const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
+        const NavModelObject = new NavModel("left");
+        const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, "left", hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
 
         const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, NavControllerObject)
 

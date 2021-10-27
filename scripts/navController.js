@@ -1,27 +1,35 @@
 class NavController {
-    constructor(leftOption, leftOptionHighlight, rightOption, rightOptionHighlight, leftScreen, rightScreen, containers, scrollBar, menuButton) {
+    constructor(leftOption, leftOptionHighlight, rightOption, rightOptionHighlight, optionSelected, leftScreen, rightScreen, containers, scrollBar, menuButton) {
         this.leftOption = leftOption;
         this.rightOption = rightOption;
         this.leftOptionHighlight = leftOptionHighlight;
         this.rightOptionHighlight = rightOptionHighlight;
+
+        
         this.leftScreen = leftScreen;
         this.rightScreen = rightScreen;
         this.containers = containers;
         this.scrollBar = scrollBar;
         this.menuButton = menuButton;
+        
+        if (optionSelected === "left") {
+            this.containers.scrollTo(0, 0);
+        } else if (optionSelected === "right") {
+            this.containers.scrollTo((this.containers.scrollWidth / 2), 0);
+        }
     }
 
     animateLeftOption() {
         this.leftOptionHighlight.animate([
-            {width: "100%", zIndex: 1}
-        ], {duration: 200, easing: "ease-out"})
+            { width: "100%", zIndex: 1 }
+        ], { duration: 200, easing: "ease-out" })
         this.containers.scrollTo(0, 0);
     };
 
     animateRightOption() {
         this.rightOptionHighlight.animate([
-            {width: "100%", zIndex: 1}
-        ], {duration: 200, easing: "ease-out"})
+            { width: "100%", zIndex: 1 }
+        ], { duration: 200, easing: "ease-out" })
         this.containers.scrollTo((this.containers.scrollWidth / 2), 0);
     };
 

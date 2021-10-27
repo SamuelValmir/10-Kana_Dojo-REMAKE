@@ -403,18 +403,6 @@ svg circle:last-child {
     background-color: #348C00 ;
 }
 
-#voiced-scroll{
-    background-color: #CC4500;
-}
-
-#combo-scroll1{
-    background-color: #A03600;
-}
-
-#combo-scroll2{
-    background-color: #403600;
-}
-
 .reference-screen .container, .stats-screen .container{
     background-color: #f1f1f1;
     color: #777;
@@ -568,9 +556,32 @@ svg circle:last-child {
     background-color: rgb(0, 140, 255) ;
 }
 
+.stats-screen .container .row{
+    display: flex;
+    text-align: center;
+    place-items: center;
+    height: 15vw;
+    font-size: 5vw;
+}
 
+.stats-screen .container .row > span{
+    width: 100%;
+}
 
+.stats-screen .container > .top{
+    font-size: 4vw;
+    background-color: #ddd;
+    height: 9vw;
+    /* padding: .5rem; */
+}
 
+.stats-screen .container .right{
+    color: #348C00;
+}
+
+.stats-screen .container .wrong{
+    color: var(--primaryColor);
+}
 
 /** ----- MODAL MAIN ----- */
 .modal{
