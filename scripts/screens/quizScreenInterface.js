@@ -110,7 +110,6 @@ let quizScreenInterface = {
     },
 
     showCardAnimation() {
-        // console.log("animation")
         this.card.style.transform = "scale(1.5)";
         let animation = this.card.animate([
             { transform: "scale(1)" }

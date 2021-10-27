@@ -10,3 +10,6 @@ const KATAKANA = "katakana";
 
 const FLASH_CARD_SCREEN = "flashCardScreen";
 const QUIZ_SCREEN = "quizScreen";
+
+const EYE_SPY_MAIN_COLOR = "";
+const MATCH_MAKER_MAIN_COLOR = "";

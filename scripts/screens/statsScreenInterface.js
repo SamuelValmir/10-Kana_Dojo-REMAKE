@@ -62,27 +62,23 @@ let statsScreenInterface = {
         rowElement.appendChild(wrongElement);
         rowElement.appendChild(accuracyElement);
 
-        for (const group of Object.entries(kana.groups)) {
+        for (let index = 0; index < Object.entries(kana.groups).length; index++) {
+            let group = Object.entries(kana.groups)[index];
+            let addGroupClass = true;
+            for (let family of Object.values(group[1])) {
 
-
-            for (const family of Object.values(group[1])) {
-                let rowElement;
-
-                for (let kana of family) {
-                    let addTop = true;
-                    
+                for (let kana of family) {   
+                    let rowElement;
                     rowElement = document.createElement("div");
                     rowElement.classList.add("row");
 
-                    if (addTop === true){
-                        addTop = false;
-
-                        
+                    if (addGroupClass === true){
+                        addGroupClass = false;
+                        rowElement.classList.add(group[0]);
                     }
                     
                     let kanaElement = document.createElement("span");
                     kanaElement.classList.add("kana");
-                    let cardTop = document.createElement("span");
 
                     if (option === "hiragana") {
                         kanaElement.innerHTML = wanakana.toHiragana(kana);
@@ -107,9 +103,13 @@ let statsScreenInterface = {
                     rowElement.appendChild(rightElement);
                     rowElement.appendChild(wrongElement);
                     rowElement.appendChild(accuracyElement);
-                }
-                if (rowElement.childElementCount == 2 || rowElement.childElementCount == 3) {
-                    rowElement.style.justifyContent = "space-between";
+
+                    rowElement.addEventListener("click", (event)=>{
+                        let rowElement = event.target;
+                        rowElement.animate([
+                            {backgroundColor : "#aaa"}
+                        ], {duration: 200, easing: "ease"})
+                    })
                 }
             }
         }

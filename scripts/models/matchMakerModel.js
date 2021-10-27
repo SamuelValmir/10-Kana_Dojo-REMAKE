@@ -1,6 +1,6 @@
 "use strict";
 
-let game = {
+let matchMakerModel = {
     cards: null,
     lockMode: false,
     firstCard: null,

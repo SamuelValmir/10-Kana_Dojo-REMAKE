@@ -557,15 +557,17 @@ svg circle:last-child {
 }
 
 .stats-screen .container .row{
-    display: flex;
-    text-align: center;
-    place-items: center;
     height: 15vw;
+    display: flex;
     font-size: 5vw;
 }
 
 .stats-screen .container .row > span{
     width: 100%;
+    height: 100%;
+    display: flex;
+    place-content: center;
+    align-items: center;
 }
 
 .stats-screen .container > .top{
@@ -696,7 +698,68 @@ label{
 
 
 
-/** ----- MODAL CUSTOM ----- */
+
+
+/** -------------------- GAME START SCREEN -------------------- */
+
+.game-start-screen{
+    color: white;
+
+    height: 100vh;
+    flex-direction: column;
+    background-color: #131517;
+}
+
+.game-start-screen .top, .game-start-screen .bottom{
+    height: 50vh;
+}
+
+.game-start-screen .top .score{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+}
+
+
+.game-start-screen .top .score .result{
+    color: white;
+}
+
+.game-start-screen .top .score .result .green{
+    color: rgb(145, 255, 0);
+}
+
+.game-start-screen .bottom{
+    text-align: center;
+    width: 90%;
+    margin: auto;
+}
+
+.game-start-screen .bottom .text{
+    width: 60vw;
+    display: block;
+    margin: auto;
+    text-align: left;
+}
+
+.game-start-screen .bottom .game-title{
+    display: block;
+    font-size: 8vw;
+}
+
+
+.game-start-screen .bottom hr{
+    border-color: orangered;
+}
+
+.game-start-screen .bottom .options{
+    display: block;
+}
+
+
+/** -------------------- MODAL CUSTOM -------------------- */
 
 .modal-custom .container{
     height: fit-content;

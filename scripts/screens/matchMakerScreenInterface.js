@@ -1,12 +1,21 @@
 "use strict";
 
+let matchMakerScreenInterface = {
+    htmlElement: document.querySelector("board"),
+    show(){
+
+    },
+    hide(){
+
+    }
+}
 window.onload = () => {
     // startGame();
     // setMoves();
 }
 
 let startGame = () => {
-    game.createCards();
+    matchMakerModel.createCards();
     drawCardsOnScreen();
 }
 
@@ -14,7 +23,7 @@ let drawCardsOnScreen = () => {
     // Making and adding the cards in html
     let boardElement = document.getElementsByClassName("board")[0];
 
-    game.cards.forEach(card => {
+    matchMakerModel.cards.forEach(card => {
         let cardElement = document.createElement("div");
         cardElement.id = card.id;
         cardElement.classList.add(CARD);
@@ -40,14 +49,14 @@ let createCardBackFront = (cardElement, card) => {
 }
 
 function flipCard() {
-    if (game.setCard(this.id)) {
+    if (matchMakerModel.setCard(this.id)) {
         this.classList.add("flip");
-        game.increaseMove();
+        matchMakerModel.increaseMove();
         setMoves();
-        if (game.secondCard) {
-            if (game.checkMatch()) {
-                game.clearCards();
-                if (game.checkGameOver()) {
+        if (matchMakerModel.secondCard) {
+            if (matchMakerModel.checkMatch()) {
+                matchMakerModel.clearCards();
+                if (matchMakerModel.checkGameOver()) {
                     setTimeout(() => {
                         let gameOverLayer = document.querySelector(".gameOver");
                         gameOverLayer.style.display = "grid";
@@ -56,10 +65,10 @@ function flipCard() {
                 }
             } else {
                 setTimeout(() => {
-                    let firstCardElement = document.getElementById(game.firstCard.id);
-                    let secondCardElement = document.getElementById(game.secondCard.id);
+                    let firstCardElement = document.getElementById(matchMakerModel.firstCard.id);
+                    let secondCardElement = document.getElementById(matchMakerModel.secondCard.id);
 
-                    game.unFlipCards();
+                    matchMakerModel.unFlipCards();
                     firstCardElement.classList.remove("flip");
                     secondCardElement.classList.remove("flip");
                 }, 1000);
@@ -69,9 +78,9 @@ function flipCard() {
 }
 
 let setMoves = () => {
-    let a = document.querySelector(".moves span").innerHTML = game.moves;
+    let a = document.querySelector(".moves span").innerHTML = matchMakerModel.moves;
 }
 
 let setScore = () => {
-    let a = document.querySelector(".score span").innerHTML = game.moves;
+    let a = document.querySelector(".score span").innerHTML = matchMakerModel.moves;
 }
