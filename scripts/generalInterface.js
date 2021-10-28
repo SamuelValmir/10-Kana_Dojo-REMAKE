@@ -4,8 +4,8 @@ let progressBar;
 let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
-    // menuScreenInterface.show();
-    gameStartScreenInterface.show();
+    menuScreenInterface.show();
+    // eyeSpyScreenInterface.showStartScreen();
     // statsScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
     // document.querySelector(".memory-game").style.display = "grid";

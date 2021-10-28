@@ -707,11 +707,29 @@ label{
 
     height: 100vh;
     flex-direction: column;
-    background-color: #131517;
+    /* background-color: #131517; */
+    background: linear-gradient(180deg, rgb(19, 21, 23, 1) , #131517);
+
 }
 
 .game-start-screen .top, .game-start-screen .bottom{
     height: 50vh;
+}
+
+.game-start-screen .top{
+    overflow: hidden;
+}
+
+.game-start-screen .top img{
+    height: 100%;
+
+    opacity: .2;
+
+    transform: rotate(-45deg) scale(2);
+    -o-transform: rotate(-45deg) scale(2);
+    -ms-transform: rotate(-45deg) scale(2);
+    -moz-transform: rotate(-45deg) scale(2);
+    -webkit-transform: rotate(-45deg) scale(2);
 }
 
 .game-start-screen .top .score{
@@ -722,19 +740,26 @@ label{
     top: 2rem;
 }
 
-
 .game-start-screen .top .score .result{
     color: white;
 }
 
 .game-start-screen .top .score .result .green{
-    color: rgb(145, 255, 0);
+    color: rgb(81, 255, 0);
 }
 
 .game-start-screen .bottom{
-    text-align: center;
+    box-shadow: -10rem -35vw 8rem #131517, 10rem -35vw 8rem #131517;
+    z-index: 1;
+}
+
+.game-start-screen .bottom .container{
     width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
     margin: auto;
+    text-align: center;
 }
 
 .game-start-screen .bottom .text{
@@ -746,17 +771,20 @@ label{
 
 .game-start-screen .bottom .game-title{
     display: block;
-    font-size: 8vw;
-}
-
-
-.game-start-screen .bottom hr{
-    border-color: orangered;
+    font-size: 9vw;
 }
 
 .game-start-screen .bottom .options{
-    display: block;
+    display: flex;
+    justify-content: space-around;
 }
+
+.game-start-screen .bottom .button{
+    padding: 1.5rem;
+    border-radius: .8rem;
+}
+
+
 
 
 /** -------------------- MODAL CUSTOM -------------------- */

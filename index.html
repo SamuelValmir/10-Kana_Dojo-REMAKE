@@ -467,6 +467,7 @@
 
     <div class="game-start-screen">
         <div class="top">
+            <img src="./assets/images/eye_spy.jpg" alt="eye spy image">
             <span class="score">
                 <span class="best">BEST</span>
                 <span class="result">Hiragana<span class="green"> - </span></span>
@@ -475,17 +476,32 @@
         </div>
 
         <div class="bottom">
-            <span class="text">
-                <span class="game-title">Eye Spy</span>
-                <span class="game-description">How many characters can you find before time expires?</span>
-            </span>
-            <hr>
-            <span class="options">
-                <!-- <input type="checkbox" name="" id=""> -->
-                <span class="hiragana">Hiragana</span>
-                <span class="katakana">Katakana</span>
-            </span>
-            <span class="button">Play</span>
+            <div class="container">
+                <span class="text">
+                    <span class="game-title"></span>
+                    <span class="game-description"></span>
+                </span>
+                <hr>
+                <span class="options">
+                    
+                    <label class="checkbox-container">
+                        <span class="checkmark-circle"></span>
+                        <span class="checkbox" name="hiragana">
+                            <span class="checkmark"></span>
+                        </span>
+                        Hiragana
+                    </label>
+
+                    <label class="checkbox-container">
+                        <span class="checkmark-circle"></span>
+                        <span class="checkbox" name="katakana">
+                            <span class="checkmark"></span>
+                        </span>
+                        Katakana
+                    </label>
+                </span>
+                <span class="button">Play</span>
+            </div>
         </div>
     </div>
 
@@ -541,6 +557,7 @@
     <script src="./scripts/modals/modalCustomInterface.js"></script>
 
     <script src="./scripts/screens/gameStartScreenInterface.js"></script>
+    <script src="./scripts/screens/eyeSpyScreenInterface.js"></script>
 
     <script src="./scripts/generalInterface.js"></script>
 

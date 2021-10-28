@@ -1,5 +1,6 @@
 let checkBoxList = {
     checkedAmount: undefined,
+    confirmButton: undefined,
     canAnimate(list, selectedIndex) {
         this.setCheckedAmount(list);
 
@@ -66,9 +67,12 @@ let checkBoxList = {
         }
     },
 
-    built(elementList, hasEditIcon = false, alphabet = undefined, families = undefined) {
+    built(elementList, hasEditIcon = false, alphabet = undefined, families = undefined, confirmButton) {
         // Return an object list of check box that its first element is checked by default
         const checkBoxObjectList = [];
+
+        this.confirmButton = confirmButton;
+
         for (let index = 0; index < elementList.length; index++) {
             const checkBoxElement = elementList[index];
             const checkBoxObject = new CheckBox();
@@ -92,7 +96,7 @@ let checkBoxList = {
             if (alphabet !== undefined) {
                 checkBoxObject.alphabet = alphabet;
             }
-            
+
             if (families !== undefined) {
                 checkBoxObject.family = families[index];
                 checkBoxObject.alphabet = checkBoxElement.getAttribute("alphabet")
@@ -116,6 +120,8 @@ let checkBoxList = {
             if (index === 0) {
                 checkBoxObject.showCheckBoxAndCheckMark();
                 checkBoxObject.showEditIcon();
+            } else {
+                checkBoxObject.hideCheckBoxAndCheckMark();
             }
 
             // It adds click event in checkbox
@@ -146,11 +152,17 @@ let checkBoxList = {
                 checkBoxObject.showCheckBoxAndCheckMark();
                 checkBoxObject.showEditIcon();
             }
+            this.confirmButton.disabled = false;
+            this.confirmButton.style.opacity = "1";
 
         } else {
-            setTimeout(() => {
-                alert("At least one option must be selected!");
-            }, 300);
+            //! I must make a control variable that allow has no checkbox selected.
+            // checkBoxObject.isChecked = false;
+            // checkBoxObject.hideCheckBoxAndCheckMark();
+            // checkBoxObject.hideEditIcon();
+            // this.confirmButton.disabled = true;
+            // this.confirmButton.style.opacity = ".5";
+            // alert("At least one option must be selected!");
         }
     },
 

@@ -53,116 +53,124 @@ let modalMainInterface = {
             let leftCheckBoxElementList = this.leftCheckBoxElementList;
             let rightCheckBoxElementList = this.rightCheckBoxElementList;
 
-            this.leftCheckBoxObjectList = checkBoxList.built(leftCheckBoxElementList);
-            this.rightCheckBoxObjectList = checkBoxList.built(rightCheckBoxElementList, true);
+            this.leftCheckBoxObjectList = checkBoxList.built(leftCheckBoxElementList, false, undefined, undefined, this.startButton);
+            this.rightCheckBoxObjectList = checkBoxList.built(rightCheckBoxElementList, true, undefined, undefined, this.startButton);
         } else {
             checkBoxList.reset(this.leftCheckBoxObjectList);
             checkBoxList.reset(this.rightCheckBoxObjectList);
         }
     },
 
+    disableStartButton() {
+        this.startButton.disabled = true;
+    },
+    
     initializeButtons() {
         let backButton = this.backButton;
         let startButton = this.startButton;
-
+        this.startButton.disabled = false;
+        
         backButton.addEventListener("click", async () => {
             await this.modalControllerObject.animateLeftButton();
             this.hide();
         })
-        
+
         startButton.addEventListener("click", async () => {
-            await this.modalControllerObject.animateRightButton();
+            if (this.startButton.disabled === false) {
 
-            let checkBoxHiragana = this.leftCheckBoxObjectList[0];
-            let checkBoxKatakana = this.leftCheckBoxObjectList[1];
+                await this.modalControllerObject.animateRightButton();
 
-            let checkboxBasic = this.rightCheckBoxObjectList[0];
-            let checkboxVoiced = this.rightCheckBoxObjectList[1];
-            let checkboxCombo1 = this.rightCheckBoxObjectList[2];
-            let checkboxCombo2 = this.rightCheckBoxObjectList[3];
+                let checkBoxHiragana = this.leftCheckBoxObjectList[0];
+                let checkBoxKatakana = this.leftCheckBoxObjectList[1];
 
-            let onlyRomaji;
+                let checkboxBasic = this.rightCheckBoxObjectList[0];
+                let checkboxVoiced = this.rightCheckBoxObjectList[1];
+                let checkboxCombo1 = this.rightCheckBoxObjectList[2];
+                let checkboxCombo2 = this.rightCheckBoxObjectList[3];
 
-            if (checkboxBasic.isChecked === true) {
-                if (checkboxBasic.isEdited === false) {
-                    onlyRomaji = kana.onlyRomajiOf([...kana.basic]);
+                let onlyRomaji;
 
-                    if (checkBoxHiragana.isChecked === true) {
-                        this.hiraganaBasicList = kana.toHiragana(onlyRomaji);
-                    }
-                    if (checkBoxKatakana.isChecked === true) {
-                        this.katakanaBasicList = kana.toKatakana(onlyRomaji);
-                    }
-                }
-            }
+                if (checkboxBasic.isChecked === true) {
+                    if (checkboxBasic.isEdited === false) {
+                        onlyRomaji = kana.onlyRomajiOf([...kana.basic]);
 
-
-            if (checkboxVoiced.isChecked === true) {
-                if (checkboxVoiced.isEdited === false) {
-                    onlyRomaji = kana.onlyRomajiOf([...kana.voiced]);
-
-                    if (checkBoxHiragana.isChecked === true) {
-                        this.hiraganaVoicedList = kana.toHiragana(onlyRomaji);
-                    }
-                    if (checkBoxKatakana.isChecked === true) {
-                        this.katakanaVoicedList = kana.toKatakana(onlyRomaji);
+                        if (checkBoxHiragana.isChecked === true) {
+                            this.hiraganaBasicList = kana.toHiragana(onlyRomaji);
+                        }
+                        if (checkBoxKatakana.isChecked === true) {
+                            this.katakanaBasicList = kana.toKatakana(onlyRomaji);
+                        }
                     }
                 }
-            }
 
-            if (checkboxCombo1.isChecked === true) {
-                if (checkboxCombo1.isEdited === false) {
-                    onlyRomaji = kana.onlyRomajiOf([...kana.combo1]);
 
-                    if (checkBoxHiragana.isChecked === true) {
-                        this.hiraganaCombo1List = kana.toHiragana(onlyRomaji);
-                    }
-                    if (checkBoxKatakana.isChecked === true) {
-                        this.katakanaCombo1List = kana.toKatakana(onlyRomaji);
-                    }
-                }
-            }
+                if (checkboxVoiced.isChecked === true) {
+                    if (checkboxVoiced.isEdited === false) {
+                        onlyRomaji = kana.onlyRomajiOf([...kana.voiced]);
 
-            if (checkboxCombo2.isChecked === true) {
-                if (checkboxCombo2.isEdited === false) {
-                    onlyRomaji = kana.onlyRomajiOf([...kana.combo2]);
-
-                    if (checkBoxHiragana.isChecked === true) {
-                        this.hiraganaCombo2List = kana.toHiragana(onlyRomaji);
-                    }
-                    if (checkBoxKatakana.isChecked === true) {
-                        this.katakanaCombo2List = kana.toKatakana(onlyRomaji);
+                        if (checkBoxHiragana.isChecked === true) {
+                            this.hiraganaVoicedList = kana.toHiragana(onlyRomaji);
+                        }
+                        if (checkBoxKatakana.isChecked === true) {
+                            this.katakanaVoicedList = kana.toKatakana(onlyRomaji);
+                        }
                     }
                 }
+
+                if (checkboxCombo1.isChecked === true) {
+                    if (checkboxCombo1.isEdited === false) {
+                        onlyRomaji = kana.onlyRomajiOf([...kana.combo1]);
+
+                        if (checkBoxHiragana.isChecked === true) {
+                            this.hiraganaCombo1List = kana.toHiragana(onlyRomaji);
+                        }
+                        if (checkBoxKatakana.isChecked === true) {
+                            this.katakanaCombo1List = kana.toKatakana(onlyRomaji);
+                        }
+                    }
+                }
+
+                if (checkboxCombo2.isChecked === true) {
+                    if (checkboxCombo2.isEdited === false) {
+                        onlyRomaji = kana.onlyRomajiOf([...kana.combo2]);
+
+                        if (checkBoxHiragana.isChecked === true) {
+                            this.hiraganaCombo2List = kana.toHiragana(onlyRomaji);
+                        }
+                        if (checkBoxKatakana.isChecked === true) {
+                            this.katakanaCombo2List = kana.toKatakana(onlyRomaji);
+                        }
+                    }
+                }
+
+                let cards = [
+                    [...this.hiraganaBasicList],
+                    [...this.hiraganaVoicedList],
+                    [...this.hiraganaCombo1List],
+                    [...this.hiraganaCombo2List],
+                    [...this.katakanaBasicList],
+                    [...this.katakanaVoicedList],
+                    [...this.katakanaCombo1List],
+                    [...this.katakanaCombo2List]];
+
+                cards = cards.flat();
+                cards = Cards.shuffle(cards);
+
+                this.hide();
+                menuScreenInterface.hide();
+
+                switch (this.leadsTo) {
+                    case FLASH_CARD_SCREEN: {
+                        flashCardScreenInterface.show(cards);
+                    } break;
+
+                    case QUIZ_SCREEN: {
+                        quizScreenInterface.show(cards);
+                    } break;
+
+                }
+
             }
-
-            let cards = [
-                [...this.hiraganaBasicList],
-                [...this.hiraganaVoicedList],
-                [...this.hiraganaCombo1List],
-                [...this.hiraganaCombo2List],
-                [...this.katakanaBasicList],
-                [...this.katakanaVoicedList],
-                [...this.katakanaCombo1List],
-                [...this.katakanaCombo2List]];
-
-            cards = cards.flat();
-            cards = Cards.shuffle(cards);
-
-            this.hide();
-            menuScreenInterface.hide();
-
-            switch (this.leadsTo) {
-                case FLASH_CARD_SCREEN: {
-                    flashCardScreenInterface.show(cards);
-                } break;
-
-                case QUIZ_SCREEN: {
-                    quizScreenInterface.show(cards);
-                } break;
-
-            }
-
         })
     },
 }
