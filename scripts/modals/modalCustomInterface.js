@@ -65,7 +65,7 @@ let modalCustomInterface = {
         if (checkBoxHiragana.isChecked === true) {
             showHiragana = true;
         }
-        
+
         if (checkBoxKatakana.isChecked === true) {
             showKatakana = true;
         }
@@ -79,46 +79,49 @@ let modalCustomInterface = {
             this.insertFamilies(group, "katakana", families);
         }
 
-        this.checkBoxObjectList = checkBoxList.built(this.checkBoxElementList, false, undefined, families);
+        this.checkBoxObjectList = new CheckBoxListController(this.checkBoxElementList, false, undefined, families, this.finishButton, false, MENU_PRIMARY_COLOR).build();
     },
 
     initializeButtons() {
         let cancelButton = this.cancelButton;
         let finishButton = this.finishButton;
+        this.finishButton.disabled = false;
 
         cancelButton.addEventListener("click", async () => {
             await this.modalControllerObject.animateLeftButton();
             this.hide();
         })
-        
+
         finishButton.addEventListener("click", async () => {
-            await this.modalControllerObject.animateRightButton();
-            this.currentCheckBox.isEdited = true;
-            
-            switch (this.currentCheckBox.name) {
-                case "Basic":
-                    modalMainInterface.hiraganaBasicList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                    modalMainInterface.katakanaBasicList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
-                    break;
-                case "Voiced":
-                    modalMainInterface.hiraganaVoicedList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                    modalMainInterface.katakanaVoicedList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+            if (this.finishButton.disabled === false) {
+                await this.modalControllerObject.animateRightButton();
+                this.currentCheckBox.isEdited = true;
 
-                    break;
-                case "Combo 1":
-                    modalMainInterface.hiraganaCombo1List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                    modalMainInterface.katakanaCombo1List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
-                    break;
-                case "Combo 2":
-                    modalMainInterface.hiraganaCombo2List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                    modalMainInterface.katakanaCombo2List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
-                    break;
+                switch (this.currentCheckBox.name) {
+                    case "Basic":
+                        modalMainInterface.hiraganaBasicList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaBasicList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        break;
+                    case "Voiced":
+                        modalMainInterface.hiraganaVoicedList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaVoicedList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
 
-                default:
-                    alert("Error on switch casse of the execute modal button");
-                    break;
+                        break;
+                    case "Combo 1":
+                        modalMainInterface.hiraganaCombo1List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaCombo1List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        break;
+                    case "Combo 2":
+                        modalMainInterface.hiraganaCombo2List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaCombo2List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        break;
+
+                    default:
+                        alert("Error on switch casse of the execute modal button");
+                        break;
+                }
+                this.hide();
             }
-            this.hide();
         })
     },
 

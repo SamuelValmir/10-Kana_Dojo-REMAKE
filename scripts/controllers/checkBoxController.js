@@ -1,7 +1,9 @@
 
-class CheckBox {
+class CheckBoxController {
+
     isChecked = false;
     isEdited = false;
+    color;
     name;
     htmlElement;
     checkMark;
@@ -36,8 +38,8 @@ class CheckBox {
     }
 
     showCheckBoxAndCheckMark() {
-        this.htmlElement.style.backgroundColor = MENU_PRIMARY_COLOR;
-        this.htmlElement.style.borderColor = MENU_PRIMARY_COLOR;
+        this.htmlElement.style.backgroundColor = this.color;
+        this.htmlElement.style.borderColor = this.color;
         this.checkMark.style.display = "block"
     }
 

@@ -4,11 +4,11 @@ let progressBar;
 let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
-    menuScreenInterface.show();
+    // menuScreenInterface.show();
     // eyeSpyScreenInterface.showStartScreen();
+    matchMakerScreenInterface.showStartScreen();
     // statsScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
-    // document.querySelector(".memory-game").style.display = "grid";
 })
 
 // It fills the 3 scrolls bar as long as the screen is scrolled

@@ -2,7 +2,7 @@ let eyeSpyScreenInterface = {
     htmlElement: document.querySelector(".d"),
 
     showStartScreen(){
-        gameStartScreenInterface.show(gameStartScreenInterface, EYE_SPY_MAIN_COLOR, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
+        gameStartScreenInterface.show(this, EYE_SPY_MAIN_COLOR_LIST, EYE_SPY_MAIN_BACKGROUND_IMAGE, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
     },
 
     show(){

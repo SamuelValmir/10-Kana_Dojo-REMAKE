@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
 
-<!-- Built in 07/09/2021 - /09/2021 by Samuel Valmir -->
+<!-- Built in 07/09/2021 - /11/2021 by Samuel Valmir -->
 <!-- What I've learned:
-    Make the code easy to comprehend by commenting less and only when necessary,
-    Make the project with just one html file,
-    noscript tag,
-    3d flip effect,
-    work with objects,
-    Mobile first,
-    Progress bar,
-    Tab navigator,
-    Scroll bar progress,
-    Horizontal carousel,
-    Use metadata to improve the SEO,
+     Make the code easy to comprehend by commenting less and only when necessary,
+     Make the project with just one html file,
+     noscript tag,
+     3d flip effect,
+     work with objects,
+     Mobile first,
+     Progress bar,
+     Tab navigator,
+     Scroll bar progress,
+     Horizontal carousel,
+     Use metadata to improve the SEO,
     -->
 
 <!-- News (changes):
-    Study with memory card
-    Compatibility from desktop
-    The progress bar changes it color to indicate the current level
-    The Flash Card study can choice hiragana and katakana in the same time and also has division between kana combo with and without dakuten and handakuten.
+         Study with memory card
+         Compatibility from desktop
+         The progress bar changes it color to indicate the current level
+         The Flash Card study can choice hiragana and katakana in the same time and also has division between kana combo with and without dakuten and handakuten.
     -->
 
 <!-- BUGS FIXED:
-        Bug when dragging flash cards with two fingers-->
+        Bug when dragging flash cards with two fingers,
+        Match maker wasn't working. After selecting the second card, the application would stop working
+    -->
 
 <head>
     <meta charset="utl-8">
@@ -467,7 +469,7 @@
 
     <div class="game-start-screen">
         <div class="top">
-            <img src="./assets/images/eye_spy.jpg" alt="eye spy image">
+            <img alt="game background image">
             <span class="score">
                 <span class="best">BEST</span>
                 <span class="result">Hiragana<span class="green"> - </span></span>
@@ -483,7 +485,7 @@
                 </span>
                 <hr>
                 <span class="options">
-                    
+
                     <label class="checkbox-container">
                         <span class="checkmark-circle"></span>
                         <span class="checkbox" name="hiragana">
@@ -506,8 +508,8 @@
     </div>
 
 
-    <!------- MEMORY GAME ------->
-    <div class="memory-game">
+    <!------- MATCH MAKER ------->
+    <div class="match-maker">
         <div class="moves">Moves: <span></span></div>
         <div class="board"></div>
     </div>
@@ -550,12 +552,13 @@
 
     <script src="./scripts/screens/statsScreenInterface.js"></script>
 
-    <script src="./scripts/controllers/checkBox.js"></script>
-    <script src="./scripts/controllers/checkBoxList.js"></script>
+    <script src="./scripts/controllers/checkBoxController.js"></script>
+    <script src="./scripts/controllers/checkBoxListController.js"></script>
     <script src="./scripts/modals/modalMainInterface.js"></script>
 
     <script src="./scripts/modals/modalCustomInterface.js"></script>
 
+    <script src="./scripts/controllers/gameStartScreenController.js"></script>
     <script src="./scripts/screens/gameStartScreenInterface.js"></script>
     <script src="./scripts/screens/eyeSpyScreenInterface.js"></script>
 

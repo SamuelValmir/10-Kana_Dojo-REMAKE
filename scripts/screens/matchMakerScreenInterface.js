@@ -1,17 +1,23 @@
 "use strict";
 
 let matchMakerScreenInterface = {
-    htmlElement: document.querySelector("board"),
-    show(){
+    htmlElement: document.querySelector(".match-maker"),
 
+    showStartScreen() {
+        gameStartScreenInterface.show(this, MATCH_MAKER_MAIN_COLOR_LIST, MATCH_MAKER_MAIN_BACKGROUND_IMAGE, MATCH_MAKER_GAME_TITLE, MATCH_MAKER_GAME_DESCRIPTION);
     },
-    hide(){
 
-    }
-}
-window.onload = () => {
-    // startGame();
-    // setMoves();
+    show() {
+        this.htmlElement.style.display = "grid";
+
+        startGame();
+        setMoves();
+    },
+
+    hide() {
+        this.htmlElement.style.display = "none";
+    },
+
 }
 
 let startGame = () => {

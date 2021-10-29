@@ -1,7 +1,19 @@
-let checkBoxList = {
-    checkedAmount: undefined,
-    confirmButton: undefined,
-    canAnimate(list, selectedIndex) {
+class CheckBoxListController {
+    constructor(elementList, hasEditIcon, alphabet, families, confirmButton, mustHasAtLeastOneChecked, color) {
+        this.elementList = elementList;
+        this.hasEditIcon = hasEditIcon;
+        this.alphabet = alphabet;
+        this.families = families;
+        this.confirmButton = confirmButton;
+        this.mustHasAtLeastOneChecked = mustHasAtLeastOneChecked;
+        this.color = color;
+    }
+
+    checkedAmount = undefined;
+    confirmButton = undefined;
+    mustHasAtLeastOneChecked = undefined;
+
+    isLastChecked(list, selectedIndex) {
         this.setCheckedAmount(list);
 
         if (this.checkedAmount > 1) {
@@ -10,12 +22,12 @@ let checkBoxList = {
             return true;
         }
         return false;
-    },
+    }
 
     setCheckedAmount(list) {
         let checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
         this.checkedAmount = checkBoxCheckedList.length;
-    },
+    }
 
     parseFamilyOfCheckedToHiragana(checkBoxObjectList) {
         let result = [];
@@ -28,7 +40,7 @@ let checkBoxList = {
             }
         })
         return result;
-    },
+    }
 
     parseFamilyOfCheckedToKatakana(checkBoxObjectList) {
         let result = [];
@@ -41,13 +53,13 @@ let checkBoxList = {
             }
         })
         return result;
-    },
+    }
 
     getAllChecked(list) {
         let checkBoxCheckedList = [];
         checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
         return checkBoxCheckedList;
-    },
+    }
 
     reset(checkBoxObjectList) {
         // Return an object list of check box that its first element is checked by default
@@ -65,17 +77,15 @@ let checkBoxList = {
             }
             checkBoxObject.isEdited = false;
         }
-    },
+    }
 
-    built(elementList, hasEditIcon = false, alphabet = undefined, families = undefined, confirmButton) {
+    build() {
         // Return an object list of check box that its first element is checked by default
         const checkBoxObjectList = [];
 
-        this.confirmButton = confirmButton;
-
-        for (let index = 0; index < elementList.length; index++) {
-            const checkBoxElement = elementList[index];
-            const checkBoxObject = new CheckBox();
+        for (let index = 0; index < this.elementList.length; index++) {
+            const checkBoxElement = this.elementList[index];
+            const checkBoxObject = new CheckBoxController();
 
             if (index === 0) {
                 checkBoxObject.isChecked = true;
@@ -83,22 +93,24 @@ let checkBoxList = {
                 checkBoxObject.isChecked = false;
             }
 
+            checkBoxObject.color = this.color;
             checkBoxObject.name = checkBoxElement.getAttribute("name");
             checkBoxObject.htmlElement = checkBoxElement;
             checkBoxObject.checkMark = checkBoxElement.children[0];
             checkBoxObject.checkMarkCircle = checkBoxElement.parentElement.children[0];
 
-            if (hasEditIcon === true) {
+            if (this.hasEditIcon === true) {
                 checkBoxObject.editIcon = checkBoxElement.parentElement.parentElement.children[1];
                 checkBoxObject.hasEditIcon = true;
             }
 
-            if (alphabet !== undefined) {
-                checkBoxObject.alphabet = alphabet;
+            if (
+                this.alphabet !== undefined) {
+                checkBoxObject.alphabet = this.alphabet;
             }
 
-            if (families !== undefined) {
-                checkBoxObject.family = families[index];
+            if (this.families !== undefined) {
+                checkBoxObject.family = this.families[index];
                 checkBoxObject.alphabet = checkBoxElement.getAttribute("alphabet")
             }
 
@@ -108,7 +120,7 @@ let checkBoxList = {
         this.initializeCheckboxList(checkBoxObjectList);
 
         return checkBoxObjectList;
-    },
+    }
 
     // It checks the first checkbox and inserts the click event in everyone 
     initializeCheckboxList(checkBoxObjectList) {
@@ -136,35 +148,44 @@ let checkBoxList = {
                 })
             }
         }
-    },
+    }
 
     checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index) {
         checkBoxObject.animateCheckBoxAndCheckMarkCircle();
 
-        if (checkBoxList.canAnimate(checkBoxObjectList, index) === true) {
+        if (this.isLastChecked(checkBoxObjectList, index) === true) {
 
             if (checkBoxObject.isChecked === true) {
-                checkBoxObject.isChecked = false;
-                checkBoxObject.hideCheckBoxAndCheckMark();
-                checkBoxObject.hideEditIcon();
+                this.disableCheckBox(checkBoxObject);
             } else {
-                checkBoxObject.isChecked = true;
-                checkBoxObject.showCheckBoxAndCheckMark();
-                checkBoxObject.showEditIcon();
+                this.enableCheckBox(checkBoxObject);
             }
-            this.confirmButton.disabled = false;
-            this.confirmButton.style.opacity = "1";
-
         } else {
-            //! I must make a control variable that allow has no checkbox selected.
-            // checkBoxObject.isChecked = false;
-            // checkBoxObject.hideCheckBoxAndCheckMark();
-            // checkBoxObject.hideEditIcon();
-            // this.confirmButton.disabled = true;
-            // this.confirmButton.style.opacity = ".5";
-            // alert("At least one option must be selected!");
+            if (this.mustHasAtLeastOneChecked === false) {
+                if (checkBoxObject.isChecked === true) {
+                    this.disableCheckBox(checkBoxObject);
+                    this.confirmButton.disabled = true;
+                    this.confirmButton.style.opacity = ".5";
+                } else {
+                    this.enableCheckBox(checkBoxObject);
+                    this.confirmButton.disabled = false;
+                    this.confirmButton.style.opacity = "1";
+                }
+            }
         }
-    },
+    }
+
+    enableCheckBox(checkBoxObject) {
+        checkBoxObject.isChecked = true;
+        checkBoxObject.showCheckBoxAndCheckMark();
+        checkBoxObject.showEditIcon();
+    }
+
+    disableCheckBox(checkBoxObject) {
+        checkBoxObject.isChecked = false;
+        checkBoxObject.hideCheckBoxAndCheckMark();
+        checkBoxObject.hideEditIcon();
+    }
 
     async editIconClickEventListener(checkBoxObject) {
         await checkBoxObject.animateEditIcon();

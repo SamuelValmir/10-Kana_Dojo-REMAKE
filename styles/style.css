@@ -704,10 +704,10 @@ label{
 
 .game-start-screen{
     color: white;
-
+    
     height: 100vh;
+    display: none;
     flex-direction: column;
-    /* background-color: #131517; */
     background: linear-gradient(180deg, rgb(19, 21, 23, 1) , #131517);
 
 }
@@ -749,7 +749,7 @@ label{
 }
 
 .game-start-screen .bottom{
-    box-shadow: -10rem -35vw 8rem #131517, 10rem -35vw 8rem #131517;
+    box-shadow: -10rem -35vw 8rem #131517, 0rem -35vw 8rem #131517, 10rem -35vw 8rem #131517;
     z-index: 1;
 }
 
@@ -1059,8 +1059,9 @@ label{
 /* ----------------------------------------------------------- */
 
 /** ----- MEMORY GAME ----- */
-.memory-game{
+.match-maker{
     height: 100vh;
+    background-color: #348C00;
     display: none;
     justify-items: center;
     align-items: center;
@@ -1079,7 +1080,7 @@ label{
     align-self: start;
 }
 
-.memory-game .card{
+.match-maker .card{
     width: 15vw;
     height: 15vw;
 
@@ -1101,7 +1102,7 @@ label{
     }
 } */
 
-.memory-game .card-front, .memory-game .card-back{
+.match-maker .card-front, .match-maker .card-back{
     width: 100%;
     height: 100%;
 
@@ -1118,12 +1119,12 @@ label{
     font-size: 5vw;
 }
 
-.memory-game .card-front{
+.match-maker .card-front{
     background-color: var(--secondary);
 }
 
 /* IT draws a red circle in the front of the card */
-.memory-game .card-front::after{
+.match-maker .card-front::after{
     content: "";
     background-color: var(--primaryColor);
 
@@ -1133,7 +1134,7 @@ label{
     border-radius: 50%;
 }
 
-.memory-game .card-back{
+.match-maker .card-back{
   background-color: var(--primaryColor);
   color: var(--secondary);
   transform: rotateY(180deg);
