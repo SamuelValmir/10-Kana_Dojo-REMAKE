@@ -7,6 +7,9 @@ let gameStartScreenInterface = {
     game: undefined,
     mainColor: undefined,
 
+
+    topElement: document.querySelector(".game-start-screen .top"),
+    bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
     backgroundImage: undefined,
     titleElement: document.querySelector(".game-start-screen .bottom .game-title"),
@@ -43,15 +46,33 @@ let gameStartScreenInterface = {
             this.buttonElement.disabled = false;
 
             // Build objects to the left and right checkboxes
-            let checkBoxElementList = this.checkBoxElementList;
+            const checkBoxElementList = this.checkBoxElementList;
             this.checkBoxObjectList = new CheckBoxListController(checkBoxElementList, false, undefined, undefined, this.buttonElement, false, this.mainColor).build();
+            const checkBoxHiragana = this.checkBoxObjectList[0];
+            const checkBoxKatakana = this.checkBoxObjectList[1];
             let gameStartScreenControllerObject = new GameStartScreenController(this.buttonElement, this.hslColorList);
+
+            // console.log(kana.getAll())
 
             this.buttonElement.addEventListener("click", async () => {
                 if (this.buttonElement.disabled === false) {
                     await gameStartScreenControllerObject.animateButton();
-                    this.hide();
-                    this.game.show();
+
+                    const allKana = kana.getAll();
+                    let cards = [];
+                    if (checkBoxHiragana.isChecked === true){
+                        cards.push(kana.toHiragana(allKana));
+                    }
+                    if (checkBoxKatakana.isChecked === true){
+                        cards.push(kana.toKatakana(allKana));
+                    }
+                    cards = cards.flat();
+                    cards = Cards.shuffle(cards);
+                   
+                    this.topElement.lastElementChild.style.display = "none";
+                    this.bottomElement.children[0].style.display = "none";
+                    // this.hide();
+                    this.game.show(cards);
                 }
             })
 

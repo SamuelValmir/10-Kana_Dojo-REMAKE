@@ -6,7 +6,7 @@ let progressBarTop;
 document.addEventListener("DOMContentLoaded", () => {
     // menuScreenInterface.show();
     // eyeSpyScreenInterface.showStartScreen();
-    matchMakerScreenInterface.showStartScreen();
+    // matchMakerScreenInterface.showStartScreen();
     // statsScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
 })

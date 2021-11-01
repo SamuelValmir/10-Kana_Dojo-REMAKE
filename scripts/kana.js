@@ -63,9 +63,18 @@ let kana = {
         let result = [];
         list.forEach(kana => { result.push(wanakana.toKatakana(kana)) });
         return result;
+    },
+
+    getAll() {
+        let result = [
+            [...this.basic],
+            [...this.voiced],
+            [...this.combo1],
+            [...this.combo2]]
+        result = result.flat();
+        return result;
     }
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     fetch("./assets/kana.json")
@@ -73,5 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             kana.groups = data;
             kana.initialize();
+            // matchMakerScreenInterface.showStartScreen();
+            eyeSpyScreenInterface.showStartScreen();
         })
 })

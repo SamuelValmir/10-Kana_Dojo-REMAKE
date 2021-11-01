@@ -7,6 +7,10 @@ let matchMakerModel = {
     secondCard: null,
     moves: 0,
 
+    index: 0,
+    counter: 16,
+    currentCards: [],
+
     setCard(id) {
         let card = this.cards.filter((card) => card.id == id)[0];
 
@@ -46,59 +50,48 @@ let matchMakerModel = {
         this.clearCards();
     },
 
-    createCards() {
+    createCards(kanaList) {
         this.cards = [];
 
-        // It puts each element/kana from kanaJson to cards array
-        for (const family of Object.values(kana.basicFamilies)) {
-            for (const kana of family) {
-                this.cards.push(this.createPairOf(kana));
-            }
+        for (const kana of kanaList) {
+            this.cards.push(this.createPairOf(kana));
         }
 
         // It makes a list with only elements, without objects
         this.cards = this.cards.flatMap(pair => pair);
-        for (let index = 0; index < 90; index++) {
-            this.cards.pop();
+
+        let index = this.index;
+        let counter = this.counter;
+
+        for (index; index < counter; index++) {
+            this.currentCards.push(this.cards[index]);
         }
-        this.cards = Cards.shuffle(this.cards);
+        this.currentCards = Cards.shuffle(this.currentCards);
     },
 
     createPairOf(kana) { // Duplicate a card and return an object with the copies
         return [
-            { id: this.createId(kana), content: wanakana.toHiragana(kana), flipped: false },
-            { id: this.createId(kana), content: wanakana.toHiragana(kana), flipped: false }
+            { id: this.createId(kana), content: kana, flipped: false },
+            { id: this.createId(kana), content: kana, flipped: false }
         ];
     },
-
-    // shuffle() {
-    //     let cards = this.cards;
-    //     let currentIndex = cards.length;
-    //     let randomIndex = 0;
-
-    //     while (currentIndex !== 0) {
-    //         randomIndex = Math.floor(Math.random() * currentIndex);
-    //         currentIndex--;
-    //         [cards[currentIndex], cards[randomIndex]] = [cards[randomIndex], cards[currentIndex]];
-    //     }
-    // },
 
     createId(kana) {
         let num = Math.random() * 1000
         return kana + parseInt(num);
     },
 
-    checkGameOver(){
+    checkGameOver() {
         let gameOver = true;
         this.cards.forEach((card) => {
-            if(!card.flipped){
+            if (!card.flipped) {
                 gameOver = false;
             }
         });
         return gameOver;
     },
 
-    increaseMove(){
+    increaseMove() {
         this.moves++;
     },
 

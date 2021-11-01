@@ -510,7 +510,27 @@
 
     <!------- MATCH MAKER ------->
     <div class="match-maker">
-        <div class="moves">Moves: <span></span></div>
+        <div class="top">
+            <span class="return-button">
+                <img src="assets/icons/arrow_back_white_svg.svg" alt="return">
+                <span class="return-button-highlight"></span>
+            </span>
+            <span class="time">60</span>
+            <span class="moves"></span>
+        </div>
+        <div class="board"></div>
+    </div>
+
+    <!------- EYE SPY ------->
+    <div class="eye-spy">
+        <div class="top">
+            <span class="return-button">
+                <img src="assets/icons/arrow_back_white_svg.svg" alt="return">
+                <span class="return-button-highlight"></span>
+            </span>
+            <span class="current"></span>
+            <span class="moves"></span>
+        </div>
         <div class="board"></div>
     </div>
 
@@ -560,6 +580,8 @@
 
     <script src="./scripts/controllers/gameStartScreenController.js"></script>
     <script src="./scripts/screens/gameStartScreenInterface.js"></script>
+    <script src="./scripts/screens/gameInterface.js"></script>t
+    
     <script src="./scripts/screens/eyeSpyScreenInterface.js"></script>
 
     <script src="./scripts/generalInterface.js"></script>
