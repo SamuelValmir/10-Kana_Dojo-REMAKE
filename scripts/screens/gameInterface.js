@@ -1,25 +1,28 @@
 class GameInterface {
-    constructor(game, itHasCurrentIcon = false){
-        this.game = game;
+    constructor(gameScreenInterface, gameModel, itHasCurrentIcon = false, dimension) {
+        this.gameScreenInterface = gameScreenInterface;
+        this.gameModel = gameModel;
         this.itHasCurrentIcon = itHasCurrentIcon;
+        this.dimension = dimension;
         this.startGame();
     }
 
     startGame() {
-        if(this.itHasCurrentIcon === true){
+        if (this.itHasCurrentIcon === true) {
             console.log("it has current icon")
         }
-        
-        matchMakerModel.createCards(this.game.cards);
+
+        this.gameScreenInterface.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
+        this.gameModel.createCards(this.gameScreenInterface.cards);
         this.drawCardsOnScreen();
         this.setMoves();
     }
 
     drawCardsOnScreen() {
         // Making and adding the cards in html
-        let boardElement = this.game.boardElement;
+        let boardElement = this.gameScreenInterface.boardElement;
 
-        matchMakerModel.currentCards.forEach(card => {
+        this.gameModel.currentCards.forEach(card => {
             let cardElement = document.createElement("div");
             cardElement.id = card.id;
             cardElement.classList.add(CARD);
@@ -27,18 +30,16 @@ class GameInterface {
 
             this.createCardBackFront(cardElement, card);
 
-            cardElement.addEventListener('click', flipCard);
-            boardElement.appendChild(cardElement);
+            cardElement.addEventListener('click', () => {
+                if (this.gameModel.setCard(card.id)) {
+                    cardElement.classList.add("flip");
+                    this.gameModel.increaseMove();
+                    this.setMoves();
 
-            function flipCard() {
-                if (matchMakerModel.setCard(this.id)) {
-                    this.classList.add("flip");
-                    matchMakerModel.increaseMove();
-                    gameInterface.setMoves();
-                    if (matchMakerModel.secondCard) {
-                        if (matchMakerModel.checkMatch()) {
-                            matchMakerModel.clearCards();
-                            if (matchMakerModel.checkGameOver()) {
+                    if (this.gameModel.secondCard) {
+                        if (this.gameModel.checkMatch()) {
+                            this.gameModel.clearCards();
+                            if (this.gameModel.checkGameOver()) {
                                 setTimeout(() => {
                                     let gameOverLayer = document.querySelector(".gameOver");
                                     gameOverLayer.style.display = "grid";
@@ -47,19 +48,21 @@ class GameInterface {
                             }
                         } else {
                             setTimeout(() => {
-                                let firstCardElement = document.getElementById(matchMakerModel.firstCard.id);
-                                let secondCardElement = document.getElementById(matchMakerModel.secondCard.id);
-        
-                                matchMakerModel.unFlipCards();
+                                let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
+                                let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
+
+                                this.gameModel.unFlipCards();
                                 firstCardElement.classList.remove("flip");
                                 secondCardElement.classList.remove("flip");
                             }, 1000);
                         }
                     }
                 }
-            }
+            });
+            boardElement.appendChild(cardElement);
         });
     }
+
 
     createCardBackFront(cardElement, card) {
         let frontCardElement = document.createElement("div");
@@ -74,10 +77,10 @@ class GameInterface {
     }
 
     setMoves() {
-        document.querySelector(".moves").innerHTML = matchMakerModel.moves;
+        document.querySelector(".moves").innerHTML = this.gameModel.moves;
     }
 
     setScore() {
-        document.querySelector(".score").innerHTML = matchMakerModel.moves;
+        document.querySelector(".score").innerHTML = this.gameModel.moves;
     }
 }

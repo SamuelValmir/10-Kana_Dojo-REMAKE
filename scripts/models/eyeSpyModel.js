@@ -1,16 +1,38 @@
 "use strict";
 
-let matchMakerModel = {
+let eyeSpyModel = {
     cards: null,
     lockMode: false,
     firstCard: null,
     secondCard: null,
     moves: 0,
-
     index: 0,
-    counter: 16,
-    currentCards: [],
+    counter: 25,
 
+    currentCards: [],
+    sortedCard: null,
+
+    createCards(kanaList) { // It creates the objects cards and adds in currentCards only the ones that will appears on screen
+        this.cards = [];
+
+        for (const kana of kanaList) {
+            this.cards.push(this.createCard(kana));
+        }
+        console.log(this.cards)
+
+        let index = this.index;
+        let counter = this.counter;
+
+        for (index; index < counter; index++) {
+            this.currentCards.push(this.cards[index]);
+        }
+        this.currentCards = Cards.shuffle(this.currentCards);
+    },
+
+    createCard(kana) { // Return an object with the object
+        return {content: kana, flipped: false };
+    },
+    
     setCard(id) {
         let card = this.cards.filter((card) => card.id == id)[0];
 
@@ -49,37 +71,6 @@ let matchMakerModel = {
         this.firstCard.flipped = false;
         this.secondCard.flipped = false;
         this.clearCards();
-    },
-
-    createCards(kanaList) {
-        this.cards = [];
-
-        for (const kana of kanaList) {
-            this.cards.push(this.createPairOf(kana));
-        }
-
-        // It makes a list with only elements, without objects
-        this.cards = this.cards.flatMap(pair => pair);
-
-        let index = this.index;
-        let counter = this.counter;
-
-        for (index; index < counter; index++) {
-            this.currentCards.push(this.cards[index]);
-        }
-        this.currentCards = Cards.shuffle(this.currentCards);
-    },
-
-    createPairOf(kana) { // Duplicate a card and return an object with the copies
-        return [
-            { id: this.createId(kana), content: kana, flipped: false },
-            { id: this.createId(kana), content: kana, flipped: false }
-        ];
-    },
-
-    createId(kana) {
-        let num = Math.random() * 1000
-        return kana + parseInt(num);
     },
 
     checkGameOver() {

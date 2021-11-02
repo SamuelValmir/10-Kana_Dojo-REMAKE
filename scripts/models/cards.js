@@ -1,3 +1,5 @@
+"use strict";
+
 class Cards {
     static shuffle(cards) {
         let currentIndex = cards.length;

@@ -1075,8 +1075,25 @@ label{
 
 .match-maker .top, .eye-spy .top{
     width: 95vw;
+
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.eye-spy .top .left{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.eye-spy .current{
+    color: #131517;
+    background-color: rgb(29, 225, 251);
+
+    padding: 2rem;
+    border-radius: 0 0 .8rem .8rem;
+    font-size: 8vw;
 }
 
 
