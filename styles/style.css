@@ -1087,7 +1087,7 @@ label{
     align-items: center;
 }
 
-.eye-spy .current{
+.eye-spy .sorted-card{
     color: #131517;
     background-color: rgb(29, 225, 251);
 
@@ -1115,11 +1115,12 @@ label{
     height: 15vw;
 
     position: relative;
+}
 
+.match-maker .card{
     transform-style: preserve-3d;
     transition: transform .5s;
     animation: f 1s;
-    /* transform: rotateY(200deg); */
 }
 
 @keyframes f {
@@ -1141,7 +1142,6 @@ label{
     justify-items: center;
     align-items: center;
 
-    border: solid;
     border-radius: .5em;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
     backface-visibility: hidden;
@@ -1150,21 +1150,10 @@ label{
 }
 
 .match-maker .card-front, .eye-spy .card-front{
-    background-color: var(--secondary);
+    /* background-color: ; */
 }
 
-/* IT draws a red circle in the front of the card */
-.match-maker .card-front::after, .eye-spy .card-front::after{
-    content: "";
-    background-color: var(--primaryColor);
-
-    width: 35%;
-    height: 35%;
-
-    border-radius: 50%;
-}
-
-.match-maker .card-back, .eye-spy .card-back{
+.match-maker .card-back{
   background-color: var(--primaryColor);
   color: var(--secondary);
   transform: rotateY(180deg);

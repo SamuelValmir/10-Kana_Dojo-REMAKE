@@ -2,10 +2,16 @@
 let eyeSpyScreenInterface = {
     htmlElement: document.querySelector(".eye-spy"),
     boardElement: document.querySelector(".eye-spy .board"),
+    mainColor: null,
+    gameModel: eyeSpyModel,
+    dimension: 5,
     cards: undefined,
 
     showStartScreen() {
-        gameStartScreenInterface.show(this, EYE_SPY_MAIN_COLOR_LIST, EYE_SPY_MAIN_BACKGROUND_IMAGE, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
+        const [hue, saturation, lightness] = EYE_SPY_MAIN_COLOR_LIST;
+        this.mainColor = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+
+        gameStartScreenInterface.show(this, this.mainColor, EYE_SPY_MAIN_COLOR_LIST, EYE_SPY_MAIN_BACKGROUND_IMAGE, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
     },
 
     show(cards) {
@@ -19,19 +25,15 @@ let eyeSpyScreenInterface = {
     },
 
     startGame() {
-        if (this.itHasCurrentIcon === true) {
-            console.log("it has current icon")
-        }
-
-        this.gameScreenInterface.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.gameModel.createCards(this.gameScreenInterface.cards);
+        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
+        this.gameModel.createCards(this.cards);
         this.drawCardsOnScreen();
         this.setMoves();
     },
 
     drawCardsOnScreen() {
         // Making and adding the cards in html
-        let boardElement = this.gameScreenInterface.boardElement;
+        let boardElement = this.boardElement;
 
         this.gameModel.currentCards.forEach(card => {
             let cardElement = document.createElement("div");
@@ -39,60 +41,55 @@ let eyeSpyScreenInterface = {
             cardElement.classList.add(CARD);
             cardElement.dataset.content = card.content;
 
-            this.createCardBackFront(cardElement, card);
+            let frontCardElement = document.createElement("div");
+            frontCardElement.classList.add(CARD_FRONT);
+            frontCardElement.innerHTML = card.content;
+            frontCardElement.style.backgroundColor = this.mainColor;
 
             cardElement.addEventListener('click', () => {
-                if (this.gameModel.setCard(card.id)) {
-                    cardElement.classList.add("flip");
-                    this.gameModel.increaseMove();
-                    this.setMoves();
+                this.gameModel.increaseMove();
+                this.setMoves();
 
-                    if (this.gameModel.secondCard) {
-                        if (this.gameModel.checkMatch()) {
-                            this.gameModel.clearCards();
-                            if (this.gameModel.checkGameOver()) {
-                                setTimeout(() => {
-                                    let gameOverLayer = document.querySelector(".gameOver");
-                                    gameOverLayer.style.display = "grid";
-                                    setScore();
-                                }, 1000)
-                            }
-                        } else {
-                            setTimeout(() => {
-                                let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
-                                let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
+                if (this.gameModel.checkMatch(card.id)) {
 
-                                this.gameModel.unFlipCards();
-                                firstCardElement.classList.remove("flip");
-                                secondCardElement.classList.remove("flip");
-                            }, 1000);
-                        }
+                    this.cardMatchAnimation(cardElement, frontCardElement);
+                    if (this.gameModel.checkGameOver()) {
+                        setTimeout(() => {
+                            let gameOverLayer = document.querySelector(".gameOver");
+                            gameOverLayer.style.display = "grid";
+                            setScore();
+                        }, 1000)
                     }
                 }
             });
+
+            cardElement.appendChild(frontCardElement);
             boardElement.appendChild(cardElement);
         });
     },
 
+    cardMatchAnimation(cardElement, frontCardElement) {
+        frontCardElement.innerHTML = "";
+        frontCardElement.style.backgroundColor = "rgb(0, 200, 0)";
+        const animation = cardElement.animate([
+            {transform: "rotateY(360deg) scale(0)"}
+        ], {duration: 600, easing: "ease-in"});
 
-    createCardBackFront(cardElement, card) {
-        let frontCardElement = document.createElement("div");
-        frontCardElement.classList.add(CARD_FRONT);
+        animation.addEventListener("finish", ()=>{
+            cardElement.style.transform = "scale(0)";
+        })
+    },
 
-        let backCardElement = document.createElement("div");
-        backCardElement.classList.add(CARD_BACK);
-        backCardElement.innerHTML = card.content;
-
-        cardElement.appendChild(frontCardElement);
-        cardElement.appendChild(backCardElement);
+    setSortedCard() {
+        document.querySelector(".eye-spy .sortedCard").innerHTML = this.gameModel.sorted - card;
     },
 
     setMoves() {
-        document.querySelector(".moves").innerHTML = this.gameModel.moves;
+        document.querySelector(".eye-spy .moves").innerHTML = this.gameModel.moves;
     },
 
     setScore() {
-        document.querySelector(".score").innerHTML = this.gameModel.moves;
+        document.querySelector(".eye-spy  .score").innerHTML = this.gameModel.moves;
     }
 
 }

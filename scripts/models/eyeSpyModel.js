@@ -2,15 +2,12 @@
 
 let eyeSpyModel = {
     cards: null,
-    lockMode: false,
-    firstCard: null,
-    secondCard: null,
-    moves: 0,
-    index: 0,
-    counter: 25,
-
     currentCards: [],
     sortedCard: null,
+
+    moves: 0,
+    index: 0,
+    counter: 4,
 
     createCards(kanaList) { // It creates the objects cards and adds in currentCards only the ones that will appears on screen
         this.cards = [];
@@ -18,7 +15,6 @@ let eyeSpyModel = {
         for (const kana of kanaList) {
             this.cards.push(this.createCard(kana));
         }
-        console.log(this.cards)
 
         let index = this.index;
         let counter = this.counter;
@@ -27,44 +23,34 @@ let eyeSpyModel = {
             this.currentCards.push(this.cards[index]);
         }
         this.currentCards = Cards.shuffle(this.currentCards);
+
+        this.setSortedCard();
     },
 
     createCard(kana) { // Return an object with the object
-        return {content: kana, flipped: false };
-    },
-    
-    setCard(id) {
-        let card = this.cards.filter((card) => card.id == id)[0];
-
-        if (card.flipped || this.lockMode) {
-            return false;
-        }
-
-        //* (!this.firstCard) == (firstCard == null)
-        if (!this.firstCard) {
-
-            this.firstCard = card;
-            card.flipped = true;
-            return true;
-        } else {
-            this.secondCard = card;
-            card.flipped = true;
-            this.lockMode = true;
-            return true;
-        }
+        return {id: this.createId(kana), content: kana, flipped: false };
     },
 
-    checkMatch() {
-        if (this.firstCard && this.secondCard) {
-            return this.firstCard.content === this.secondCard.content;
+    createId(kana) {
+        let num = Math.random() * 1000
+        return kana + parseInt(num);
+    },
+
+    setSortedCard(){
+        const randomPositionInCurrentCards = Math.floor(Math.random() * this.currentCards.length);
+        this.sortedCard = this.currentCards[randomPositionInCurrentCards];
+    },
+
+    checkMatch(id) {
+        let card = this.currentCards.filter((card) => card.id == id)[0];
+
+        if(card === this.sortedCard){
+            this.currentCards = this.currentCards.filter(element=> element != card);
+
+            this.setSortedCard();
+            return true;
         }
         return false;
-    },
-
-    clearCards() {
-        this.firstCard = null;
-        this.secondCard = null;
-        this.lockMode = false;
     },
 
     unFlipCards() {

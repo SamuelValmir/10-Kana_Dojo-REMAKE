@@ -22,12 +22,10 @@ let gameStartScreenInterface = {
     checkBoxElementList: document.querySelectorAll(".game-start-screen .bottom .checkbox"),
     checkBoxObjectList: [],
 
-    show(game, hslColorList, backgroundImage, gameTitle, gameDescription) {
+    show(game, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription) {
         this.game = game;
+        this.mainColor = mainColor
         this.hslColorList = hslColorList;
-        const [hue, saturation, lightness] = this.hslColorList;
-
-        this.mainColor = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
         this.backgroundImage = backgroundImage;
         this.title = gameTitle;
         this.gameDescription = gameDescription;
