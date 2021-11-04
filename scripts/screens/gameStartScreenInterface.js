@@ -7,7 +7,6 @@ let gameStartScreenInterface = {
     game: undefined,
     mainColor: undefined,
 
-
     topElement: document.querySelector(".game-start-screen .top"),
     bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
@@ -73,10 +72,6 @@ let gameStartScreenInterface = {
                     this.game.show(cards);
                 }
             })
-
-        } else {
-            checkBoxList.reset(this.leftCheckBoxObjectList);
-            checkBoxList.reset(this.rightCheckBoxObjectList);
         }
 
         this.backgroundImageElement.src = this.backgroundImage;

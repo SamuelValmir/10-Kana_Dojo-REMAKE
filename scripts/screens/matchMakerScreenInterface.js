@@ -1,8 +1,8 @@
 "use strict";
 
 let matchMakerScreenInterface = {
-    htmlElement: document.querySelector(".match-maker"),
-    boardElement: document.querySelector(".match-maker .board"),
+    htmlElement: document.querySelector(".match-maker-screen"),
+    boardElement: document.querySelector(".match-maker-screen .board"),
     gameModel: matchMakerModel,
     dimension: 4,
     cards: undefined,

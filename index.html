@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="container play-screen">
-                    <div class="study-section study-section-flash-card">
+                    <div class="study-section eye-spy">
                         <img src="./assets/icons/eye-icon.jpg" alt="eye spy">
                         <div class="description">
                             <h2>Eye Spy</h2>
@@ -139,7 +139,7 @@
                         </div>
                     </div>
 
-                    <div class="study-section study-section-quiz">
+                    <div class="study-section match-maker">
                         <img src="./assets/icons/heart-icon.png" alt="match maker">
                         <div class="description">
                             <h2>Match Maker</h2>
@@ -509,44 +509,45 @@
 
 
     <!------- MATCH MAKER ------->
-    <div class="match-maker">
+    <div class="match-maker-screen">
         <div class="top">
             <span class="return-button">
                 <img src="assets/icons/arrow_back_white_svg.svg" alt="return">
                 <span class="return-button-highlight"></span>
             </span>
             <span class="time">60</span>
-            <span class="moves"></span>
+            <span class="moves green"></span>
         </div>
         <div class="board"></div>
     </div>
 
     <!------- EYE SPY ------->
-    <div class="eye-spy">
+    <div class="eye-spy-screen">
         <div class="top">
             <span class="left">
                 <span class="return-button">
                     <img src="assets/icons/arrow_back_white_svg.svg" alt="return">
                     <span class="return-button-highlight"></span>
                 </span>
-                <span class="time">1</span>
+                <span class="time"></span>
             </span>
-            <span class="sorted-card">1</span>
-            <span class="moves">0</span>
+            <span class="sorted-card"></span>
+            <span class="moves green"></span>
         </div>
         <div class="board"></div>
     </div>
 
 
-    <!------- MEMORY GAME (GAME OVER) ------->
-    <div class="gameOver">
-        <div>
-            Congratulation! You have finished you study!
-            <div class="score">SCORE: <span></span></div>
-        </div>
-        <div>
-            <button id="restart" onclick="location.reload()">Play again</button>
-            <button id="menu" onclick="goToMenu()">Menu</button>
+    <!------- GAME OVER SCREEN ------->
+    <div class="gameOver-screen">
+        <div class="container">
+            <span class="top"> Time's up</span>
+            <span class="content"> YOU MADE <span class="matches green">0</span> MATCHES</span>
+            <span class="best">Best <span class="best-value orange">0</span></span>
+            <div>
+                <button class="play-again">Play again</button>
+                <button class="menu">Menu</button>
+            </div>
         </div>
     </div>
 
@@ -592,6 +593,8 @@
 
     <script src="./scripts/models/matchMakerModel.js"></script>
     <script src="./scripts/screens/matchMakerScreenInterface.js"></script>
+
+    <script src="./scripts/screens/gameOverScreenInterface.js"></script>
 </body>
 
 </html>

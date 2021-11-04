@@ -28,6 +28,11 @@ let menuScreenInterface = {
         quizSection: document.querySelector(".menu-screen .study-section-quiz"),
     },
 
+    games: {
+        eyeSpyElement: document.querySelector(".menu-screen .play-screen .eye-spy"),
+        matchMakerElement: document.querySelector(".menu-screen .play-screen .match-maker")
+    },
+
     progress: {
         hiraganaProgress: document.querySelector(".menu-screen .progress-container-hiragana"),
         katakanaProgress: document.querySelector(".menu-screen .progress-container-katakana"),
@@ -88,10 +93,21 @@ let menuScreenInterface = {
                 }
 
             })
+
             playOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateRightOption() === true) {
                     HeaderControllerObject.nav.animateRightOption();
                 }
+            })
+
+            this.games.eyeSpyElement.addEventListener("click", () => {
+                this.hide();
+                eyeSpyScreenInterface.showStartScreen();
+            })
+            
+            this.games.matchMakerElement.addEventListener("click", () => {
+                this.hide();
+                matchMakerScreenInterface.showStartScreen();
             })
 
             window.addEventListener("click", async (event) => {
@@ -142,7 +158,7 @@ let menuScreenInterface = {
                 this.hide();
                 statsScreenInterface.show("left");
             })
-            
+
             this.progress.katakanaProgress.addEventListener("click", () => {
                 this.hide();
                 statsScreenInterface.show("right");

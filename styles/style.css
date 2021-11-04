@@ -745,7 +745,7 @@ label{
     color: white;
 }
 
-.game-start-screen .top .score .result .green{
+.green{
     color: rgb(81, 255, 0);
 }
 
@@ -1060,7 +1060,7 @@ label{
 /* ----------------------------------------------------------- */
 
 /** ----- MEMORY GAME ----- */
-.match-maker, .eye-spy{
+.match-maker-screen, .eye-spy-screen{
     z-index: 2;
     height: 100vh;
     
@@ -1073,7 +1073,7 @@ label{
     align-items: center;
 }
 
-.match-maker .top, .eye-spy .top{
+.match-maker-screen .top, .eye-spy-screen .top{
     width: 95vw;
 
     display: flex;
@@ -1081,13 +1081,13 @@ label{
     align-items: center;
 }
 
-.eye-spy .top .left{
+.eye-spy-screen .top .left{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.eye-spy .sorted-card{
+.eye-spy-screen .sorted-card{
     color: #131517;
     background-color: rgb(29, 225, 251);
 
@@ -1106,18 +1106,18 @@ label{
     align-self: start;
 }
 
-.eye-spy .board{
+.eye-spy-screen .board{
     grid-template-columns: auto auto auto auto ;
 }
 
-.match-maker .card, .eye-spy .card{
+.match-maker-screen .card, .eye-spy-screen .card{
     width: 15vw;
     height: 15vw;
 
     position: relative;
 }
 
-.match-maker .card{
+.match-maker-screen .card{
     transform-style: preserve-3d;
     transition: transform .5s;
     animation: f 1s;
@@ -1133,7 +1133,7 @@ label{
     }
 } */
 
-.match-maker .card-front, .match-maker .card-back, .eye-spy .card-front, .eye-spy .card-back{
+.match-maker-screen .card-front, .match-maker-screen .card-back, .eye-spy-screen .card-front, .eye-spy-screen .card-back{
     width: 100%;
     height: 100%;
 
@@ -1149,11 +1149,11 @@ label{
     font-size: 5vw;
 }
 
-.match-maker .card-front, .eye-spy .card-front{
+.match-maker-screen .card-front, .eye-spy-screen .card-front{
     /* background-color: ; */
 }
 
-.match-maker .card-back{
+.match-maker-screen .card-back{
   background-color: var(--primaryColor);
   color: var(--secondary);
   transform: rotateY(180deg);
@@ -1165,31 +1165,61 @@ label{
 
 /* ------------------------------------------------------------- */
 
-/** MEMORY GAME (GAME OVER)*/
-.gameOver{
-    background-color: rgba(0, 0, 0, 0.9);
-    color: white;
-
+/** --------------- GAME OVER SCREEN ---------------*/
+.gameOver-screen{
+    background-color: rgba(0, 0, 0, 0.3);
+    
     width: 100%;
     height: 100%;
-
+    
     display: none;
     top: 0;
     position: absolute;
+    z-index: 2;
     
     place-items: center;
     align-content: center;
     justify-items: center;
     
-    font-size: 2em;
     text-align: center;
 }
+.gameOver-screen .container{
+    background-color: blue;
+    
+    width: 95vw;
+    height: fit-content;
 
-.score{
-    color: yellow;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: auto;
+    padding: 1rem;
+
+    border-radius: .8rem;
+    font-size: 7vw;
 }
 
-button{
+.gameOver-screen .container .top{
+    font-size: 6vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-style: italic;
+}
+
+.gameOver-screen .container .content .matches{
+    font-size: 8.5vw;
+}
+
+.gameOver-screen .container .best{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 6vw;
+
+}
+
+.orange{
+    color: orange;
+}
+
+.gameOver-screen button{
     background-color: red;
     color: white;
 
