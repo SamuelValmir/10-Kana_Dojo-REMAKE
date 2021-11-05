@@ -10,7 +10,7 @@ let eyeSpyScreenInterface = {
     dimension: 5,
     cards: undefined,
 
-    time:0,
+    time: null,
 
     lastPromise: null,
     timeInterval: null,
@@ -26,6 +26,7 @@ let eyeSpyScreenInterface = {
         this.htmlElement.style.display = "grid";
         this.cards = cards;
         this.startGame();
+        console.log(this.gameModel.time)
     },
 
     hide() {
@@ -34,8 +35,10 @@ let eyeSpyScreenInterface = {
 
     startGame() {
         this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.gameModel.createCards(this.cards, this.time);
+        this.gameModel.createCards(this.cards);
         this.lastPromise = null;
+
+        this.time = this.gameModel.time;
         this.timeElement.innerHTML = this.time;
         this.drawCardsOnScreen();
         this.setMoves();
@@ -44,6 +47,7 @@ let eyeSpyScreenInterface = {
     drawCardsOnScreen() {
         // Making and adding the cards in html
         let boardElement = this.boardElement;
+        boardElement.innerHTML = "";
 
         this.gameModel.currentCards.forEach(card => {
             let cardElement = document.createElement("div");
@@ -60,31 +64,36 @@ let eyeSpyScreenInterface = {
             boardElement.appendChild(cardElement);
 
             cardElement.addEventListener('click', async () => {
-                this.gameModel.increaseMove();
-                this.setMoves();
+                if (card.clickable === true) {
+                    this.gameModel.increaseMove();
+                    this.setMoves();
 
-                if (this.gameModel.checkMatch(card.id)) {
-                    if (this.timeInterval === null) {
-                        this.timeInterval = setInterval(() => { // Update the time in the screen
-                            this.timeElement.innerHTML = this.gameModel.time;
-                            if (this.gameModel.time <= 0) {
-                                clearInterval(this.timeInterval);
-                                this.showGameOverScreen();
-                            }
-                        }, 1)
-                    }
-                    this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
+                    if (this.gameModel.checkMatch(card.id)) {
+                        card.clickable = false;
+                        if (this.timeInterval === null) {
+                            this.timeInterval = setInterval(() => { // Update the time in the screen
+                                this.timeElement.innerHTML = this.gameModel.time;
+                                if (this.gameModel.time <= 0) {
+                                    clearInterval(this.timeInterval);
+                                    this.timeInterval = null;
+                                    this.showGameOverScreen();
+                                    this.gameModel.reset();
+                                }
+                            }, 1)
+                        }
+                        this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
 
-                    await this.cardMatchAnimation(cardElement, frontCardElement);
+                        await this.cardMatchAnimation(cardElement, frontCardElement);
 
-                    if (this.lastPromise !== null) {
-                        this.lastPromise.then(() => {
+                        if (this.lastPromise !== null) {
+                            this.lastPromise.then(() => {
 
-                            if (this.gameModel.checkGameWin()) {
-                                boardElement.innerHTML = "";
-                                this.startGame();
-                            }
-                        })
+                                if (this.gameModel.checkGameWin()) {
+                                    boardElement.innerHTML = "";
+                                    this.startGame();
+                                }
+                            })
+                        }
                     }
                 }
             });
@@ -124,9 +133,9 @@ let eyeSpyScreenInterface = {
         document.querySelector(".eye-spy-screen  .score").innerHTML = this.gameModel.moves;
     },
 
-    showGameOverScreen(){
+    showGameOverScreen() {
         this.htmlElement.style.display = "none";
-        gameOverScreenInterface.show(this);
+        gameOverScreenInterface.show(this, this.gameModel.matches);
     }
 
 }

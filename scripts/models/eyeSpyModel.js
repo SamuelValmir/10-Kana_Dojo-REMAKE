@@ -2,22 +2,26 @@
 
 let eyeSpyModel = {
     kanaList: null,
-    cards: null,
+    cards: [],
     currentCards: [],
     sortedCard: null,
     inLastCard: false,
 
     isTimeLowing: false,
-    time: 3,
+    time: 2,
     moves: 0,
     counter: 2,
 
+    matches: 0,
     gameOver: false,
+    firstGame: true,
 
-    createCards(kanaList, time) { // It creates the objects cards and adds in currentCards only the ones that will appears on screen
-        this.kanaList = kanaList;
-        this.time = time;
-        this.cards = [];
+    createCards(kanaList) { // It creates the objects cards and adds in currentCards only the ones that will appears on screen
+        if(this.firstGame === true){
+            this.firstGame = false;
+            this.kanaList = kanaList;
+        }
+
         this.inLastCard = false;
         this.isTimeLowing = false;
 
@@ -32,13 +36,23 @@ let eyeSpyModel = {
             this.currentCards.push(this.cards[index]);
         }
 
-        this.currentCards = this.currentCards;
-
         this.setSortedCard();
     },
 
+    reset(){
+        this.cards = [];
+        this.currentCards = [];
+
+        this.time = 2;
+        this.moves = 0;
+        this.counter = 2;
+
+        this.firstGame = true;
+        this.matches = 0;
+    },
+
     createObjectFromCard(kana) { // Return an object with the object
-        return { id: this.createId(kana), content: kana, flipped: false };
+        return { id: this.createId(kana), content: kana, flipped: false, clickable: true};
     },
 
     createId(kana) {
@@ -65,6 +79,7 @@ let eyeSpyModel = {
         let card = this.currentCards.filter((card) => card.id == id)[0];
 
         if (card.content === this.sortedCard) {
+            this.matches++;
             this.currentCards = this.currentCards.filter(element => element != card);
 
             if (this.currentCards.length !== 0) {

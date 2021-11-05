@@ -14,6 +14,7 @@ let matchMakerScreenInterface = {
     show(cards) {
         this.htmlElement.style.display = "grid";
         this.cards = cards;
+        new GameScreenController(this.boardElement, this.dimension, this.gameModel);
         this.startGame();
     },
 

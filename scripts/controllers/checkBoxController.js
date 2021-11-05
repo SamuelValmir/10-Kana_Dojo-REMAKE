@@ -1,6 +1,6 @@
 
 class CheckBoxController {
-
+    
     isChecked = false;
     isEdited = false;
     color;
@@ -12,6 +12,7 @@ class CheckBoxController {
     editIcon;
     alphabet;
     family;
+
     animateCheckBoxAndCheckMarkCircle() {
         this.htmlElement.animate([
             { transform: "scale(0.8)" }

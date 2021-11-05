@@ -30,11 +30,18 @@ let gameStartScreenInterface = {
         this.gameDescription = gameDescription;
 
         this.htmlElement.style.display = "flex";
+        this.topElement.lastElementChild.style.display = "flex";
+        this.bottomElement.children[0].style.display = "flex";
         this.initialize();
     },
 
     hide() {
         this.htmlElement.style.display = "none";
+    },
+    
+    hideContent(){
+        this.topElement.lastElementChild.style.display = "none";
+        this.bottomElement.children[0].style.display = "none";
     },
 
     initialize() {
@@ -66,9 +73,7 @@ let gameStartScreenInterface = {
                     cards = cards.flat();
                     cards = Cards.shuffle(cards);
                    
-                    this.topElement.lastElementChild.style.display = "none";
-                    this.bottomElement.children[0].style.display = "none";
-                    // this.hide();
+                    this.hideContent();
                     this.game.show(cards);
                 }
             })
