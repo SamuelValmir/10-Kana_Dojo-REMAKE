@@ -1,111 +1,53 @@
-"use strict";
+class EyeSpyModel extends GameModel {
+    constructor(kanaList) {
+        super(kanaList, 1.3);
+        // this.createCards();
+    }
 
-let eyeSpyModel = {
-    kanaList: null,
-    cards: [],
-    currentCards: [],
-    sortedCard: null,
-    inLastCard: false,
+    sortedCard = null;
+    inLastCard = false;
 
-    isTimeLowing: false,
-    time: 2,
-    moves: 0,
-    counter: 2,
-
-    matches: 0,
-    gameOver: false,
-    firstGame: true,
-
-    createCards(kanaList) { // It creates the objects cards and adds in currentCards only the ones that will appears on screen
-        if(this.firstGame === true){
-            this.firstGame = false;
-            this.kanaList = kanaList;
-        }
-
-        this.inLastCard = false;
-        this.isTimeLowing = false;
-
+    createCards() { // It creates the objects cards
         for (const kana of this.kanaList) {
             this.cards.push(this.createObjectFromCard(kana));
         }
 
-        let counter = this.counter;
-
-        this.cards = Cards.shuffle(this.cards);
-        for (let index = 0; index < counter; index++) {
-            this.currentCards.push(this.cards[index]);
-        }
-
+        this.setCurrentCards();
         this.setSortedCard();
-    },
-
-    reset(){
-        this.cards = [];
-        this.currentCards = [];
-
-        this.time = 2;
-        this.moves = 0;
-        this.counter = 2;
-
-        this.firstGame = true;
-        this.matches = 0;
-    },
+    }
 
     createObjectFromCard(kana) { // Return an object with the object
-        return { id: this.createId(kana), content: kana, flipped: false, clickable: true};
-    },
+        return { id: this.createId(kana), content: kana, flipped: false, clickable: true };
+    }
 
-    createId(kana) {
-        let num = Math.random() * 1000
-        return kana + parseInt(num);
-    },
-
-    setTime() {
-        const interval = setInterval(() => {
-            this.time--;
-            if (this.time <= 0) {
-                clearInterval(interval);
-                this.gameOver = true;
-            }
-        }, 1000);
-    },
+    setCurrentCards() { // It adds in currentCards only the cards that will appear on screen
+        this.cards = Cards.shuffle(this.cards);
+        for (let index = 0; index < (this.dimension ** 2); index++) {
+            this.currentCards.push(this.cards[index]);
+        }
+    }
 
     setSortedCard() {
         const randomPositionInCurrentCards = Math.floor(Math.random() * this.currentCards.length);
         this.sortedCard = this.currentCards[randomPositionInCurrentCards].content;
-    },
+    }
 
     checkMatch(id) {
-        let card = this.currentCards.filter((card) => card.id == id)[0];
-
+        let card = this.currentCards.filter((card) => card.id === id)[0];
+        
         if (card.content === this.sortedCard) {
+            super.checkMatch();
             this.matches++;
-            this.currentCards = this.currentCards.filter(element => element != card);
+            this.currentCards = this.currentCards.filter(element => element != card); // Removes the card matched from currentCards
 
             if (this.currentCards.length !== 0) {
                 this.setSortedCard();
             } else {
                 this.inLastCard = true;
             }
-
-            if (this.isTimeLowing === false) {
-                this.isTimeLowing = true;
-                this.setTime();
-            }
             return true;
         }
         return false;
-    },
-
-    checkGameWin() {
-        if (this.currentCards.length === 0) {
-            return true;
-        }
-        return false;
-    },
-
-    increaseMove() {
-        this.moves++;
-    },
+    }
 
 }

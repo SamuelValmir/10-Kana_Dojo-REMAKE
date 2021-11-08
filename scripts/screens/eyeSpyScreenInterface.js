@@ -8,12 +8,14 @@ let eyeSpyScreenInterface = {
     mainColor: null,
     gameModel: eyeSpyModel,
     dimension: 5,
-    cards: undefined,
+    kanaList: undefined,
 
     time: null,
 
     lastPromise: null,
     timeInterval: null,
+
+    eyeSpyModel: null,
 
     showStartScreen() {
         const [hue, saturation, lightness] = EYE_SPY_MAIN_COLOR_LIST;
@@ -22,11 +24,13 @@ let eyeSpyScreenInterface = {
         gameStartScreenInterface.show(this, this.mainColor, EYE_SPY_MAIN_COLOR_LIST, EYE_SPY_MAIN_BACKGROUND_IMAGE, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
     },
 
-    show(cards) {
+    show(kanaList) {
         this.htmlElement.style.display = "grid";
-        this.cards = cards;
+        this.kanaList = kanaList;
+        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
+        this.eyeSpyModel = new EyeSpyModel(this.kanaList, this.dimension);
         this.startGame();
-        console.log(this.gameModel.time)
+        this.setMoves();
     },
 
     hide() {
@@ -34,22 +38,18 @@ let eyeSpyScreenInterface = {
     },
 
     startGame() {
-        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.gameModel.createCards(this.cards);
         this.lastPromise = null;
-
-        this.time = this.gameModel.time;
+        this.eyeSpyModel.createCards();
+        this.time = this.eyeSpyModel.time;
         this.timeElement.innerHTML = this.time;
         this.drawCardsOnScreen();
-        this.setMoves();
     },
 
     drawCardsOnScreen() {
         // Making and adding the cards in html
-        let boardElement = this.boardElement;
-        boardElement.innerHTML = "";
+        this.boardElement.innerHTML = "";
 
-        this.gameModel.currentCards.forEach(card => {
+        this.eyeSpyModel.currentCards.forEach(card => {
             let cardElement = document.createElement("div");
             cardElement.id = card.id;
             cardElement.classList.add(CARD);
@@ -61,35 +61,35 @@ let eyeSpyScreenInterface = {
             frontCardElement.style.backgroundColor = this.mainColor;
 
             cardElement.appendChild(frontCardElement);
-            boardElement.appendChild(cardElement);
+            this.boardElement.appendChild(cardElement);
 
             cardElement.addEventListener('click', async () => {
                 if (card.clickable === true) {
-                    this.gameModel.increaseMove();
+                    this.eyeSpyModel.increaseMove();
                     this.setMoves();
 
-                    if (this.gameModel.checkMatch(card.id)) {
+                    if (this.eyeSpyModel.checkMatch(card.id)) {
                         card.clickable = false;
                         if (this.timeInterval === null) {
                             this.timeInterval = setInterval(() => { // Update the time in the screen
-                                this.timeElement.innerHTML = this.gameModel.time;
-                                if (this.gameModel.time <= 0) {
+                                this.timeElement.innerHTML = this.eyeSpyModel.time;
+                                if (this.eyeSpyModel.time <= 0) {
                                     clearInterval(this.timeInterval);
                                     this.timeInterval = null;
                                     this.showGameOverScreen();
-                                    this.gameModel.reset();
+                                    this.eyeSpyModel.reset();
                                 }
                             }, 1)
                         }
-                        this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
+                        this.sortedCardElement.innerHTML = this.eyeSpyModel.sortedCard;
 
                         await this.cardMatchAnimation(cardElement, frontCardElement);
 
                         if (this.lastPromise !== null) {
                             this.lastPromise.then(() => {
 
-                                if (this.gameModel.checkGameWin()) {
-                                    boardElement.innerHTML = "";
+                                if (this.eyeSpyModel.checkGameWin()) {
+                                    this.boardElement.innerHTML = "";
                                     this.startGame();
                                 }
                             })
@@ -97,7 +97,7 @@ let eyeSpyScreenInterface = {
                     }
                 }
             });
-            this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
+            this.sortedCardElement.innerHTML = this.eyeSpyModel.sortedCard;
         });
     },
 
@@ -114,7 +114,7 @@ let eyeSpyScreenInterface = {
                 resolve();
             })
         })
-        if (this.gameModel.inLastCard === true) {
+        if (this.eyeSpyModel.inLastCard === true) {
             this.lastPromise = promise;
         }
         return promise;
@@ -122,20 +122,20 @@ let eyeSpyScreenInterface = {
     },
 
     setSortedCard() {
-        document.querySelector(".eye-spy-screen .sortedCard").innerHTML = this.gameModel.sorted - card;
+        document.querySelector(".eye-spy-screen .sortedCard").innerHTML = this.eyeSpyModel.sorted - card;
     },
 
     setMoves() {
-        document.querySelector(".eye-spy-screen .moves").innerHTML = this.gameModel.moves;
+        document.querySelector(".eye-spy-screen .moves").innerHTML = this.eyeSpyModel.moves;
     },
 
     setScore() {
-        document.querySelector(".eye-spy-screen  .score").innerHTML = this.gameModel.moves;
+        document.querySelector(".eye-spy-screen  .score").innerHTML = this.eyeSpyModel.moves;
     },
 
     showGameOverScreen() {
         this.htmlElement.style.display = "none";
-        gameOverScreenInterface.show(this, this.gameModel.matches);
+        gameOverScreenInterface.show(this, this.eyeSpyModel.matches);
     }
 
 }
