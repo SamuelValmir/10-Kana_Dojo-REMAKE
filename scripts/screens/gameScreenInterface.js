@@ -1,11 +1,15 @@
-class GameInterface {
-    constructor(gameScreenInterface, gameModel, itHasCurrentIcon = false, dimension) {
+"use strict";
+
+class GameScreenInterface {
+    constructor(gameScreenInterface, itHasCurrentIcon = false, dimension) {
         this.gameScreenInterface = gameScreenInterface;
-        this.gameModel = gameModel;
         this.itHasCurrentIcon = itHasCurrentIcon;
         this.dimension = dimension;
-        this.startGame();
+        // this.startGame();
     }
+
+    mainColor = null;
+    gameModel = null;
 
     startGame() {
         if (this.itHasCurrentIcon === true) {
@@ -76,11 +80,20 @@ class GameInterface {
         cardElement.appendChild(backCardElement);
     }
 
-    setMoves() {
-        document.querySelector(".moves").innerHTML = this.gameModel.moves;
+    setMoves(movesElement) {
+        movesElement.innerHTML = this.gameModel.moves;
     }
 
     setScore() {
         document.querySelector(".score").innerHTML = this.gameModel.moves;
+    }
+
+    setMainColor([hue, saturation, lightness]) {
+        this.mainColor = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
+    }
+
+    showGameOverScreen() {
+        this.htmlElement.style.display = "none";
+        gameOverScreenInterface.show(this, this.gameModel.matches);
     }
 }

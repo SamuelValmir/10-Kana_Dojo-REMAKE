@@ -102,12 +102,12 @@ let menuScreenInterface = {
 
             this.games.eyeSpyElement.addEventListener("click", () => {
                 this.hide();
-                eyeSpyScreenInterface.showStartScreen();
+                new EyeSpyScreenInterface().showStartScreen();
             })
             
             this.games.matchMakerElement.addEventListener("click", () => {
                 this.hide();
-                matchMakerScreenInterface.showStartScreen();
+                new MatchMakerScreenInterface().showStartScreen();
             })
 
             window.addEventListener("click", async (event) => {

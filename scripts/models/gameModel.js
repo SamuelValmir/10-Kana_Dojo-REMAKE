@@ -11,18 +11,24 @@ class GameModel {
     currentCards = [];
 
     isTimeLowing = false;
-    time = 4;
-    
+    time = 5;
+
     moves = 0;
     matches = 0;
     gameOver = false;
+
+    setCurrentCards() { // It adds in currentCards only the cards that will appear on screen
+        for (let index = 0; index < (this.dimension ** 2); index++) {
+            this.currentCards.push(this.cards[index]);
+        }
+    }
 
     createId(kana) {
         let num = Math.random() * 1000
         return kana + parseInt(num);
     }
-    
-    checkMatch(){
+
+    trySetTime() {
         if (this.isTimeLowing === false) {
             this.isTimeLowing = true;
             this.setTime();
@@ -47,11 +53,12 @@ class GameModel {
         this.moves = 0;
         this.dimension = 2;
 
+        this.firstGame = true;
         this.matches = 0;
     }
 
-    checkGameWin() {
-        if (this.currentCards.length === 0) {
+    checkGameOver() {
+        if (this.gameOver === true) {
             return true;
         }
         return false;

@@ -1,33 +1,51 @@
 "use strict";
 
-let matchMakerScreenInterface = {
-    htmlElement: document.querySelector(".match-maker-screen"),
-    boardElement: document.querySelector(".match-maker-screen .board"),
-    gameModel: matchMakerModel,
-    dimension: 4,
-    cards: undefined,
+class MatchMakerScreenInterface extends GameScreenInterface {
+    constructor() {
+        super(MatchMakerScreenInterface, false, 4);
+    }
+
+    htmlElement = document.querySelector(".match-maker-screen");
+    boardElement = document.querySelector(".match-maker-screen .board");
+    timeElement = document.querySelector(".match-maker-screen .time");
+    movesElement = document.querySelector(".match-maker-screen .moves");
+
+    kanaList = null;
+    time = null;
+
+    timeInterval = null;
+    matchMakerModel = null;
 
     showStartScreen() {
-        gameStartScreenInterface.show(this, MATCH_MAKER_MAIN_COLOR_LIST, MATCH_MAKER_MAIN_BACKGROUND_IMAGE, MATCH_MAKER_GAME_TITLE, MATCH_MAKER_GAME_DESCRIPTION);
-    },
+        this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
+        gameStartScreenInterface.show(this,
+            this.mainColor,
+            MATCH_MAKER_MAIN_COLOR_LIST,
+            MATCH_MAKER_MAIN_BACKGROUND_IMAGE,
+            MATCH_MAKER_GAME_TITLE,
+            MATCH_MAKER_GAME_DESCRIPTION);
+    }
 
-    show(cards) {
+    show(kanaList) {
         this.htmlElement.style.display = "grid";
-        this.cards = cards;
-        new GameScreenController(this.boardElement, this.dimension, this.gameModel);
+        this.kanaList = kanaList;
+        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
+        this.gameModel = new MatchMakerModel(this.kanaList, this.dimension)
         this.startGame();
-    },
+        this.setMoves(this.movesElement);
+        // new GameScreenController(this.boardElement, this.dimension, this.gameModel);
+    }
 
     hide() {
         this.htmlElement.style.display = "none";
-    },
+    }
 
     startGame() {
-        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.gameModel.createCards(this.cards);
+        this.gameModel.createCards();
+        this.time = this.gameModel.time;
+        this.timeElement.innerHTML = this.time;
         this.drawCardsOnScreen();
-        this.setMoves();
-    },
+    }
 
     drawCardsOnScreen() {
         // Making and adding the cards in html
@@ -42,9 +60,21 @@ let matchMakerScreenInterface = {
 
             cardElement.addEventListener('click', () => {
                 if (this.gameModel.setCard(card.id)) {
+                    if (this.timeInterval === null) {
+                        this.timeInterval = setInterval(() => { // Update the time in the screen
+                            this.timeElement.innerHTML = this.gameModel.time;
+                            if (this.gameModel.time <= 0) {
+                                clearInterval(this.timeInterval);
+                                this.timeInterval = null;
+                                this.showGameOverScreen();
+                                this.gameModel.reset();
+                            }
+                        }, 1)
+                    }
+
                     cardElement.classList.add("flip");
                     this.gameModel.increaseMove();
-                    this.setMoves();
+                    this.setMoves(this.movesElement);
 
                     if (this.gameModel.secondCard) {
                         if (this.gameModel.checkMatch()) {
@@ -71,26 +101,19 @@ let matchMakerScreenInterface = {
             });
             this.boardElement.appendChild(cardElement);
         });
-    },
+    }
 
     createCardBackFront(cardElement, card) {
         let frontCardElement = document.createElement("div");
         frontCardElement.classList.add(CARD_FRONT);
-
+        frontCardElement.style.backgroundColor = this.mainColor;
+        
         let backCardElement = document.createElement("div");
         backCardElement.classList.add(CARD_BACK);
         backCardElement.innerHTML = card.content;
+        backCardElement.style.backgroundColor = this.mainColor;
 
         cardElement.appendChild(frontCardElement);
         cardElement.appendChild(backCardElement);
-    },
-
-    setMoves() {
-        document.querySelector(".moves").innerHTML = this.gameModel.moves;
-    },
-
-    setScore() {
-        document.querySelector(".score").innerHTML = this.gameModel.moves;
     }
-
 }

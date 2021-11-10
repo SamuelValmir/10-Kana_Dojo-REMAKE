@@ -1,55 +1,59 @@
-//! I must fix the content of this screen
-let eyeSpyScreenInterface = {
-    htmlElement: document.querySelector(".eye-spy-screen"),
-    boardElement: document.querySelector(".eye-spy-screen .board"),
-    timeElement: document.querySelector(".eye-spy-screen .time"),
-    sortedCardElement: document.querySelector(".eye-spy-screen .sorted-card"),
+"use strict";
 
-    mainColor: null,
-    gameModel: eyeSpyModel,
-    dimension: 5,
-    kanaList: undefined,
+class EyeSpyScreenInterface extends GameScreenInterface {
+    constructor(){
+        super(EyeSpyScreenInterface, true, 2);
+    }
 
-    time: null,
+    htmlElement = document.querySelector(".eye-spy-screen");
+    boardElement = document.querySelector(".eye-spy-screen .board");
+    timeElement = document.querySelector(".eye-spy-screen .time");
+    sortedCardElement = document.querySelector(".eye-spy-screen .sorted-card");
+    movesElement = document.querySelector(".eye-spy-screen .moves");
 
-    lastPromise: null,
-    timeInterval: null,
+    kanaList = null;
+    time = null;
 
-    eyeSpyModel: null,
+    lastPromise = null;
+    timeInterval = null;
+    eyeSpyModel = null;
 
     showStartScreen() {
-        const [hue, saturation, lightness] = EYE_SPY_MAIN_COLOR_LIST;
-        this.mainColor = "hsl(" + hue + "," + saturation + "%," + lightness + "%)";
-
-        gameStartScreenInterface.show(this, this.mainColor, EYE_SPY_MAIN_COLOR_LIST, EYE_SPY_MAIN_BACKGROUND_IMAGE, EYE_SPY_GAME_TITLE, EYE_SPY_GAME_DESCRIPTION);
-    },
+        this.setMainColor(EYE_SPY_MAIN_COLOR_LIST);
+        gameStartScreenInterface.show(this,
+            this.mainColor,
+            EYE_SPY_MAIN_COLOR_LIST,
+            EYE_SPY_MAIN_BACKGROUND_IMAGE,
+            EYE_SPY_GAME_TITLE,
+            EYE_SPY_GAME_DESCRIPTION);
+    }
 
     show(kanaList) {
         this.htmlElement.style.display = "grid";
         this.kanaList = kanaList;
         this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.eyeSpyModel = new EyeSpyModel(this.kanaList, this.dimension);
+        this.gameModel = new EyeSpyModel(this.kanaList, this.dimension);
         this.startGame();
-        this.setMoves();
-    },
+        this.setMoves(this.movesElement);
+    }
 
     hide() {
         this.htmlElement.style.display = "none";
-    },
+    }
 
     startGame() {
         this.lastPromise = null;
-        this.eyeSpyModel.createCards();
-        this.time = this.eyeSpyModel.time;
+        this.gameModel.createCards();
+        this.time = this.gameModel.time;
         this.timeElement.innerHTML = this.time;
         this.drawCardsOnScreen();
-    },
+    }
 
     drawCardsOnScreen() {
         // Making and adding the cards in html
         this.boardElement.innerHTML = "";
 
-        this.eyeSpyModel.currentCards.forEach(card => {
+        this.gameModel.currentCards.forEach(card => {
             let cardElement = document.createElement("div");
             cardElement.id = card.id;
             cardElement.classList.add(CARD);
@@ -65,30 +69,30 @@ let eyeSpyScreenInterface = {
 
             cardElement.addEventListener('click', async () => {
                 if (card.clickable === true) {
-                    this.eyeSpyModel.increaseMove();
-                    this.setMoves();
+                    this.gameModel.increaseMove();
+                    this.setMoves(this.movesElement);
 
-                    if (this.eyeSpyModel.checkMatch(card.id)) {
+                    if (this.gameModel.checkMatch(card.id)) {
                         card.clickable = false;
                         if (this.timeInterval === null) {
                             this.timeInterval = setInterval(() => { // Update the time in the screen
-                                this.timeElement.innerHTML = this.eyeSpyModel.time;
-                                if (this.eyeSpyModel.time <= 0) {
+                                this.timeElement.innerHTML = this.gameModel.time;
+                                if (this.gameModel.time <= 0) {
                                     clearInterval(this.timeInterval);
                                     this.timeInterval = null;
                                     this.showGameOverScreen();
-                                    this.eyeSpyModel.reset();
+                                    this.gameModel.reset();
                                 }
                             }, 1)
                         }
-                        this.sortedCardElement.innerHTML = this.eyeSpyModel.sortedCard;
+                        this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
 
                         await this.cardMatchAnimation(cardElement, frontCardElement);
 
                         if (this.lastPromise !== null) {
                             this.lastPromise.then(() => {
 
-                                if (this.eyeSpyModel.checkGameWin()) {
+                                if (this.gameModel.checkGameWin()) {
                                     this.boardElement.innerHTML = "";
                                     this.startGame();
                                 }
@@ -97,9 +101,9 @@ let eyeSpyScreenInterface = {
                     }
                 }
             });
-            this.sortedCardElement.innerHTML = this.eyeSpyModel.sortedCard;
+            this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
         });
-    },
+    }
 
     cardMatchAnimation(cardElement, frontCardElement) {
         const promise = new Promise(resolve => {
@@ -114,28 +118,14 @@ let eyeSpyScreenInterface = {
                 resolve();
             })
         })
-        if (this.eyeSpyModel.inLastCard === true) {
+        if (this.gameModel.inLastCard === true) {
             this.lastPromise = promise;
         }
         return promise;
 
-    },
-
-    setSortedCard() {
-        document.querySelector(".eye-spy-screen .sortedCard").innerHTML = this.eyeSpyModel.sorted - card;
-    },
-
-    setMoves() {
-        document.querySelector(".eye-spy-screen .moves").innerHTML = this.eyeSpyModel.moves;
-    },
-
-    setScore() {
-        document.querySelector(".eye-spy-screen  .score").innerHTML = this.eyeSpyModel.moves;
-    },
-
-    showGameOverScreen() {
-        this.htmlElement.style.display = "none";
-        gameOverScreenInterface.show(this, this.eyeSpyModel.matches);
     }
 
+    setSortedCard() {
+        document.querySelector(".eye-spy-screen .sortedCard").innerHTML = this.gameModel.sorted - card;
+    }
 }
