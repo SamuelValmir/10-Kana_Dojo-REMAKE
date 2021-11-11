@@ -1120,12 +1120,8 @@ label{
 .match-maker-screen .card{
     transform-style: preserve-3d;
     transition: transform .5s;
-    animation: f 1s;
 }
 
-@keyframes f {
-    to{transform: rotateY(360deg);}
-}
 /* 
 @-moz-document url-prefix(){
     .card{

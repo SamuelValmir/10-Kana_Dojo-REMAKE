@@ -1,7 +1,7 @@
 "use strict";
 
 class EyeSpyScreenInterface extends GameScreenInterface {
-    constructor(){
+    constructor() {
         super(EyeSpyScreenInterface, true, 2);
     }
 
@@ -93,7 +93,6 @@ class EyeSpyScreenInterface extends GameScreenInterface {
                             this.lastPromise.then(() => {
 
                                 if (this.gameModel.checkGameWin()) {
-                                    this.boardElement.innerHTML = "";
                                     this.startGame();
                                 }
                             })
@@ -103,6 +102,44 @@ class EyeSpyScreenInterface extends GameScreenInterface {
             });
             this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
         });
+        this.animateBoard();
+    }
+
+    animateBoard() {
+        let cardsElementList = this.boardElement.children;
+        let animationMatrix = [];
+        let linesNumber = this.dimension - 1;
+
+        for (let i = 0; i < this.dimension; i++) {
+
+            let animation = cardsElementList[i].animate([
+                { transform: "rotateY(360deg)" }
+            ], 300);
+
+            animation.pause();
+
+            for (let j = 0; j < this.dimension; j++) {
+                if (j === 0) {
+                    animationMatrix.push([])
+                }
+                animationMatrix[i][j] = animation;
+            }
+        }
+        console.log(animationMatrix)
+
+        let i1 = 0;
+        let i2 = 0;
+        
+        let interval = setInterval(() => {
+            if (i1 < 2) {
+                let currentAnimation = animationMatrix[i1][i2];
+                currentAnimation.play();
+                i1++;
+
+            } else {
+                clearInterval(interval);
+            }
+        }, 100)
     }
 
     cardMatchAnimation(cardElement, frontCardElement) {

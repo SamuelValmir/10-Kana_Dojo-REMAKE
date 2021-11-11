@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             kana.groups = data;
             kana.initialize();
-            new MatchMakerScreenInterface().showStartScreen();
-            // new EyeSpyScreenInterface().showStartScreen();
+            // new MatchMakerScreenInterface().showStartScreen();
+            new EyeSpyScreenInterface().showStartScreen();
         })
 })

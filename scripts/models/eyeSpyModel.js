@@ -13,7 +13,7 @@ class EyeSpyModel extends GameModel {
         for (const kana of this.kanaList) {
             this.cards.push(this.createObjectFromCard(kana));
         }
-        
+         
         this.setCurrentCards();
         this.setSortedCard();
     }
