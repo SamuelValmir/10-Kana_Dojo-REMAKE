@@ -108,15 +108,18 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     animateBoard() {
         let cardsElementList = this.boardElement.children;
         let animationMatrix = [];
-        let linesNumber = this.dimension - 1;
+        let animationList = [];
+        // ! It's been defined wrongly
 
         for (let i = 0; i < this.dimension; i++) {
+            // console.log(1)
 
             let animation = cardsElementList[i].animate([
                 { transform: "rotateY(360deg)" }
             ], 300);
 
             animation.pause();
+            animationList.push(animation);
 
             for (let j = 0; j < this.dimension; j++) {
                 if (j === 0) {
@@ -125,21 +128,60 @@ class EyeSpyScreenInterface extends GameScreenInterface {
                 animationMatrix[i][j] = animation;
             }
         }
-        console.log(animationMatrix)
+        // console.log(animationMatrix)
 
-        let i1 = 0;
-        let i2 = 0;
-        
-        let interval = setInterval(() => {
-            if (i1 < 2) {
-                let currentAnimation = animationMatrix[i1][i2];
-                currentAnimation.play();
-                i1++;
+        // animationMatrix = [
+        //     [1, 2, 3],
+        //     [4, 5, 6],
+        //     [7, 8, 9]]
 
-            } else {
-                clearInterval(interval);
-            }
-        }, 100)
+        // let line = 0;
+
+        // let interval = setInterval(() => {
+        // if (line < animationMatrix.length) {
+
+        // console.log(animationMatrix[1])
+        // for (let line of animationMatrix) {
+        //     for (let animation of line) {
+        //         console.log(animation)
+        //         animation.play();
+        //     }
+        //     // console.log(animation)
+        // }
+
+        for (let animation of animationList) {
+            // console.log(animation)
+        }
+
+        // line++;
+
+        // } 
+        // else {
+        //     clearInterval(interval);
+        // }
+        // }, 1000)
+
+
+        // let interval = setInterval(() => {
+        //     console.log(i[0])
+        //     console.log(i[1])
+        //     i[0][1]++
+        //     if (i[0][1] === 1) {
+        //         i[1][1]++
+        //     }
+
+        // }, 500)
+
+        //     let interval = setInterval(() => {
+        //         if (i1 < 2) {
+        //             let currentAnimation = animationMatrix[i1][i2];
+        //             currentAnimation.play();
+        //             i1++;
+
+        //         } else {
+        //             clearInterval(interval);
+        //         }
+        //     }, 100)
     }
 
     cardMatchAnimation(cardElement, frontCardElement) {

@@ -108,7 +108,7 @@ let menuScreenInterface = {
             this.games.matchMakerElement.addEventListener("click", () => {
                 this.hide();
                 new MatchMakerScreenInterface().showStartScreen();
-            })
+        })
 
             window.addEventListener("click", async (event) => {
                 let elementClicked = event.target;
