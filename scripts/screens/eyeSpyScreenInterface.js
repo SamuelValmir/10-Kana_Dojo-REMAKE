@@ -108,80 +108,42 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     animateBoard() {
         let cardsElementList = this.boardElement.children;
         let animationMatrix = [];
-        let animationList = [];
-        // ! It's been defined wrongly
 
-        for (let i = 0; i < this.dimension; i++) {
-            // console.log(1)
+        let j = -1;
+        for (let i = 0; i < cardsElementList.length; i++) {
 
+            cardsElementList[i].style.transform = "rotateX(-90deg)"
             let animation = cardsElementList[i].animate([
-                { transform: "rotateY(360deg)" }
-            ], 300);
+                { transform: "rotateX(0deg)" }
+            ], { duration: 200, easing: "linear" });
 
             animation.pause();
-            animationList.push(animation);
 
-            for (let j = 0; j < this.dimension; j++) {
-                if (j === 0) {
-                    animationMatrix.push([])
-                }
-                animationMatrix[i][j] = animation;
+            animation.addEventListener("finish", () => {
+                cardsElementList[i].style.transform = "initial"
+            })
+
+            // It makes a matrix with the animations
+            if (i % this.dimension === 0) {
+                animationMatrix.push([])
+                j++;
             }
-        }
-        // console.log(animationMatrix)
 
-        // animationMatrix = [
-        //     [1, 2, 3],
-        //     [4, 5, 6],
-        //     [7, 8, 9]]
-
-        // let line = 0;
-
-        // let interval = setInterval(() => {
-        // if (line < animationMatrix.length) {
-
-        // console.log(animationMatrix[1])
-        // for (let line of animationMatrix) {
-        //     for (let animation of line) {
-        //         console.log(animation)
-        //         animation.play();
-        //     }
-        //     // console.log(animation)
-        // }
-
-        for (let animation of animationList) {
-            // console.log(animation)
+            animationMatrix[j][i % this.dimension] = animation;
         }
 
-        // line++;
+        let line = 0;
 
-        // } 
-        // else {
-        //     clearInterval(interval);
-        // }
-        // }, 1000)
-
-
-        // let interval = setInterval(() => {
-        //     console.log(i[0])
-        //     console.log(i[1])
-        //     i[0][1]++
-        //     if (i[0][1] === 1) {
-        //         i[1][1]++
-        //     }
-
-        // }, 500)
-
-        //     let interval = setInterval(() => {
-        //         if (i1 < 2) {
-        //             let currentAnimation = animationMatrix[i1][i2];
-        //             currentAnimation.play();
-        //             i1++;
-
-        //         } else {
-        //             clearInterval(interval);
-        //         }
-        //     }, 100)
+        // It plays the animation for each line
+        let interval = setInterval(() => {
+            for (let animation of animationMatrix[line]) {
+                animation.play();
+            }
+            line++;
+            if (line === animationMatrix.length) {
+                clearInterval(interval);
+            }
+        }, 150)
     }
 
     cardMatchAnimation(cardElement, frontCardElement) {
