@@ -10,6 +10,7 @@ let gameStartScreenInterface = {
     topElement: document.querySelector(".game-start-screen .top"),
     returnButton: document.querySelector(".game-start-screen .return-button"),
     returnButtonHighlight: document.querySelector(".game-start-screen .return-button-highlight"),
+    settingsIcon: document.querySelector(".game-start-screen .settings-icon-container"),
     bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
     backgroundImage: undefined,
@@ -61,6 +62,11 @@ let gameStartScreenInterface = {
 
             const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, null)
 
+            this.settingsIcon.addEventListener("click", async () => {
+                await this.animateSettingsIcon();
+                console.log("Done!")
+            })
+
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
                 this.hide();
@@ -98,5 +104,19 @@ let gameStartScreenInterface = {
         this.horizontalBarElement.style.borderColor = this.mainColor;
 
         this.buttonElement.style.backgroundColor = this.mainColor;
+    },
+
+    animateSettingsIcon() {
+        const promise = new Promise(resolve => {
+
+            let animation = this.settingsIcon.animate([
+                { transform: "rotate(360deg)" }
+            ], { duration: 600, easing: "ease-out" })
+
+            animation.addEventListener("finish", ()=>{
+                resolve();
+            })
+        })
+        return promise;
     }
 }
