@@ -1,4 +1,4 @@
-<h1 align="center"> Memory Game (REMAKE)</h1>
+<h1 align="center"> Kana Dojo (REMAKE)</h1>
 
 <!--
 <h1 align="center">
