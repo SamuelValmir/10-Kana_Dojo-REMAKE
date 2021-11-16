@@ -474,11 +474,18 @@
     <div class="game-start-screen">
         <div class="top">
             <img alt="game background image">
-            <span class="score">
-                <span class="best">BEST</span>
-                <span class="result">Hiragana<span class="green"> - </span></span>
-                <span class="result">Katakana<span class="green"> - </span></span>
-            </span>
+            <div class="head">
+                <span class="return-button">
+                    <img src="assets/icons/arrow_back_white_svg.svg" alt="return">
+                    <span class="return-button-highlight"></span>
+                </span>
+
+                <span class="score">
+                    <span class="best">BEST</span>
+                    <span class="result">Hiragana<span class="green"> - </span></span>
+                    <span class="result">Katakana<span class="green"> - </span></span>
+                </span>
+            </div>
         </div>
 
         <div class="bottom">
@@ -589,8 +596,6 @@
     <script src="./scripts/controllers/gameStartScreenController.js"></script>
     <script src="./scripts/screens/gameStartScreenInterface.js"></script>
     <script src="./scripts/screens/gameScreenInterface.js"></script>t
-
-    <script src="./scripts/controllers/gameScreenController.js"></script>
 
     <script src="./scripts/models/gameModel.js"></script>
     <script src="./scripts/models/eyeSpyModel.js"></script>

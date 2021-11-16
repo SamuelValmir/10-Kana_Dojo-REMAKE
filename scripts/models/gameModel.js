@@ -1,24 +1,24 @@
 "use strict";
 
 class GameModel {
-    constructor(kanaList, dimension) {
+    constructor(kanaList, gameConfiguration) {
         this.kanaList = kanaList;
-        // this.time = time;
-        this.dimension = dimension;
+        this.gameConfiguration = gameConfiguration;
+        this.time = gameConfiguration.time;
+        this.dimension = Math.floor((gameConfiguration.dimensionX * gameConfiguration.dimensionY));
     }
 
     cards = [];
     currentCards = [];
 
     isTimeLowing = false;
-    time = 3;
 
     moves = 0;
     matches = 0;
     gameOver = false;
 
     setCurrentCards() { // It adds in currentCards only the cards that will appear on screen
-        for (let index = 0; index < (this.dimension ** 2); index++) {
+        for (let index = 0; index < (this.dimension); index++) {
             this.currentCards.push(this.cards[index]);
         }
     }
@@ -45,18 +45,6 @@ class GameModel {
         }, 1000);
     }
 
-    reset() {
-        this.cards = [];
-        this.currentCards = [];
-
-        this.time = 2;
-        this.moves = 0;
-        this.dimension = 2;
-
-        this.firstGame = true;
-        this.matches = 0;
-    }
-
     checkGameOver() {
         if (this.gameOver === true) {
             return true;
@@ -66,6 +54,11 @@ class GameModel {
 
     increaseMove() {
         this.moves++;
+    }
+
+    increaseTime(){
+        const {bonusTime} = this.gameConfiguration;
+        this.time += bonusTime;
     }
 
 }

@@ -2,48 +2,39 @@
 
 class MatchMakerScreenInterface extends GameScreenInterface {
     constructor() {
-        super(MatchMakerScreenInterface, false, 4);
+        let returnButton = document.querySelector(".match-maker-screen .return-button");
+        let returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
+        super(MatchMakerScreenInterface, returnButton, returnButtonHighlight);
     }
 
     htmlElement = document.querySelector(".match-maker-screen");
     boardElement = document.querySelector(".match-maker-screen .board");
+    returnButton = document.querySelector(".match-maker-screen .return-button");
+    returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
     timeElement = document.querySelector(".match-maker-screen .time");
     movesElement = document.querySelector(".match-maker-screen .moves");
 
-    kanaList = null;
-    time = null;
-
-    timeInterval = null;
-    matchMakerModel = null;
-
-    showStartScreen() {
+    showStartScreen(gameConfiguration) {
         this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
             this.mainColor,
             MATCH_MAKER_MAIN_COLOR_LIST,
             MATCH_MAKER_MAIN_BACKGROUND_IMAGE,
             MATCH_MAKER_GAME_TITLE,
-            MATCH_MAKER_GAME_DESCRIPTION);
+            MATCH_MAKER_GAME_DESCRIPTION,
+            gameConfiguration);
     }
 
-    show(kanaList) {
-        this.htmlElement.style.display = "grid";
-        this.kanaList = kanaList;
-        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
-        this.gameModel = new MatchMakerModel(this.kanaList, this.dimension)
-        this.startGame();
+    show(kanaList, gameConfiguration) {
+        this.setVariables(kanaList, gameConfiguration);
+        this.gameModel = new MatchMakerModel(this.kanaList, gameConfiguration);
+        this.currentGameScreenInterface = this;
         this.setMoves(this.movesElement);
-        // new GameScreenController(this.boardElement, this.dimension, this.gameModel);
-    }
-
-    hide() {
-        this.htmlElement.style.display = "none";
+        this.startGame();
     }
 
     startGame() {
-        this.gameModel.createCards();
-        this.time = this.gameModel.time;
-        this.timeElement.innerHTML = this.time;
+        super.startGame();
         this.drawCardsOnScreen();
     }
 
@@ -67,7 +58,6 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                                 clearInterval(this.timeInterval);
                                 this.timeInterval = null;
                                 this.showGameOverScreen();
-                                this.gameModel.reset();
                             }
                         }, 1)
                     }

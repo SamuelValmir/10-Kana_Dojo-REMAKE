@@ -2,7 +2,9 @@
 
 class EyeSpyScreenInterface extends GameScreenInterface {
     constructor() {
-        super(EyeSpyScreenInterface, true, 2);
+        let returnButton = document.querySelector(".eye-spy-screen .return-button");
+        let returnButtonHighlight = document.querySelector(".eye-spy-screen .return-button-highlight");
+        super(EyeSpyScreenInterface, 2, returnButton, returnButtonHighlight);
     }
 
     htmlElement = document.querySelector(".eye-spy-screen");
@@ -11,12 +13,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     sortedCardElement = document.querySelector(".eye-spy-screen .sorted-card");
     movesElement = document.querySelector(".eye-spy-screen .moves");
 
-    kanaList = null;
-    time = null;
-
     lastPromise = null;
-    timeInterval = null;
-    eyeSpyModel = null;
 
     showStartScreen() {
         this.setMainColor(EYE_SPY_MAIN_COLOR_LIST);
@@ -29,23 +26,16 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     }
 
     show(kanaList) {
-        this.htmlElement.style.display = "grid";
-        this.kanaList = kanaList;
-        this.boardElement.style.gridTemplateColumns = "auto ".repeat(this.dimension);
+        this.setVariables(kanaList);
         this.gameModel = new EyeSpyModel(this.kanaList, this.dimension);
-        this.startGame();
+        this.currentGameScreenInterface = this;
         this.setMoves(this.movesElement);
-    }
-
-    hide() {
-        this.htmlElement.style.display = "none";
+        this.startGame();
     }
 
     startGame() {
         this.lastPromise = null;
-        this.gameModel.createCards();
-        this.time = this.gameModel.time;
-        this.timeElement.innerHTML = this.time;
+        super.startGame();
         this.drawCardsOnScreen();
     }
 
@@ -81,7 +71,6 @@ class EyeSpyScreenInterface extends GameScreenInterface {
                                     clearInterval(this.timeInterval);
                                     this.timeInterval = null;
                                     this.showGameOverScreen();
-                                    this.gameModel.reset();
                                 }
                             }, 1)
                         }

@@ -721,7 +721,7 @@ label{
     overflow: hidden;
 }
 
-.game-start-screen .top img{
+.game-start-screen .top > img{
     height: 100%;
 
     opacity: .2;
@@ -733,12 +733,23 @@ label{
     -webkit-transform: rotate(-45deg) scale(2);
 }
 
+.game-start-screen .top .head{
+    display: block;
+    width: 95vw;
+    position: absolute;
+    left: 1rem;
+    right: 2rem;
+    top: 1rem;
+}
+
 .game-start-screen .top .score{
     display: flex;
     flex-direction: column;
     position: absolute;
-    right: 2rem;
-    top: 2rem;
+    right: 1rem;
+}
+.game-start-screen .top .return-button{
+    z-index: 2;
 }
 
 .game-start-screen .top .score .result{

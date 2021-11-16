@@ -8,6 +8,8 @@ let gameStartScreenInterface = {
     mainColor: undefined,
 
     topElement: document.querySelector(".game-start-screen .top"),
+    returnButton: document.querySelector(".game-start-screen .return-button"),
+    returnButtonHighlight: document.querySelector(".game-start-screen .return-button-highlight"),
     bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
     backgroundImage: undefined,
@@ -21,7 +23,8 @@ let gameStartScreenInterface = {
     checkBoxElementList: document.querySelectorAll(".game-start-screen .bottom .checkbox"),
     checkBoxObjectList: [],
 
-    show(game, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription) {
+    show(game, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfiguration = null) {
+        // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
         this.game = game;
         this.mainColor = mainColor
         this.hslColorList = hslColorList;
@@ -38,8 +41,8 @@ let gameStartScreenInterface = {
     hide() {
         this.htmlElement.style.display = "none";
     },
-    
-    hideContent(){
+
+    hideContent() {
         this.topElement.lastElementChild.style.display = "none";
         this.bottomElement.children[0].style.display = "none";
     },
@@ -56,25 +59,33 @@ let gameStartScreenInterface = {
             const checkBoxKatakana = this.checkBoxObjectList[1];
             let gameStartScreenControllerObject = new GameStartScreenController(this.buttonElement, this.hslColorList);
 
-            // console.log(kana.getAll())
+            const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, null)
 
+            this.returnButton.addEventListener("click", async () => {
+                await HeaderControllerObject.animateButton();
+                this.hide();
+                menuScreenInterface.show();
+            })
             this.buttonElement.addEventListener("click", async () => {
                 if (this.buttonElement.disabled === false) {
                     await gameStartScreenControllerObject.animateButton();
 
                     const allKana = kana.getAll();
                     let cards = [];
-                    if (checkBoxHiragana.isChecked === true){
+                    if (checkBoxHiragana.isChecked === true) {
                         cards.push(kana.toHiragana(allKana));
                     }
-                    if (checkBoxKatakana.isChecked === true){
+                    if (checkBoxKatakana.isChecked === true) {
                         cards.push(kana.toKatakana(allKana));
                     }
                     cards = cards.flat();
                     cards = Cards.shuffle(cards);
-                   
+
                     this.hideContent();
-                    this.game.show(cards);
+                    const gameConfiguration = {
+                        time: 20, dimensionX: 2, dimensionY: 2, bonusTime: 10
+                    }
+                    this.game.show(cards, gameConfiguration);
                 }
             })
         }

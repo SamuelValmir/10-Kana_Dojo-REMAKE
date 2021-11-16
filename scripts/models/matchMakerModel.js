@@ -1,8 +1,8 @@
 "use strict";
 
 class MatchMakerModel extends GameModel {
-    constructor(kanaList, dimension) {
-        super(kanaList, dimension);
+    constructor(kanaList, gameConfiguration) {
+        super(kanaList, gameConfiguration);
     }
 
     lockMode = false;
@@ -34,7 +34,6 @@ class MatchMakerModel extends GameModel {
             { id: this.createId(kana), content: kana, flipped: false, matched: false }
         ];
     }
-
 
     setCard(id) {
         let card = this.cards.filter((card) => card.id == id)[0];
@@ -85,8 +84,6 @@ class MatchMakerModel extends GameModel {
         this.clearCards();
     }
 
-
-
     checkGameOver() {
         let gameOver = true;
         this.cards.forEach((card) => {
@@ -104,14 +101,9 @@ class MatchMakerModel extends GameModel {
                 gameWin = false;
             }
         })
-        console.log(gameWin)
+        if(gameWin === true){
+            this.increaseTime();
+        }
         return gameWin;
-
-        // if (this.matches === (this.dimension * 2)) {
-        //     console.log("Game win!")
-        //     return true;
-        // }
-        // console.log("Still not win")
-        // return false;
     }
 }
