@@ -762,7 +762,7 @@ align-items: center;
 }
 
 .game-start-screen .top .return-button{
-    z-index: 2;
+    align-self: center;
 }
 
 .game-start-screen .top .score .result{

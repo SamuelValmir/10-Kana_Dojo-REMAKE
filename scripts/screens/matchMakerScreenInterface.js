@@ -49,7 +49,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             cardElement.dataset.content = card.content;
             this.createCardBackFront(cardElement, card);
 
-            cardElement.addEventListener('click', () => {
+            cardElement.addEventListener('click', async () => {
                 if (this.gameModel.setCard(card.id)) {
                     if (this.timeInterval === null) {
                         this.timeInterval = setInterval(() => { // Update the time in the screen
@@ -68,11 +68,6 @@ class MatchMakerScreenInterface extends GameScreenInterface {
 
                     if (this.gameModel.secondCard) {
                         if (this.gameModel.checkMatch()) {
-                            let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
-                            let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
-                            firstCardElement.style.border = "4px solid yellow";
-                            secondCardElement.style.border = "4px solid yellow";
-
                             if (this.gameModel.checkGameOver()) {
                                 setTimeout(() => {
                                     let gameOverLayer = document.querySelector(".gameOver");
@@ -80,11 +75,18 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                                     setScore();
                                 }, 1000)
                             }
-                            if (this.gameModel.checkGameWin()) {
-                                this.startGame();
-                            }
 
+                            await this.cardMatchAnimation();
+                            if (this.lastPromise !== null) {
+                                this.lastPromise.then(() => {
+
+                                    if (this.gameModel.checkGameWin()) {
+                                        this.startGame();
+                                    }
+                                })
+                            }
                             this.gameModel.clearCards();
+
                         } else {
                             setTimeout(() => {
                                 let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
@@ -101,6 +103,31 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             this.boardElement.appendChild(cardElement);
         });
         this.animateBoard();
+    }
+
+    cardMatchAnimation() {
+        const promise = new Promise(resolve => {
+            let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
+            let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
+
+            const animation = firstCardElement.animate([
+                { border: "4px solid yellow" }
+            ], { duration: 2000, easing: "linear" });
+
+            secondCardElement.animate([
+                { border: "4px solid yellow" }
+            ], { duration: 2000, easing: "linear" });
+
+            animation.addEventListener("finish", () => {
+                firstCardElement.style.border = "4px solid yellow";
+                secondCardElement.style.border = "4px solid yellow";
+                resolve();
+            })
+        })
+        if (this.gameModel.inLastCard === true) {
+            this.lastPromise = promise;
+        }
+        return promise;
     }
 
     animateBoard() {

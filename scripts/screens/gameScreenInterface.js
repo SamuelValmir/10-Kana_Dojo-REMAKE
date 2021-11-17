@@ -15,7 +15,10 @@ class GameScreenInterface {
     time = null;
     timeInterval = null;
 
+    lastPromise = null;
+
     startGame() {
+        this.lastPromise = null;
         this.gameModel.createCards();
         this.time = this.gameModel.time;
         this.timeElement.innerHTML = this.time;
@@ -24,6 +27,7 @@ class GameScreenInterface {
     setVariables(kanaList, {dimensionX, dimensionY}) {
         this.htmlElement.style.display = "grid";
         this.kanaList = kanaList;
+        this.dimension = dimensionX * dimensionY;
         this.boardElement.style.gridTemplateColumns = "auto ".repeat(dimensionX);
         this.boardElement.style.gridTemplateRows = "auto ".repeat(dimensionY);
     }

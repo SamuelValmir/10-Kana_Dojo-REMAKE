@@ -6,7 +6,6 @@ class EyeSpyModel extends GameModel {
     }
 
     sortedCard = null;
-    inLastCard = false;
 
     createCards() { // It creates the objects cards
         this.cards = [];

@@ -12,7 +12,8 @@ class GameModel {
     currentCards = [];
 
     isTimeLowing = false;
-
+    inLastCard = false;
+    
     moves = 0;
     matches = 0;
     gameOver = false;

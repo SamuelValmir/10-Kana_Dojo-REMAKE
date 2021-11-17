@@ -4,7 +4,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     constructor() {
         let returnButton = document.querySelector(".eye-spy-screen .return-button");
         let returnButtonHighlight = document.querySelector(".eye-spy-screen .return-button-highlight");
-        super(EyeSpyScreenInterface, 2, returnButton, returnButtonHighlight);
+        super(EyeSpyScreenInterface,returnButton, returnButtonHighlight);
     }
 
     htmlElement = document.querySelector(".eye-spy-screen");
@@ -13,28 +13,26 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     sortedCardElement = document.querySelector(".eye-spy-screen .sorted-card");
     movesElement = document.querySelector(".eye-spy-screen .moves");
 
-    lastPromise = null;
-
-    showStartScreen() {
+    showStartScreen(gameConfiguration) {
         this.setMainColor(EYE_SPY_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
             this.mainColor,
             EYE_SPY_MAIN_COLOR_LIST,
             EYE_SPY_MAIN_BACKGROUND_IMAGE,
             EYE_SPY_GAME_TITLE,
-            EYE_SPY_GAME_DESCRIPTION);
+            EYE_SPY_GAME_DESCRIPTION,
+            gameConfiguration);
     }
 
-    show(kanaList) {
-        this.setVariables(kanaList);
-        this.gameModel = new EyeSpyModel(this.kanaList, this.dimension);
+    show(kanaList, gameConfiguration) {
+        this.setVariables(kanaList, gameConfiguration);
+        this.gameModel = new EyeSpyModel(this.kanaList, gameConfiguration);
         this.currentGameScreenInterface = this;
         this.setMoves(this.movesElement);
         this.startGame();
     }
 
     startGame() {
-        this.lastPromise = null;
         super.startGame();
         this.drawCardsOnScreen();
     }

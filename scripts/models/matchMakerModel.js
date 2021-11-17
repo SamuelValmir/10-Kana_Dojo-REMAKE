@@ -36,7 +36,7 @@ class MatchMakerModel extends GameModel {
     }
 
     setCard(id) {
-        let card = this.cards.filter((card) => card.id == id)[0];
+        let card = this.cards.filter((card) => card.id === id)[0];
 
         if (card.flipped || this.lockMode) {
             return false;
@@ -65,6 +65,11 @@ class MatchMakerModel extends GameModel {
                 this.firstCard.matched = true;
                 this.secondCard.matched = true;
                 this.matches++;
+
+                if(this.currentCards.filter(card => card.matched === false).length === 0){
+                    this.lockMode = false;
+                    this.inLastCard = true;
+                }
             }
 
             return match;
@@ -101,7 +106,7 @@ class MatchMakerModel extends GameModel {
                 gameWin = false;
             }
         })
-        if(gameWin === true){
+        if (gameWin === true) {
             this.increaseTime();
         }
         return gameWin;
