@@ -58,6 +58,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
     <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
         or if you have enabled the javaScript in your browser! </noscript>
     <title>Game</title>
@@ -523,19 +526,26 @@
         </div>
     </div>
 
-    <!------- GAME CONFIGURATION MODAL ------->
+    <!-- ----- GAME CONFIGURATION MODAL ------->
 
-    <!-- <div class="game-configuration-modal">
+    <div class="game-configuration-modal">
         <div class="container">
-            time
-            bonus time
-            dimension
-            board animation
-            <span class="switch"></span>
-            card animation
-            card match sing
+            <div class="time-container">
+                <span class=""> time </span> <input class="time" type="text">
+                <span class=""> bonus time </span> <input class="bonus-time" type="text">
+            </div>
+
+            <span class=""> dimension </span>
+            <span class=""> board animation <span class="switch"></span> </span>
+            <span class=""> card animation <span class="switch"></span> </span>
+            <span class=""> card match sing <span class="switch"></span> </span>
+
+            <div class="button-container">
+                <span class="button done-button"> Done </span>
+                <span class="button cancel-button"> Cancel </span>
+            </div>
         </div>
-    </div> -->
+    </div>
 
     <!------- MATCH MAKER ------->
     <div class="match-maker-screen">
@@ -582,7 +592,6 @@
 
     <script src="./scripts/constants.js"></script>
     <script src="./scripts/kana.js"></script>
-    <!-- <script src="./scripts/header.js"></script> -->
     <script src="./scripts/models/cards.js"></script>
 
     <script src="./scripts/models/navModel.js"></script>

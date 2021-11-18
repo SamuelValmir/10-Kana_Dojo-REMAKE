@@ -68,14 +68,6 @@ class MatchMakerScreenInterface extends GameScreenInterface {
 
                     if (this.gameModel.secondCard) {
                         if (this.gameModel.checkMatch()) {
-                            if (this.gameModel.checkGameOver()) {
-                                setTimeout(() => {
-                                    let gameOverLayer = document.querySelector(".gameOver");
-                                    gameOverLayer.style.display = "grid";
-                                    setScore();
-                                }, 1000)
-                            }
-
                             await this.cardMatchAnimation();
                             if (this.lastPromise !== null) {
                                 this.lastPromise.then(() => {
@@ -91,7 +83,6 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                             setTimeout(() => {
                                 let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
                                 let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
-
                                 this.gameModel.unFlipCards();
                                 firstCardElement.classList.remove("flip");
                                 secondCardElement.classList.remove("flip");
@@ -109,18 +100,31 @@ class MatchMakerScreenInterface extends GameScreenInterface {
         const promise = new Promise(resolve => {
             let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
             let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
+            this.gameModel.clearCards();
+            let animation;
 
-            const animation = firstCardElement.animate([
-                { border: "4px solid yellow" }
-            ], { duration: 2000, easing: "linear" });
+            // It animates the card back side and front side
+            for(let i = 0; i < firstCardElement.children.length; i++){
+               let face = firstCardElement.children[i]
 
-            secondCardElement.animate([
-                { border: "4px solid yellow" }
-            ], { duration: 2000, easing: "linear" });
+               animation = face.animate([
+                { border: ".2rem solid yellow"}
+            ], { duration: 1000, easing: "linear" });
+            }
+            
+            for(let i = 0; i < secondCardElement.children.length; i++){
+               let face = secondCardElement.children[i]
+
+               face.animate([
+                { border: ".2rem solid yellow"}
+            ], { duration: 1000, easing: "linear" });
+            }
 
             animation.addEventListener("finish", () => {
-                firstCardElement.style.border = "4px solid yellow";
-                secondCardElement.style.border = "4px solid yellow";
+                firstCardElement.children[0].style.border = ".2rem solid yellow";
+                firstCardElement.children[1].style.border = ".2rem solid yellow";
+                secondCardElement.children[0].style.border = ".2rem solid yellow";
+                secondCardElement.children[1].style.border = ".2rem solid yellow";
                 resolve();
             })
         })

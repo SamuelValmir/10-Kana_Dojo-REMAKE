@@ -1,3 +1,8 @@
+"use strict";
+
+let a = document.querySelector(".game-configuration-modal .time-container .time");
+a.mask("0:00");
+
 let statsScreenInterface = {
     htmlElement: document.querySelector(".stats-screen"),
     isShowing: false,
@@ -67,16 +72,16 @@ let statsScreenInterface = {
             let addGroupClass = true;
             for (let family of Object.values(group[1])) {
 
-                for (let kana of family) {   
+                for (let kana of family) {
                     let rowElement;
                     rowElement = document.createElement("div");
                     rowElement.classList.add("row");
 
-                    if (addGroupClass === true){
+                    if (addGroupClass === true) {
                         addGroupClass = false;
                         rowElement.classList.add(group[0]);
                     }
-                    
+
                     let kanaElement = document.createElement("span");
                     kanaElement.classList.add("kana");
 
@@ -104,11 +109,11 @@ let statsScreenInterface = {
                     rowElement.appendChild(wrongElement);
                     rowElement.appendChild(accuracyElement);
 
-                    rowElement.addEventListener("click", (event)=>{
+                    rowElement.addEventListener("click", (event) => {
                         let rowElement = event.target;
                         rowElement.animate([
-                            {backgroundColor : "#aaa"}
-                        ], {duration: 200, easing: "ease"})
+                            { backgroundColor: "#aaa" }
+                        ], { duration: 200, easing: "ease" })
                     })
                 }
             }

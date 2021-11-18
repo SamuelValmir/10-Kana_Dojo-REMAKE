@@ -42,7 +42,7 @@ class MatchMakerModel extends GameModel {
             return false;
         }
 
-        //* (!this.firstCard) == (firstCard == null)
+        //* (!this.firstCard) === (firstCard === null)
         if (!this.firstCard) {
 
             this.firstCard = card;
@@ -51,7 +51,6 @@ class MatchMakerModel extends GameModel {
         } else {
             this.secondCard = card;
             card.flipped = true;
-            this.lockMode = true;
             return true;
         }
     }
@@ -66,10 +65,13 @@ class MatchMakerModel extends GameModel {
                 this.secondCard.matched = true;
                 this.matches++;
 
-                if(this.currentCards.filter(card => card.matched === false).length === 0){
+                if (this.currentCards.some(card => card.matched === false)) {
                     this.lockMode = false;
                     this.inLastCard = true;
                 }
+            }else{
+                // It don't allows the player click in another card when him selected cards did no match
+                this.lockMode = true;
             }
 
             return match;

@@ -743,8 +743,8 @@ label{
 }
 
 .game-start-screen .top .head .settings-icon-container{
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 
 }
 
@@ -818,22 +818,33 @@ align-items: center;
 }
 
 .game-configuration-modal .container{
-    background-color: #74E332;
+    background-color: #BBC1E1;
     color: black;
-
-    display: flex;
+    
     width: 100vw;
-    height: 100px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    padding: 1rem;
+}
+
+.game-configuration-modal .time-container input{
+    /* background-color: red; */
+    /* border: none; */
+    width: 4rem;
+
 }
 
 .game-configuration-modal .switch{
     background-color: #fff;
     
-    display: block;
+    display: flex;
     position: relative;
     height: 1.5rem;
-    width: 5rem;
+    width: 2.5rem;
     
+    padding: .2rem;
     border: 1px solid #BBC1E1;
     border-radius: 1rem;
     cursor: pointer;
@@ -843,19 +854,16 @@ align-items: center;
 
 .game-configuration-modal .switch::after{
     content: "";
-    background-color: #BBC1E1;
+    /* background-color: #BBC1E1; */
+    background-color: rgb(168, 26, 26);
 
     display: block;
-    position: absolute;
-    left: 0px;
-    top: auto;
-    bottom: auto;
+    align-self: center;
 
+    width: 50%;
+    height: 100%;
 
-    width: 45%;
-    height: 90%;
-
-    border-radius: 1rem;
+    border-radius: 100%;
 }
 
 /** -------------------- MODAL CUSTOM -------------------- */
@@ -1208,7 +1216,7 @@ align-items: center;
     justify-items: center;
     align-items: center;
 
-    border-radius: .5em;
+    border-radius: .5rem;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
     backface-visibility: hidden;
 
