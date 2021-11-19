@@ -58,9 +58,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
 
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
+    <script src="./scripts/jquery-3.6.0.min.js"></script>
+    <script src="./scripts/jquery.mask.js.js"></script>
     <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
         or if you have enabled the javaScript in your browser! </noscript>
     <title>Game</title>
@@ -531,16 +530,42 @@
     <div class="game-configuration-modal">
         <div class="container">
             <div class="time-container">
-                <span class=""> time </span> <input class="time" type="text">
-                <span class=""> bonus time </span> <input class="bonus-time" type="text">
+                <span class="time"> time <input class="game-time" type="text" placeholder="mm:ss" value="1:00"> </span>
+                <span class="time"> bonus time <input class="bonus-time" type="number" placeholder="seconds" value="10"> </span>
             </div>
 
-            <span class=""> dimension </span>
-            <span class=""> board animation <span class="switch"></span> </span>
-            <span class=""> card animation <span class="switch"></span> </span>
-            <span class=""> card match sing <span class="switch"></span> </span>
+            <div class="dimension-container">
+                <span> dimension </span>
+                <span class="dimension"> 2x2</span>
+                <span class="dimension"> 4x2</span>
+                <span class="dimension"> 4x4</span>
+                <span class="dimension"> 5x4</span>
+                <span class="dimension"> 6x6</span>
+            </div>
+
+            <div class="animation-container">
+                <span class=""> board animation </span>
+                <span class="switch" activated="true">
+                    <span class="ball"></span>
+                </span>
+            </div>
+
+            <div class="animation-container">
+                <span class=""> card animation </span>
+                <span class="switch" activated="true">
+                    <span class="ball"></span>
+                </span>
+            </div>
+
+            <div class="animation-container">
+                <span class=""> card match sing </span>
+                <span class="switch" activated="true">
+                    <span class="ball"></span>
+                </span>
+            </div>
 
             <div class="button-container">
+                <span class="button reset-button"> Reset </span>
                 <span class="button done-button"> Done </span>
                 <span class="button cancel-button"> Cancel </span>
             </div>

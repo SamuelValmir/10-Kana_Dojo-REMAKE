@@ -113,7 +113,7 @@ let gameStartScreenInterface = {
                 { transform: "rotate(360deg)" }
             ], { duration: 600, easing: "ease-out" })
 
-            animation.addEventListener("finish", ()=>{
+            animation.addEventListener("finish", () => {
                 resolve();
             })
         })

@@ -1,8 +1,5 @@
 "use strict";
 
-let a = document.querySelector(".game-configuration-modal .time-container .time");
-a.mask("0:00");
-
 let statsScreenInterface = {
     htmlElement: document.querySelector(".stats-screen"),
     isShowing: false,
