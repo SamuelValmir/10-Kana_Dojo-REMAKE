@@ -17,6 +17,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
     showStartScreen(gameConfiguration) {
         this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
+            MatchMakerScreenInterface,
             this.mainColor,
             MATCH_MAKER_MAIN_COLOR_LIST,
             MATCH_MAKER_MAIN_BACKGROUND_IMAGE,

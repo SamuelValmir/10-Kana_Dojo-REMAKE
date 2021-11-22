@@ -812,22 +812,26 @@ label{
 
 /** -------------------- GAME SETTINGS MODAL ---------- */
 
-.game-configuration-modal .container{
+.game-configuration-modal {
+    display: none;
     position: absolute;
     top: 0;
 }
 
 .game-configuration-modal .container{
+    position: relative;
+
     background-color: #BBC1E1;
     color: black;
     
     width: 100vw;
-    height: fit-content;
     display: flex;
     flex-direction: column;
     gap: .5rem;
     z-index: 1;
     padding: 1rem;
+
+    border-radius: 0rem 0rem 1rem 1rem;
 }
 
 .game-configuration-modal .time-container{
@@ -839,10 +843,6 @@ label{
     width: 3.5rem;
     outline-style: none;
     border: 1px solid #555;
-}
-
-.game-configuration-modal .time-container input:focus{
-    outline: solid 1px rgb(168, 26, 26);
 }
 
 .game-configuration-modal .dimension-container .dimension{
@@ -880,8 +880,6 @@ label{
 }
 
 .game-configuration-modal .switch .ball{
-    background-color: rgb(168, 26, 26);
-
     display: block;
 
     width: 50%;
@@ -899,9 +897,8 @@ label{
 }
 
 .game-configuration-modal .button{
-    background-color: rgb(168, 26, 26);
     color: #e1e5e7;
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: .3rem;
 }
 

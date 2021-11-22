@@ -530,35 +530,35 @@
     <div class="game-configuration-modal">
         <div class="container">
             <div class="time-container">
-                <span class="time"> time <input class="game-time" type="text" placeholder="mm:ss" value="1:00"> </span>
-                <span class="time"> bonus time <input class="bonus-time" type="number" placeholder="seconds" value="10"> </span>
+                <span class="time"> time <input class="game-time" type="text" placeholder="mm:ss"> </span>
+                <span class="time"> bonus time <input class="bonus-time" type="text" placeholder="seconds"> </span>
             </div>
 
             <div class="dimension-container">
                 <span> dimension </span>
-                <span class="dimension"> 2x2</span>
-                <span class="dimension"> 4x2</span>
-                <span class="dimension"> 4x4</span>
-                <span class="dimension"> 5x4</span>
-                <span class="dimension"> 6x6</span>
+                <span class="dimension" selected="false"></span>
+                <span class="dimension" selected="false"></span>
+                <span class="dimension" selected="true"></span>
+                <span class="dimension" selected="false"></span>
+                <span class="dimension" selected="false"></span>
             </div>
 
             <div class="animation-container">
-                <span class=""> board animation </span>
+                <span> board animation </span>
                 <span class="switch" activated="true">
                     <span class="ball"></span>
                 </span>
             </div>
 
             <div class="animation-container">
-                <span class=""> card animation </span>
+                <span> card animation </span>
                 <span class="switch" activated="true">
                     <span class="ball"></span>
                 </span>
             </div>
 
             <div class="animation-container">
-                <span class=""> card match sing </span>
+                <span> card match sing </span>
                 <span class="switch" activated="true">
                     <span class="ball"></span>
                 </span>
@@ -567,7 +567,6 @@
             <div class="button-container">
                 <span class="button reset-button"> Reset </span>
                 <span class="button done-button"> Done </span>
-                <span class="button cancel-button"> Cancel </span>
             </div>
         </div>
     </div>
@@ -647,7 +646,8 @@
 
     <script src="./scripts/controllers/gameStartScreenController.js"></script>
     <script src="./scripts/screens/gameStartScreenInterface.js"></script>
-    <script src="./scripts/screens/gameScreenInterface.js"></script>t
+    <script src="./scripts/screens/gameScreenInterface.js"></script>
+    <script src="./scripts/modals/gameConfigurationModal.js"></script>
 
     <script src="./scripts/models/gameModel.js"></script>
     <script src="./scripts/models/eyeSpyModel.js"></script>

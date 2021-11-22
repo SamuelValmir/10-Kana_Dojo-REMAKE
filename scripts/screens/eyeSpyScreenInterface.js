@@ -16,6 +16,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     showStartScreen(gameConfiguration) {
         this.setMainColor(EYE_SPY_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
+            EyeSpyScreenInterface,
             this.mainColor,
             EYE_SPY_MAIN_COLOR_LIST,
             EYE_SPY_MAIN_BACKGROUND_IMAGE,

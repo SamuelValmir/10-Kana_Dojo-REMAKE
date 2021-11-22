@@ -4,8 +4,9 @@ let gameStartScreenInterface = {
     htmlElement: document.querySelector(".game-start-screen"),
     firstShow: true,
 
-    game: undefined,
-    mainColor: undefined,
+    game: null,
+    gameReference: null,
+    mainColor: null,
 
     topElement: document.querySelector(".game-start-screen .top"),
     returnButton: document.querySelector(".game-start-screen .return-button"),
@@ -13,20 +14,21 @@ let gameStartScreenInterface = {
     settingsIcon: document.querySelector(".game-start-screen .settings-icon-container"),
     bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
-    backgroundImage: undefined,
+    backgroundImage: null,
     titleElement: document.querySelector(".game-start-screen .bottom .game-title"),
-    title: undefined,
+    title: null,
     gameDescriptionElement: document.querySelector(".game-start-screen .bottom .game-description"),
-    gameDescription: undefined,
+    gameDescription: null,
     horizontalBarElement: document.querySelector(".game-start-screen .bottom hr"),
     buttonElement: document.querySelector(".game-start-screen .bottom .button"),
 
     checkBoxElementList: document.querySelectorAll(".game-start-screen .bottom .checkbox"),
     checkBoxObjectList: [],
 
-    show(game, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfiguration = null) {
+    show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfiguration = null) {
         // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
         this.game = game;
+        this.gameReference = gameReference;
         this.mainColor = mainColor
         this.hslColorList = hslColorList;
         this.backgroundImage = backgroundImage;
@@ -64,7 +66,8 @@ let gameStartScreenInterface = {
 
             this.settingsIcon.addEventListener("click", async () => {
                 await this.animateSettingsIcon();
-                console.log("Done!")
+                new GameConfigurationModal().show(this.gameReference, this.mainColor);
+                // ! I must make the game configuration reset when start game screen is open (make a classe instance), and still the configuration while game is on. 
             })
 
             this.returnButton.addEventListener("click", async () => {
@@ -72,6 +75,7 @@ let gameStartScreenInterface = {
                 this.hide();
                 menuScreenInterface.show();
             })
+
             this.buttonElement.addEventListener("click", async () => {
                 if (this.buttonElement.disabled === false) {
                     await gameStartScreenControllerObject.animateButton();
@@ -110,8 +114,8 @@ let gameStartScreenInterface = {
         const promise = new Promise(resolve => {
 
             let animation = this.settingsIcon.animate([
-                { transform: "rotate(360deg)" }
-            ], { duration: 600, easing: "ease-out" })
+                { transform: "rotate(180deg)" }
+            ], { duration: 300, easing: "ease-out" })
 
             animation.addEventListener("finish", () => {
                 resolve();
