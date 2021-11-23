@@ -25,7 +25,7 @@ let gameStartScreenInterface = {
     checkBoxElementList: document.querySelectorAll(".game-start-screen .bottom .checkbox"),
     checkBoxObjectList: [],
 
-    show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfiguration = null) {
+    show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfigurationModal) {
         // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
         this.game = game;
         this.gameReference = gameReference;
@@ -34,6 +34,7 @@ let gameStartScreenInterface = {
         this.backgroundImage = backgroundImage;
         this.title = gameTitle;
         this.gameDescription = gameDescription;
+        this.gameConfigurationModal = gameConfigurationModal;
 
         this.htmlElement.style.display = "flex";
         this.topElement.lastElementChild.style.display = "flex";
@@ -66,7 +67,7 @@ let gameStartScreenInterface = {
 
             this.settingsIcon.addEventListener("click", async () => {
                 await this.animateSettingsIcon();
-                new GameConfigurationModal().show(this.gameReference, this.mainColor);
+                this.gameConfigurationModal.show(this.gameReference, this.mainColor);
                 // ! I must make the game configuration reset when start game screen is open (make a classe instance), and still the configuration while game is on. 
             })
 
@@ -92,10 +93,8 @@ let gameStartScreenInterface = {
                     cards = Cards.shuffle(cards);
 
                     this.hideContent();
-                    const gameConfiguration = {
-                        time: 20, dimensionX: 2, dimensionY: 2, bonusTime: 10
-                    }
-                    this.game.show(cards, gameConfiguration);
+                    console.log(this.gameConfigurationModal.configuration);
+                    this.game.show(cards, this.gameConfigurationModal.configuration);
                 }
             })
         }

@@ -21,6 +21,7 @@ class GameScreenInterface {
         this.lastPromise = null;
         this.gameModel.createCards();
         this.time = this.gameModel.time;
+        console.log(this.gameModel)
         this.timeElement.innerHTML = this.time;
     }
 

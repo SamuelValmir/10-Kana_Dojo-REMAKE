@@ -5,6 +5,7 @@ class GameModel {
         this.kanaList = kanaList;
         this.gameConfiguration = gameConfiguration;
         this.time = gameConfiguration.time;
+        console.log(gameConfiguration.time)
         this.dimension = Math.floor((gameConfiguration.dimensionX * gameConfiguration.dimensionY));
     }
 

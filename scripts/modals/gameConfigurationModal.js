@@ -5,8 +5,14 @@ class GameConfigurationModal {
 
     timeElement = document.querySelector(".game-configuration-modal .time-container .game-time");
     bonusTimeElement = document.querySelector(".game-configuration-modal .time-container .bonus-time");
+
     dimensionElementList = document.querySelectorAll(".game-configuration-modal .dimension-container .dimension");
+
     switchElementList = document.querySelectorAll(".game-configuration-modal .switch");
+    boardAnimationSwitchElement = document.querySelector(".game-configuration-modal .switch-board-animation");
+    cardAnimationSwitchElement = document.querySelector(".game-configuration-modal .switch-card-animation");
+    cardMarkerSwitchElement = document.querySelector(".game-configuration-modal .switch-card-match-marker");
+
     resetButton = document.querySelector(".game-configuration-modal .reset-button");
     doneButton = document.querySelector(".game-configuration-modal .done-button");
     cancelButton = document.querySelector(".game-configuration-modal .cancel-button");
@@ -15,6 +21,16 @@ class GameConfigurationModal {
     reference = null;
     mainColor = null;
     firstShow = true;
+
+    configuration = {
+        time: 20,
+        bonusTime: 10,
+        dimensionX: 2,
+        dimensionY: 2,
+        boardAnimation: true,
+        cardAnimation: true,
+        cardMatchMarker: true
+    }
 
     show(reference, mainColor) {
         this.htmlElement.style.display = "block";
@@ -25,7 +41,7 @@ class GameConfigurationModal {
         this.htmlElement.style.top = "-" + (htmlElementHeight * 1.5) + "px";
 
         let animation = this.htmlElement.animate([
-            { top : "0px" }
+            { top: "0px" }
         ], 500);
 
         animation.addEventListener("finish", () => {
@@ -35,14 +51,14 @@ class GameConfigurationModal {
         this.initialize();
     }
 
-    initialize(){
+    initialize() {
         if (this.firstShow === true) {
             this.setDefaultValues();
 
             this.firstShow = false;
             // It adds mask in the inputs
             $(document).ready(function () {
-                $(".game-configuration-modal .time-container .game-time").mask("0 =00");
+                $(".game-configuration-modal .time-container .game-time").mask("0:00");
                 $(".game-configuration-modal .time-container .bonus-time").mask("00");
             });
 
@@ -54,6 +70,29 @@ class GameConfigurationModal {
                 })
                 input.addEventListener("focusout", () => {
                     input.style.outline = "none";
+
+                    let minutes;
+                    let seconds;
+
+                    if (input.classList.contains("game-time")) {
+                        const doubleDotsIndex = input.value.indexOf(":");
+                        if (doubleDotsIndex < 0) { // If not found the ":"...
+                            minutes = 0;
+                            seconds = input.value;
+                        } else { // If found the ":"...
+                            minutes = input.value.substring(0, 1);
+                            seconds = input.value.substring(2);
+                        }
+
+                        if(seconds >= 60){
+                            input.value = minutes + ":" + 59;
+                        }
+                        
+                        console.log(minutes)
+                        console.log(seconds)
+                    }
+
+                    // let seconds = input.value.substring();
                 })
             })
 
@@ -99,15 +138,19 @@ class GameConfigurationModal {
             }
 
             // It adds click event listener in the buttons
-            this.resetButton.addEventListener("click", () => {
+            this.resetButton.addEventListener("click", async () => {
+                await this.buttonAnimation(this.resetButton);
                 this.setDefaultValues();
             })
 
-            this.doneButton.addEventListener("click", () => {
+            this.doneButton.addEventListener("click", async () => {
+                await this.buttonAnimation(this.doneButton);
+
+                this.setConfiguration();
                 const htmlElementHeight = this.htmlElement.clientHeight;
 
                 const animation = this.htmlElement.animate([
-                    { top : "-" + htmlElementHeight + "px" }
+                    { top: "-" + htmlElementHeight + "px" }
                 ], 500)
 
                 animation.addEventListener("finish", () => {
@@ -116,6 +159,42 @@ class GameConfigurationModal {
             })
 
         }
+    }
+
+    buttonAnimation(button) {
+        const promise = new Promise(resolve => {
+            const animation = button.animate([
+                { transform: "scale(.9)" }
+            ], { duration: 300, easing: "linear" })
+
+            animation.addEventListener("finish", () => {
+                resolve();
+            })
+        })
+
+        return promise;
+    }
+
+    showSelectedDimensionAnimation(dimensionElement) {
+        dimensionElement.animate([
+            { transform: "scale(1.2)" }
+        ], 150)
+        dimensionElement.style.border = "2px solid " + this.mainColor;
+        dimensionElement.style.backgroundColor = "white";
+    }
+
+    hideSelectedDimension(dimensionElement) {
+        dimensionElement.style.border = "1px solid #333";
+        dimensionElement.style.backgroundColor = "#BBC1E1";
+    }
+
+    hide() {
+        this.htmlElement.style.display = "none";
+    }
+
+    setDefaultValues() {
+        this.timeElement.value = "1:00";
+        this.bonusTimeElement.value = "10";
 
         switch (this.reference.name) {
             case "MatchMakerScreenInterface": {
@@ -134,28 +213,6 @@ class GameConfigurationModal {
                 this.dimensionElementList[4].innerHTML = "6x6";
             } break;
         }
-    }
-
-    showSelectedDimensionAnimation(dimensionElement) {
-        dimensionElement.animate([
-            { transform : "scale(1.2)" }
-        ], 150)
-        dimensionElement.style.border = "2px solid " + this.mainColor;
-        dimensionElement.style.backgroundColor = "white";
-    }
-
-    hideSelectedDimension(dimensionElement) {
-        dimensionElement.style.border = "1px solid #333";
-        dimensionElement.style.backgroundColor = "#BBC1E1";
-    }
-
-    hide() {
-        this.htmlElement.style.display = "none";
-    }
-
-    setDefaultValues() {
-        this.timeElement.value = "1 =00";
-        this.bonusTimeElement.value = "10";
 
         for (let i = 0; i < this.dimensionElementList.length; i++) {
             let dimensionElement = this.dimensionElementList[i];
@@ -187,13 +244,35 @@ class GameConfigurationModal {
         buttonList.forEach(button => {
             button.style.backgroundColor = this.mainColor;
         })
+
+
+        this.setConfiguration();
+    }
+
+    setConfiguration() {
+        this.configuration.time = this.timeElement.value;
+        this.configuration.bonusTime = this.bonusTimeElement.value;
+
+        this.dimensionElementList.forEach(dimensionElement => {
+            if (dimensionElement.getAttribute("selected") === "true") {
+                let dimensionX = dimensionElement.innerHTML.substring(0, 1);
+                let dimensionY = dimensionElement.innerHTML.substring(2);
+
+                this.configuration.dimensionX = dimensionX;
+                this.configuration.dimensionY = dimensionY;
+            }
+        })
+
+        this.configuration.boardAnimation = this.boardAnimationSwitchElement.getAttribute("activated");
+        this.configuration.cardAnimation = this.cardAnimationSwitchElement.getAttribute("activated");
+        this.configuration.cardMatchMarker = this.cardMarkerSwitchElement.getAttribute("activated");
     }
 
     moveSwitchBallAnimation(switchElement, margin) {
         const switchBall = switchElement.children[0];
         const animation = switchBall.animate([
-            { marginLeft : margin + "%" }
-        ], { duration : 500, easing : "ease" })
+            { marginLeft: margin + "%" }
+        ], { duration: 500, easing: "ease" })
 
         animation.addEventListener("finish", () => {
             switchBall.style.marginLeft = margin + "%";
@@ -202,13 +281,11 @@ class GameConfigurationModal {
 
     switchOpacityAnimation(switchElement, opacity) {
         const animation = switchElement.animate([
-            { opacity : opacity }
-        ], { duration : 1000, easing : "ease" })
+            { opacity: opacity }
+        ], { duration: 1000, easing: "ease" })
 
         animation.addEventListener("finish", () => {
             switchElement.style.opacity = opacity;
         })
     }
 }
-
-// gameConfigurationModal.show();

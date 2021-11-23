@@ -5,6 +5,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
         let returnButton = document.querySelector(".match-maker-screen .return-button");
         let returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
         super(MatchMakerScreenInterface, returnButton, returnButtonHighlight);
+        this.gameConfigurationModal = new GameConfigurationModal();
     }
 
     htmlElement = document.querySelector(".match-maker-screen");
@@ -13,6 +14,8 @@ class MatchMakerScreenInterface extends GameScreenInterface {
     returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
     timeElement = document.querySelector(".match-maker-screen .time");
     movesElement = document.querySelector(".match-maker-screen .moves");
+
+    gameConfigurationModal = null;
 
     showStartScreen(gameConfiguration) {
         this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
@@ -23,6 +26,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             MATCH_MAKER_MAIN_BACKGROUND_IMAGE,
             MATCH_MAKER_GAME_TITLE,
             MATCH_MAKER_GAME_DESCRIPTION,
+            this.gameConfigurationModal,
             gameConfiguration);
     }
 
