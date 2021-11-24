@@ -23,8 +23,9 @@ class GameConfigurationModal {
     firstShow = true;
 
     configuration = {
-        time: 20,
-        bonusTime: 10,
+        minutes: 0,
+        seconds: "10",
+        bonusTime: 5,
         dimensionX: 2,
         dimensionY: 2,
         boardAnimation: true,
@@ -32,10 +33,11 @@ class GameConfigurationModal {
         cardMatchMarker: true
     }
 
-    show(reference, mainColor) {
+    show(reference, mainColor, hslColorList) {
         this.htmlElement.style.display = "block";
         this.reference = reference;
         this.mainColor = mainColor;
+        this.hslColorList = hslColorList;
 
         const htmlElementHeight = this.htmlElement.clientHeight;
         this.htmlElement.style.top = "-" + (htmlElementHeight * 1.5) + "px";
@@ -76,23 +78,43 @@ class GameConfigurationModal {
 
                     if (input.classList.contains("game-time")) {
                         const doubleDotsIndex = input.value.indexOf(":");
-                        if (doubleDotsIndex < 0) { // If not found the ":"...
-                            minutes = 0;
-                            seconds = input.value;
-                        } else { // If found the ":"...
+                        if (doubleDotsIndex > 0) { // If found the ":"...
                             minutes = input.value.substring(0, 1);
                             seconds = input.value.substring(2);
+                        } else {
+                            input.value = "0:10";
+                            minutes = 0;
+                            seconds = 10;
                         }
 
-                        if(seconds >= 60){
+                        if (seconds >= 60) {
                             input.value = minutes + ":" + 59;
+                            seconds = 59;
+                            // Seconds can't be more than 59
                         }
-                        
-                        console.log(minutes)
-                        console.log(seconds)
-                    }
 
-                    // let seconds = input.value.substring();
+                        if (minutes <= 0 && seconds < 10) {
+                            input.value = "0:10";
+                            minutes = 0;
+                            seconds = 10;
+                            // time can't be less than 10
+                        }
+
+                        if (seconds.length === 1 && seconds < 10) {
+                            input.value = minutes + ":" + 0 + seconds;
+                        } else if (seconds.length === 0) {
+                            input.value = minutes + ":00";
+                            seconds = 0;
+                        }
+
+                    } else {
+                        seconds = input.value;
+
+                        if (seconds.length === 0) {
+                            seconds = input.value = 0;
+                            seconds = 0;
+                        }
+                    }
                 })
             })
 
@@ -123,13 +145,11 @@ class GameConfigurationModal {
                 let switchElement = switchList[i];
                 switchElement.addEventListener("click", () => {
                     if (switchElement.getAttribute("activated") === "true") {
-                        console.log(1);
                         switchElement.setAttribute("activated", false);
                         this.moveSwitchBallAnimation(switchElement, 0);
                         this.switchOpacityAnimation(switchElement, .6);
 
                     } else {
-                        console.log(2);
                         switchElement.setAttribute("activated", true);
                         this.moveSwitchBallAnimation(switchElement, 50);
                         this.switchOpacityAnimation(switchElement, 1);
@@ -139,12 +159,17 @@ class GameConfigurationModal {
 
             // It adds click event listener in the buttons
             this.resetButton.addEventListener("click", async () => {
-                await this.buttonAnimation(this.resetButton);
+                // await this.buttonAnimation(this.resetButton);
                 this.setDefaultValues();
             })
 
             this.doneButton.addEventListener("click", async () => {
-                await this.buttonAnimation(this.doneButton);
+                // await this.buttonAnimation(this.doneButton);
+                // ! I must make the animation with javascript and or wait the animation end
+
+                await setTimeout(()=>{
+
+                },250);
 
                 this.setConfiguration();
                 const htmlElementHeight = this.htmlElement.clientHeight;
@@ -158,6 +183,12 @@ class GameConfigurationModal {
                 })
             })
 
+            document.addEventListener("click", (event) => {
+                let isClickInsideConfigurationModal = this.htmlElement.contains(event.target);
+                if (!isClickInsideConfigurationModal) {
+                    console.log("exit")
+                }
+            })
         }
     }
 
@@ -242,7 +273,12 @@ class GameConfigurationModal {
 
         const buttonList = document.querySelectorAll(".game-configuration-modal .button-container .button");
         buttonList.forEach(button => {
-            button.style.backgroundColor = this.mainColor;
+            const [hue, saturation, lightness] = this.hslColorList;
+            button.style.backgroundColor = "hsl(" + (hue - 5) + "," + saturation + "%," + (lightness - 15) + "%)";
+
+
+            const front = button.lastElementChild;
+            front.style.backgroundColor = this.mainColor
         })
 
 
@@ -250,7 +286,11 @@ class GameConfigurationModal {
     }
 
     setConfiguration() {
-        this.configuration.time = this.timeElement.value;
+        let minutes = this.timeElement.value.substring(0, 1);
+        let seconds = this.timeElement.value.substring(2);
+        this.configuration.minutes = minutes;
+        this.configuration.seconds = seconds;
+
         this.configuration.bonusTime = this.bonusTimeElement.value;
 
         this.dimensionElementList.forEach(dimensionElement => {

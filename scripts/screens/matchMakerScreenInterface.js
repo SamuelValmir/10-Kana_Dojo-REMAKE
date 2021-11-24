@@ -58,8 +58,8 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                 if (this.gameModel.setCard(card.id)) {
                     if (this.timeInterval === null) {
                         this.timeInterval = setInterval(() => { // Update the time in the screen
-                            this.timeElement.innerHTML = this.gameModel.time;
-                            if (this.gameModel.time <= 0) {
+                            this.updateTime();
+                            if (this.gameModel.time < 0) {
                                 clearInterval(this.timeInterval);
                                 this.timeInterval = null;
                                 this.showGameOverScreen();
@@ -72,8 +72,11 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                     this.setMoves(this.movesElement);
 
                     if (this.gameModel.secondCard) {
+                        let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
+                        let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
+                        
                         if (this.gameModel.checkMatch()) {
-                            await this.cardMatchAnimation();
+                            await this.cardMatchAnimation(firstCardElement, secondCardElement);
                             if (this.lastPromise !== null) {
                                 this.lastPromise.then(() => {
 
@@ -82,12 +85,9 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                                     }
                                 })
                             }
-                            this.gameModel.clearCards();
 
                         } else {
                             setTimeout(() => {
-                                let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
-                                let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
                                 this.gameModel.unFlipCards();
                                 firstCardElement.classList.remove("flip");
                                 secondCardElement.classList.remove("flip");
@@ -101,28 +101,26 @@ class MatchMakerScreenInterface extends GameScreenInterface {
         this.animateBoard();
     }
 
-    cardMatchAnimation() {
+    cardMatchAnimation(firstCardElement, secondCardElement) {
         const promise = new Promise(resolve => {
-            let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
-            let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
             this.gameModel.clearCards();
             let animation;
 
             // It animates the card back side and front side
-            for(let i = 0; i < firstCardElement.children.length; i++){
-               let face = firstCardElement.children[i]
+            for (let i = 0; i < firstCardElement.children.length; i++) {
+                let face = firstCardElement.children[i]
 
-               animation = face.animate([
-                { border: ".2rem solid yellow"}
-            ], { duration: 1000, easing: "linear" });
+                animation = face.animate([
+                    { border: ".2rem solid yellow" }
+                ], { duration: 500, easing: "linear" });
             }
-            
-            for(let i = 0; i < secondCardElement.children.length; i++){
-               let face = secondCardElement.children[i]
 
-               face.animate([
-                { border: ".2rem solid yellow"}
-            ], { duration: 1000, easing: "linear" });
+            for (let i = 0; i < secondCardElement.children.length; i++) {
+                let face = secondCardElement.children[i]
+
+                face.animate([
+                    { border: ".2rem solid yellow" }
+                ], { duration: 500, easing: "linear" });
             }
 
             animation.addEventListener("finish", () => {

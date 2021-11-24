@@ -12,7 +12,6 @@ class GameScreenInterface {
     mainColor = null;
     gameModel = null;
     kanaList = null;
-    time = null;
     timeInterval = null;
 
     lastPromise = null;
@@ -20,9 +19,17 @@ class GameScreenInterface {
     startGame() {
         this.lastPromise = null;
         this.gameModel.createCards();
-        this.time = this.gameModel.time;
-        console.log(this.gameModel)
-        this.timeElement.innerHTML = this.time;
+        this.updateTime();
+    }
+
+    updateTime(){
+        let minutes = Math.floor(this.gameModel.time / 60);
+        let seconds = this.gameModel.time % 60;
+        
+        if(seconds < 10){
+            seconds = "0" + seconds;
+        }
+        this.timeElement.innerHTML = minutes + ":" + seconds;
     }
 
     setVariables(kanaList, {dimensionX, dimensionY}) {

@@ -67,8 +67,7 @@ let gameStartScreenInterface = {
 
             this.settingsIcon.addEventListener("click", async () => {
                 await this.animateSettingsIcon();
-                this.gameConfigurationModal.show(this.gameReference, this.mainColor);
-                // ! I must make the game configuration reset when start game screen is open (make a classe instance), and still the configuration while game is on. 
+                this.gameConfigurationModal.show(this.gameReference, this.mainColor, this.hslColorList);
             })
 
             this.returnButton.addEventListener("click", async () => {
@@ -93,7 +92,6 @@ let gameStartScreenInterface = {
                     cards = Cards.shuffle(cards);
 
                     this.hideContent();
-                    console.log(this.gameConfigurationModal.configuration);
                     this.game.show(cards, this.gameConfigurationModal.configuration);
                 }
             })

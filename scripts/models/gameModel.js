@@ -4,8 +4,7 @@ class GameModel {
     constructor(kanaList, gameConfiguration) {
         this.kanaList = kanaList;
         this.gameConfiguration = gameConfiguration;
-        this.time = gameConfiguration.time;
-        console.log(gameConfiguration.time)
+        this.time = (gameConfiguration.minutes * 60) + (gameConfiguration.seconds * 1);
         this.dimension = Math.floor((gameConfiguration.dimensionX * gameConfiguration.dimensionY));
     }
 
@@ -40,7 +39,7 @@ class GameModel {
     setTime() {
         const interval = setInterval(() => {
             this.time--;
-            if (this.time <= 0) {
+            if (this.time < 0) {
                 clearInterval(interval);
                 this.gameOver = true;
             }
