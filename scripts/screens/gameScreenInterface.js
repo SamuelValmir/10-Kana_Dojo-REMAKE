@@ -1,25 +1,32 @@
 "use strict";
 
 class GameScreenInterface {
-    constructor(gameScreenInterfaceReference, returnButton, returnButtonHighlight) {
-        this.gameScreenInterfaceReference = gameScreenInterfaceReference;
+    constructor(returnButton, returnButtonHighlight) {
+        // this.gameScreenInterfaceReference = gameScreenInterfaceReference;
         this.returnButton = returnButton;
         this.returnButtonHighlight = returnButtonHighlight;
-        returnButton.addEventListener("click", this.animateReturnButton);
     }
 
     currentGameScreenInterface = null;
     mainColor = null;
     gameModel = null;
+
+    gameConfigurationModal = null;
+    
     kanaList = null;
     timeInterval = null;
 
     lastPromise = null;
 
     startGame() {
+        this.initialize();
         this.lastPromise = null;
         this.gameModel.createCards();
         this.updateTime();
+    }
+
+    initialize(){
+        this.returnButton.addEventListener("click", this.animateReturnButton);
     }
 
     updateTime(){
@@ -42,15 +49,15 @@ class GameScreenInterface {
 
     hide() {
         this.htmlElement.style.display = "none";
+        this.returnButton.removeEventListener("click", this.animateReturnButton);
+        clearInterval(this.currentGameScreenInterface.timeInterval);
     }
 
     animateReturnButton = async () => {
         const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, null)
         await HeaderControllerObject.animateButton();
-        this.returnButton.removeEventListener("click", this.animateReturnButton);
         this.hide();
-        clearInterval(this.currentGameScreenInterface.timeInterval)
-        new this.gameScreenInterfaceReference().showStartScreen();
+        this.currentGameScreenInterface.showStartScreen();
     }
 
     createCardBackFront(cardElement, card) {

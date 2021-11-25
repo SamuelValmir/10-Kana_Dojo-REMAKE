@@ -4,18 +4,14 @@ class MatchMakerScreenInterface extends GameScreenInterface {
     constructor() {
         let returnButton = document.querySelector(".match-maker-screen .return-button");
         let returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
-        super(MatchMakerScreenInterface, returnButton, returnButtonHighlight);
+        super(returnButton, returnButtonHighlight);
         this.gameConfigurationModal = new GameConfigurationModal();
     }
 
     htmlElement = document.querySelector(".match-maker-screen");
     boardElement = document.querySelector(".match-maker-screen .board");
-    returnButton = document.querySelector(".match-maker-screen .return-button");
-    returnButtonHighlight = document.querySelector(".match-maker-screen .return-button-highlight");
     timeElement = document.querySelector(".match-maker-screen .time");
     movesElement = document.querySelector(".match-maker-screen .moves");
-
-    gameConfigurationModal = null;
 
     showStartScreen(gameConfiguration) {
         this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
@@ -74,16 +70,27 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                     if (this.gameModel.secondCard) {
                         let firstCardElement = document.getElementById(this.gameModel.firstCard.id);
                         let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
-                        
-                        if (this.gameModel.checkMatch()) {
-                            await this.cardMatchAnimation(firstCardElement, secondCardElement);
-                            if (this.lastPromise !== null) {
-                                this.lastPromise.then(() => {
 
+                        if (this.gameModel.checkMatch()) {
+                            if (this.gameConfigurationModal.configuration.cardAnimation === "true") {
+                                await this.cardMatchAnimation(firstCardElement, secondCardElement);
+                                if (this.lastPromise !== null) {
+                                    this.lastPromise.then(() => {
+
+                                        if (this.gameModel.checkGameWin()) {
+                                            this.startGame();
+                                        }
+                                    })
+                                }
+
+                            } else {
+                                this.gameModel.clearCards();
+
+                                setTimeout(() => { // That's for wait the card animation
                                     if (this.gameModel.checkGameWin()) {
                                         this.startGame();
                                     }
-                                })
+                                }, 500)
                             }
 
                         } else {

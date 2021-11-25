@@ -4,7 +4,8 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     constructor() {
         let returnButton = document.querySelector(".eye-spy-screen .return-button");
         let returnButtonHighlight = document.querySelector(".eye-spy-screen .return-button-highlight");
-        super(EyeSpyScreenInterface,returnButton, returnButtonHighlight);
+        super(returnButton, returnButtonHighlight);
+        this.gameConfigurationModal = new GameConfigurationModal();
     }
 
     htmlElement = document.querySelector(".eye-spy-screen");
@@ -22,6 +23,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
             EYE_SPY_MAIN_BACKGROUND_IMAGE,
             EYE_SPY_GAME_TITLE,
             EYE_SPY_GAME_DESCRIPTION,
+            this.gameConfigurationModal,
             gameConfiguration);
     }
 

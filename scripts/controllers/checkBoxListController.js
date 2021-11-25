@@ -1,5 +1,5 @@
 class CheckBoxListController {
-    constructor(elementList, hasEditIcon, alphabet, families, confirmButton, mustHasAtLeastOneChecked, color) {
+    constructor(elementList, hasEditIcon, alphabet, families, confirmButton, mustHasAtLeastOneChecked, color, defaultCheckList = null) {
         this.elementList = elementList;
         this.hasEditIcon = hasEditIcon;
         this.alphabet = alphabet;
@@ -7,6 +7,7 @@ class CheckBoxListController {
         this.confirmButton = confirmButton;
         this.mustHasAtLeastOneChecked = mustHasAtLeastOneChecked;
         this.color = color;
+        this.defaultCheckList = defaultCheckList;
     }
 
     checkedAmount = undefined;
@@ -87,10 +88,15 @@ class CheckBoxListController {
             const checkBoxElement = this.elementList[index];
             const checkBoxObject = new CheckBoxController();
 
+            // It checks the first checkbox as default
             if (index === 0) {
                 checkBoxObject.isChecked = true;
             } else {
                 checkBoxObject.isChecked = false;
+            }
+
+            if (this.defaultCheckList.includes(null) === false) {
+                checkBoxObject.isChecked = this.defaultCheckList[index];
             }
 
             checkBoxObject.color = this.color;
@@ -98,7 +104,7 @@ class CheckBoxListController {
             checkBoxObject.htmlElement = checkBoxElement;
             checkBoxObject.checkMark = checkBoxElement.children[0];
             checkBoxObject.checkMarkCircle = checkBoxElement.parentElement.children[0];
-
+            
             if (this.hasEditIcon === true) {
                 checkBoxObject.editIcon = checkBoxElement.parentElement.parentElement.children[1];
                 checkBoxObject.hasEditIcon = true;
@@ -128,8 +134,7 @@ class CheckBoxListController {
             const checkBoxObject = checkBoxObjectList[index];
             const checkBoxElement = checkBoxObject.htmlElement;
 
-            // It checks the first checkbox as default
-            if (index === 0) {
+            if (checkBoxObject.isChecked === true) {
                 checkBoxObject.showCheckBoxAndCheckMark();
                 checkBoxObject.showEditIcon();
             } else {

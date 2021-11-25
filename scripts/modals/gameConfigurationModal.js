@@ -2,6 +2,7 @@
 
 class GameConfigurationModal {
     htmlElement = document.querySelector(".game-configuration-modal");
+    static htmlElement = document.querySelector(".game-configuration-modal");
 
     timeElement = document.querySelector(".game-configuration-modal .time-container .game-time");
     bonusTimeElement = document.querySelector(".game-configuration-modal .time-container .bonus-time");
@@ -21,6 +22,7 @@ class GameConfigurationModal {
     reference = null;
     mainColor = null;
     firstShow = true;
+    isShowing = false;
 
     configuration = {
         minutes: 0,
@@ -28,13 +30,14 @@ class GameConfigurationModal {
         bonusTime: 5,
         dimensionX: 2,
         dimensionY: 2,
-        boardAnimation: true,
-        cardAnimation: true,
-        cardMatchMarker: true
+        boardAnimation: "true",
+        cardAnimation: "true",
+        cardMatchMarker: "true"
     }
 
     show(reference, mainColor, hslColorList) {
         this.htmlElement.style.display = "block";
+        this.isShowing = true;
         this.reference = reference;
         this.mainColor = mainColor;
         this.hslColorList = hslColorList;
@@ -159,36 +162,17 @@ class GameConfigurationModal {
 
             // It adds click event listener in the buttons
             this.resetButton.addEventListener("click", async () => {
-                // await this.buttonAnimation(this.resetButton);
                 this.setDefaultValues();
             })
 
             this.doneButton.addEventListener("click", async () => {
-                // await this.buttonAnimation(this.doneButton);
-                // ! I must make the animation with javascript and or wait the animation end
-
-                await setTimeout(()=>{
-
-                },250);
-
                 this.setConfiguration();
-                const htmlElementHeight = this.htmlElement.clientHeight;
 
-                const animation = this.htmlElement.animate([
-                    { top: "-" + htmlElementHeight + "px" }
-                ], 500)
-
-                animation.addEventListener("finish", () => {
-                    this.htmlElement.style.top = "-" + htmlElementHeight + "px";
-                })
+                setTimeout(() => { // It waits for the button's animation end
+                    this.hide();
+                }, 250);
             })
 
-            document.addEventListener("click", (event) => {
-                let isClickInsideConfigurationModal = this.htmlElement.contains(event.target);
-                if (!isClickInsideConfigurationModal) {
-                    console.log("exit")
-                }
-            })
         }
     }
 
@@ -220,12 +204,23 @@ class GameConfigurationModal {
     }
 
     hide() {
-        this.htmlElement.style.display = "none";
+        const htmlElementHeight = this.htmlElement.clientHeight;
+
+        const animation = this.htmlElement.animate([
+            { top: "-" + htmlElementHeight + "px" }
+        ], 500)
+
+        animation.addEventListener("finish", () => {
+            this.htmlElement.style.top = "-" + htmlElementHeight + "px";
+            this.htmlElement.style.display = "none";
+        })
+
+        this.isShowing = false;
     }
 
     setDefaultValues() {
         this.timeElement.value = "1:00";
-        this.bonusTimeElement.value = "10";
+        this.bonusTimeElement.value = 10;
 
         switch (this.reference.name) {
             case "MatchMakerScreenInterface": {
@@ -255,7 +250,7 @@ class GameConfigurationModal {
 
             if (i === 2) {
                 dimensionElement.setAttribute("selected", true);
-                dimensionElement.style.border = "2px solid rgb(168, 26, 26)";
+                dimensionElement.style.border = "2px solid " + this.mainColor;
                 dimensionElement.style.backgroundColor = "white";
 
                 this.selectedDimensionOption = dimensionElement;
@@ -291,7 +286,7 @@ class GameConfigurationModal {
         this.configuration.minutes = minutes;
         this.configuration.seconds = seconds;
 
-        this.configuration.bonusTime = this.bonusTimeElement.value;
+        this.configuration.bonusTime = parseInt(this.bonusTimeElement.value);
 
         this.dimensionElementList.forEach(dimensionElement => {
             if (dimensionElement.getAttribute("selected") === "true") {

@@ -24,6 +24,8 @@ let gameStartScreenInterface = {
 
     checkBoxElementList: document.querySelectorAll(".game-start-screen .bottom .checkbox"),
     checkBoxObjectList: [],
+    checkBoxHiragana: null,
+    checkBoxKatakana: null,
 
     show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfigurationModal) {
         // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
@@ -52,15 +54,21 @@ let gameStartScreenInterface = {
     },
 
     initialize() {
+        // Build objects to the left and right checkboxes
+        let isHiraganaChecked = null;
+        let isKatakanaChecked = null;
+        if (this.checkBoxHiragana !== null && this.checkBoxKatakana.isChecked !== null) {
+            isHiraganaChecked = this.checkBoxHiragana.isChecked;
+            isKatakanaChecked = this.checkBoxKatakana.isChecked;
+        }
+        this.checkBoxObjectList = new CheckBoxListController(this.checkBoxElementList, false, undefined, undefined, this.buttonElement, false, this.mainColor, [isHiraganaChecked, isKatakanaChecked]).build();
+        this.checkBoxHiragana = this.checkBoxObjectList[0];
+        this.checkBoxKatakana = this.checkBoxObjectList[1];
+
         if (this.firstShow === true) {
             this.firstShow = false;
             this.buttonElement.disabled = false;
 
-            // Build objects to the left and right checkboxes
-            const checkBoxElementList = this.checkBoxElementList;
-            this.checkBoxObjectList = new CheckBoxListController(checkBoxElementList, false, undefined, undefined, this.buttonElement, false, this.mainColor).build();
-            const checkBoxHiragana = this.checkBoxObjectList[0];
-            const checkBoxKatakana = this.checkBoxObjectList[1];
             let gameStartScreenControllerObject = new GameStartScreenController(this.buttonElement, this.hslColorList);
 
             const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, null)
@@ -77,15 +85,15 @@ let gameStartScreenInterface = {
             })
 
             this.buttonElement.addEventListener("click", async () => {
-                if (this.buttonElement.disabled === false) {
+                if (this.buttonElement.disabled === false && this.gameConfigurationModal.isShowing === false) {
                     await gameStartScreenControllerObject.animateButton();
 
                     const allKana = kana.getAll();
                     let cards = [];
-                    if (checkBoxHiragana.isChecked === true) {
+                    if (this.checkBoxHiragana.isChecked === true) {
                         cards.push(kana.toHiragana(allKana));
                     }
-                    if (checkBoxKatakana.isChecked === true) {
+                    if (this.checkBoxKatakana.isChecked === true) {
                         cards.push(kana.toKatakana(allKana));
                     }
                     cards = cards.flat();
