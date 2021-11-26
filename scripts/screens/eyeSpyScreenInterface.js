@@ -14,7 +14,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     sortedCardElement = document.querySelector(".eye-spy-screen .sorted-card");
     movesElement = document.querySelector(".eye-spy-screen .moves");
 
-    showStartScreen(gameConfiguration) {
+    showStartScreen() {
         this.setMainColor(EYE_SPY_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
             EyeSpyScreenInterface,
@@ -23,8 +23,8 @@ class EyeSpyScreenInterface extends GameScreenInterface {
             EYE_SPY_MAIN_BACKGROUND_IMAGE,
             EYE_SPY_GAME_TITLE,
             EYE_SPY_GAME_DESCRIPTION,
-            this.gameConfigurationModal,
-            gameConfiguration);
+            EYE_SPY_BUTTON_BOX_SHADOW_COLOR,
+            this.gameConfigurationModal);
     }
 
     show(kanaList, gameConfiguration) {

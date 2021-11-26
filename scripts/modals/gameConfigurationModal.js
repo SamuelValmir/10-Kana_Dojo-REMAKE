@@ -2,7 +2,6 @@
 
 class GameConfigurationModal {
     htmlElement = document.querySelector(".game-configuration-modal");
-    static htmlElement = document.querySelector(".game-configuration-modal");
 
     timeElement = document.querySelector(".game-configuration-modal .time-container .game-time");
     bonusTimeElement = document.querySelector(".game-configuration-modal .time-container .bonus-time");
@@ -16,7 +15,6 @@ class GameConfigurationModal {
 
     resetButton = document.querySelector(".game-configuration-modal .reset-button");
     doneButton = document.querySelector(".game-configuration-modal .done-button");
-    cancelButton = document.querySelector(".game-configuration-modal .cancel-button");
 
     selectedDimensionOption = null;
     reference = null;
@@ -57,10 +55,15 @@ class GameConfigurationModal {
     }
 
     initialize() {
-        if (this.firstShow === true) {
-            this.setDefaultValues();
+        // localStorage.setItem("name", "Samuel");
+        // let isGameConfigurationModalInitialized = localStorage.getItem("isGameConfigurationModalInitialized");
+        // if (isGameConfigurationModalInitialized === null) {
+        //     localStorage.setItem("isGameConfigurationModalInitialized", true);
 
+        if (this.firstShow === true) {
             this.firstShow = false;
+
+            this.setDefaultValues();
             // It adds mask in the inputs
             $(document).ready(function () {
                 $(".game-configuration-modal .time-container .game-time").mask("0:00");
@@ -124,57 +127,94 @@ class GameConfigurationModal {
             // It adds click event listener in the dimensions options
             for (let i = 0; i < this.dimensionElementList.length; i++) {
                 let dimensionElement = this.dimensionElementList[i];
-
-                dimensionElement.addEventListener("click", (event) => {
-                    if (event.target.getAttribute("selected") !== "true") {
-                        this.dimensionElementList.forEach(dimensionElement => {
-                            if (dimensionElement.getAttribute("selected") === "true") {
-                                dimensionElement.setAttribute("selected", false);
-                                this.hideSelectedDimension(dimensionElement);
-                            }
-                        })
-
-                        event.target.setAttribute("selected", true);
-                        this.showSelectedDimensionAnimation(event.target);
-
-                        this.selectedDimensionOption = dimensionElement;
-                    }
-                })
+                dimensionElement.addEventListener("click", this.dimensionClickEventListener);
             }
 
             // It adds click event listener in the switches
             let switchList = this.switchElementList;
             for (let i = 0; i < switchList.length; i++) {
                 let switchElement = switchList[i];
-                switchElement.addEventListener("click", () => {
-                    if (switchElement.getAttribute("activated") === "true") {
-                        switchElement.setAttribute("activated", false);
-                        this.moveSwitchBallAnimation(switchElement, 0);
-                        this.switchOpacityAnimation(switchElement, .6);
-
-                    } else {
-                        switchElement.setAttribute("activated", true);
-                        this.moveSwitchBallAnimation(switchElement, 50);
-                        this.switchOpacityAnimation(switchElement, 1);
-                    }
-                })
+                switchElement.addEventListener("click", this.switchClickEventListener);
             }
 
             // It adds click event listener in the buttons
-            this.resetButton.addEventListener("click", async () => {
-                this.setDefaultValues();
-            })
-
-            this.doneButton.addEventListener("click", async () => {
-                this.setConfiguration();
-
-                setTimeout(() => { // It waits for the button's animation end
-                    this.hide();
-                }, 250);
-            })
-
+            this.resetButton.addEventListener("click", this.resetButtonClickEventListener);
+            this.doneButton.addEventListener("click", this.doneButtonClickEventListener);
         }
     }
+
+    dimensionClickEventListener = (event) => {
+        if (event.target.getAttribute("selected") !== "true") {
+            this.dimensionElementList.forEach(dimensionElement => {
+                if (dimensionElement.getAttribute("selected") === "true") {
+                    dimensionElement.setAttribute("selected", false);
+                    this.hideSelectedDimension(dimensionElement);
+                }
+            })
+
+            event.target.setAttribute("selected", true);
+            this.showSelectedDimensionAnimation(event.target);
+
+            this.selectedDimensionOption = event.target;
+        }
+    }
+
+    switchClickEventListener() {
+        const switchElement = this;
+        if (switchElement.getAttribute("activated") === "true") {
+            switchElement.setAttribute("activated", false);
+            GameConfigurationModal.moveSwitchBallAnimation(switchElement, 0);
+            GameConfigurationModal.switchOpacityAnimation(switchElement, .6);
+
+        } else {
+            switchElement.setAttribute("activated", true);
+            GameConfigurationModal.moveSwitchBallAnimation(switchElement, 50);
+            GameConfigurationModal.switchOpacityAnimation(switchElement, 1);
+        }
+    }
+
+    // SWITCH ANIMATION
+    moveSwitchBallAnimation(switchElement, margin) {
+        const switchBall = switchElement.children[0];
+        const animation = switchBall.animate([
+            { marginLeft: margin + "%" }
+        ], { duration: 500, easing: "ease" })
+
+        animation.addEventListener("finish", () => {
+            switchBall.style.marginLeft = margin + "%";
+        })
+    }
+    static moveSwitchBallAnimation(switchElement, margin) {
+        const switchBall = switchElement.children[0];
+        const animation = switchBall.animate([
+            { marginLeft: margin + "%" }
+        ], { duration: 500, easing: "ease" })
+
+        animation.addEventListener("finish", () => {
+            switchBall.style.marginLeft = margin + "%";
+        })
+    }
+
+    switchOpacityAnimation(switchElement, opacity) {
+        const animation = switchElement.animate([
+            { opacity: opacity }
+        ], { duration: 1000, easing: "ease" })
+
+        animation.addEventListener("finish", () => {
+            switchElement.style.opacity = opacity;
+        })
+    }
+
+    static switchOpacityAnimation(switchElement, opacity) {
+        const animation = switchElement.animate([
+            { opacity: opacity }
+        ], { duration: 1000, easing: "ease" })
+
+        animation.addEventListener("finish", () => {
+            switchElement.style.opacity = opacity;
+        })
+    }
+    // SWITCH ANIMATION
 
     buttonAnimation(button) {
         const promise = new Promise(resolve => {
@@ -188,6 +228,18 @@ class GameConfigurationModal {
         })
 
         return promise;
+    }
+
+    resetButtonClickEventListener = () => {
+        this.setDefaultValues();
+    }
+
+    doneButtonClickEventListener = () => {
+        this.setConfiguration();
+
+        setTimeout(() => { // It waits for the button's animation end
+            this.hide();
+        }, 250);
     }
 
     showSelectedDimensionAnimation(dimensionElement) {
@@ -301,26 +353,5 @@ class GameConfigurationModal {
         this.configuration.boardAnimation = this.boardAnimationSwitchElement.getAttribute("activated");
         this.configuration.cardAnimation = this.cardAnimationSwitchElement.getAttribute("activated");
         this.configuration.cardMatchMarker = this.cardMarkerSwitchElement.getAttribute("activated");
-    }
-
-    moveSwitchBallAnimation(switchElement, margin) {
-        const switchBall = switchElement.children[0];
-        const animation = switchBall.animate([
-            { marginLeft: margin + "%" }
-        ], { duration: 500, easing: "ease" })
-
-        animation.addEventListener("finish", () => {
-            switchBall.style.marginLeft = margin + "%";
-        })
-    }
-
-    switchOpacityAnimation(switchElement, opacity) {
-        const animation = switchElement.animate([
-            { opacity: opacity }
-        ], { duration: 1000, easing: "ease" })
-
-        animation.addEventListener("finish", () => {
-            switchElement.style.opacity = opacity;
-        })
     }
 }

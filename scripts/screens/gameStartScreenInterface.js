@@ -27,7 +27,7 @@ let gameStartScreenInterface = {
     checkBoxHiragana: null,
     checkBoxKatakana: null,
 
-    show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, gameConfigurationModal) {
+    show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, buttonBoxShadowColor, gameConfigurationModal) {
         // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
         this.game = game;
         this.gameReference = gameReference;
@@ -36,6 +36,7 @@ let gameStartScreenInterface = {
         this.backgroundImage = backgroundImage;
         this.title = gameTitle;
         this.gameDescription = gameDescription;
+        this.buttonBoxShadowColor = buttonBoxShadowColor;
         this.gameConfigurationModal = gameConfigurationModal;
 
         this.htmlElement.style.display = "flex";
@@ -46,6 +47,19 @@ let gameStartScreenInterface = {
 
     hide() {
         this.htmlElement.style.display = "none";
+
+        // It removes the event listeners of the game configuration modal
+        this.gameConfigurationModal.dimensionElementList.forEach(dimensionElement => {
+            dimensionElement.removeEventListener("click", this.gameConfigurationModal.dimensionClickEventListener);
+        });
+
+        this.gameConfigurationModal.switchElementList.forEach(switchElement => {
+            switchElement.removeEventListener("click", this.gameConfigurationModal.switchClickEventListener);
+        })
+
+        this.gameConfigurationModal.resetButton.removeEventListener("click", this.gameConfigurationModal.resetButtonClickEventListener);
+        this.gameConfigurationModal.doneButton.removeEventListener("click", this.gameConfigurationModal.doneButtonClickEventListener);
+
     },
 
     hideContent() {
@@ -102,6 +116,17 @@ let gameStartScreenInterface = {
                     this.hideContent();
                     this.game.show(cards, this.gameConfigurationModal.configuration);
                 }
+            })
+
+            this.buttonElement.addEventListener("mouseover", async () => {
+                if (this.buttonElement.disabled === false && this.gameConfigurationModal.isShowing === false) {
+                    this.buttonElement.style.boxShadow = "0px 0px .5rem " + this.buttonBoxShadowColor;
+                }
+            })
+
+            this.buttonElement.addEventListener("mouseout", async () => {
+                this.buttonElement.style.boxShadow = "none";
+
             })
         }
 

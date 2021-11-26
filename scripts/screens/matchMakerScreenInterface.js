@@ -13,7 +13,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
     timeElement = document.querySelector(".match-maker-screen .time");
     movesElement = document.querySelector(".match-maker-screen .moves");
 
-    showStartScreen(gameConfiguration) {
+    showStartScreen() {
         this.setMainColor(MATCH_MAKER_MAIN_COLOR_LIST);
         gameStartScreenInterface.show(this,
             MatchMakerScreenInterface,
@@ -22,8 +22,8 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             MATCH_MAKER_MAIN_BACKGROUND_IMAGE,
             MATCH_MAKER_GAME_TITLE,
             MATCH_MAKER_GAME_DESCRIPTION,
-            this.gameConfigurationModal,
-            gameConfiguration);
+            MATCH_MAKER_BUTTON_BOX_SHADOW_COLOR,
+            this.gameConfigurationModal);
     }
 
     show(kanaList, gameConfiguration) {
@@ -72,7 +72,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                         let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
 
                         if (this.gameModel.checkMatch()) {
-                            if (this.gameConfigurationModal.configuration.cardAnimation === "true") {
+                            if (this.gameConfigurationModal.configuration.cardMatchSign === "true") {
                                 await this.cardMatchAnimation(firstCardElement, secondCardElement);
                                 if (this.lastPromise !== null) {
                                     this.lastPromise.then(() => {
@@ -86,7 +86,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                             } else {
                                 this.gameModel.clearCards();
 
-                                setTimeout(() => { // That's for wait the card animation
+                                setTimeout(() => { // This is to wait for the card animation to end
                                     if (this.gameModel.checkGameWin()) {
                                         this.startGame();
                                     }
@@ -105,7 +105,11 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             });
             this.boardElement.appendChild(cardElement);
         });
-        this.animateBoard();
+
+
+        if (this.gameConfigurationModal.configuration.boardAnimation === "true") {
+            this.animateBoard();
+        }
     }
 
     cardMatchAnimation(firstCardElement, secondCardElement) {
