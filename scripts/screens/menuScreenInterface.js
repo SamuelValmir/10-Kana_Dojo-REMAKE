@@ -140,7 +140,7 @@ let menuScreenInterface = {
 
 
             referenceSection.addEventListener("click", () => {
-                menuScreenInterface.hide();
+                // menuScreenInterface.hide();
                 referenceScreenInterface.show();
             })
 

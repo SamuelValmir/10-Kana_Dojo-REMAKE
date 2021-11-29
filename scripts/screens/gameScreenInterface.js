@@ -12,7 +12,7 @@ class GameScreenInterface {
     gameModel = null;
 
     gameConfigurationModal = null;
-    
+
     kanaList = null;
     timeInterval = null;
 
@@ -25,22 +25,23 @@ class GameScreenInterface {
         this.updateTime();
     }
 
-    initialize(){
+    initialize() {
         this.returnButton.addEventListener("click", this.animateReturnButton);
     }
 
-    updateTime(){
+    updateTime() {
         let minutes = Math.floor(this.gameModel.time / 60);
         let seconds = this.gameModel.time % 60;
-        
-        if(seconds < 10){
+
+        if (seconds < 10) {
             seconds = "0" + seconds;
         }
         this.timeElement.innerHTML = minutes + ":" + seconds;
     }
 
-    setVariables(kanaList, {dimensionX, dimensionY}) {
+    setVariables(kanaList, { dimensionX, dimensionY }) {
         this.htmlElement.style.display = "grid";
+        this.timeInterval = null;
         this.kanaList = kanaList;
         this.dimension = dimensionX * dimensionY;
         this.boardElement.style.gridTemplateColumns = "auto ".repeat(dimensionX);
@@ -78,6 +79,19 @@ class GameScreenInterface {
 
     setScore() {
         document.querySelector(".score").innerHTML = this.gameModel.moves;
+    }
+
+    bonusTimeAnimation(){
+        this.bonusTimeElement.style.display = "block";
+        this.bonusTimeElement.innerHTML = "+" + this.gameConfigurationModal.configuration.bonusTime;
+        this.bonusTimeElement.style.top = "0";
+        
+        const animation = this.bonusTimeElement.animate([
+            {top: "-3rem"}
+        ], {duration: 1000, easing: "ease"})
+        animation.addEventListener("finish", ()=>{
+            this.bonusTimeElement.style.display = "none";
+        })
     }
 
     setMainColor([hue, saturation, lightness]) {

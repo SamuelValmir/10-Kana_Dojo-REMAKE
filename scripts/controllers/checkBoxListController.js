@@ -1,5 +1,5 @@
 class CheckBoxListController {
-    constructor(elementList, hasEditIcon, alphabet, families, confirmButton, mustHasAtLeastOneChecked, color, defaultCheckList = null) {
+    constructor(elementList, hasEditIcon, alphabet, families, confirmButton, mustHasAtLeastOneChecked, color, defaultCheckList = [null]) {
         this.elementList = elementList;
         this.hasEditIcon = hasEditIcon;
         this.alphabet = alphabet;

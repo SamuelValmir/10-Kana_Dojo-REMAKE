@@ -22,14 +22,14 @@ class NavController {
     animateLeftOption() {
         this.leftOptionHighlight.animate([
             { width: "100%", zIndex: 1 }
-        ], { duration: 200, easing: "ease-out" })
+        ], { duration: 300, easing: "ease-out" })
         this.containers.scrollTo(0, 0);
     };
 
     animateRightOption() {
         this.rightOptionHighlight.animate([
             { width: "100%", zIndex: 1 }
-        ], { duration: 200, easing: "ease-out" })
+        ], { duration: 300, easing: "ease-out" })
         this.containers.scrollTo((this.containers.scrollWidth / 2), 0);
     };
 

@@ -57,8 +57,6 @@ let modalMainInterface = {
              this.rightCheckBoxObjectList = new CheckBoxListController(rightCheckBoxElementList, true, undefined, undefined, this.startButton, true, MENU_PRIMARY_COLOR).build();
              
         } else {
-
-            
             checkBoxList.reset(this.leftCheckBoxObjectList);
             checkBoxList.reset(this.rightCheckBoxObjectList);
         }

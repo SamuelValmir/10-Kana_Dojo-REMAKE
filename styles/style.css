@@ -358,6 +358,8 @@ svg circle:last-child {
 /** ----- REFERENCE SCREEN -----  */
 .reference-screen{
     display: none;
+    position: absolute;
+    top: 0;
 }
 
 .reference-screen .header{
@@ -1256,7 +1258,18 @@ label{
 
 /* ----------------------------------------------------------- */
 
-/** ----- MEMORY GAME ----- */
+/** ----- GAME ----- */
+
+.game .top .time-container{
+    position: relative;
+}
+
+.game .top .bonus-time{
+    display: none;
+    position: absolute;
+    right: -3rem;
+}
+
 .match-maker-screen, .eye-spy-screen{
     z-index: 2;
     height: 100vh;
@@ -1342,18 +1355,10 @@ label{
     font-size: 5vw;
 }
 
-.match-maker-screen .card-front, .eye-spy-screen .card-front{
-    /* background-color: ; */
-}
-
 .match-maker-screen .card-back{
   background-color: var(--primaryColor);
   color: var(--secondary);
   transform: rotateY(180deg);
-}
-
-.flip{
-    transform: rotateY(180deg);
 }
 
 /* ------------------------------------------------------------- */

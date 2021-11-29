@@ -11,6 +11,7 @@ class EyeSpyScreenInterface extends GameScreenInterface {
     htmlElement = document.querySelector(".eye-spy-screen");
     boardElement = document.querySelector(".eye-spy-screen .board");
     timeElement = document.querySelector(".eye-spy-screen .time");
+    bonusTimeElement = document.querySelector(".eye-spy-screen .bonus-time");
     sortedCardElement = document.querySelector(".eye-spy-screen .sorted-card");
     movesElement = document.querySelector(".eye-spy-screen .moves");
 
@@ -67,32 +68,42 @@ class EyeSpyScreenInterface extends GameScreenInterface {
                         card.clickable = false;
                         if (this.timeInterval === null) {
                             this.timeInterval = setInterval(() => { // Update the time in the screen
-                                this.timeElement.innerHTML = this.gameModel.time;
-                                if (this.gameModel.time <= 0) {
+                                this.updateTime();
+                                if (this.gameModel.time < 0) {
                                     clearInterval(this.timeInterval);
-                                    this.timeInterval = null;
                                     this.showGameOverScreen();
                                 }
                             }, 1)
                         }
                         this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
 
-                        await this.cardMatchAnimation(cardElement, frontCardElement);
+                        if (this.gameConfigurationModal.configuration.cardAnimation === "true") {
+                            await this.cardMatchAnimation(cardElement, frontCardElement);
+                            if (this.lastPromise !== null) {
+                                this.lastPromise.then(() => {
 
-                        if (this.lastPromise !== null) {
-                            this.lastPromise.then(() => {
+                                    if (this.gameModel.checkGameWin()) {
+                                        this.bonusTimeAnimation();
+                                        this.startGame();
+                                    }
+                                })
+                            }
 
-                                if (this.gameModel.checkGameWin()) {
-                                    this.startGame();
-                                }
-                            })
+                        } else {
+                            this.cardMatchFastAnimation(cardElement);
+                            if (this.gameModel.checkGameWin()) {
+                                this.bonusTimeAnimation();
+                                this.startGame();
+                            }
                         }
                     }
                 }
             });
             this.sortedCardElement.innerHTML = this.gameModel.sortedCard;
         });
-        this.animateBoard();
+        if (this.gameConfigurationModal.configuration.boardAnimation === "true") {
+            this.animateBoard();
+        }
     }
 
     animateBoard() {
@@ -153,7 +164,11 @@ class EyeSpyScreenInterface extends GameScreenInterface {
             this.lastPromise = promise;
         }
         return promise;
+    }
 
+    cardMatchFastAnimation(cardElement) {
+        cardElement.style.transform = "scale(0)";
+        //    cardElement.style.display = "hidden";
     }
 
     setSortedCard() {

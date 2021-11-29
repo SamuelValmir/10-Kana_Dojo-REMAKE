@@ -28,7 +28,6 @@ let gameStartScreenInterface = {
     checkBoxKatakana: null,
 
     show(game, gameReference, mainColor, hslColorList, backgroundImage, gameTitle, gameDescription, buttonBoxShadowColor, gameConfigurationModal) {
-        // ! This "gameConfiguration = null" is to use the same configuration when the game is restarted after the game is over.
         this.game = game;
         this.gameReference = gameReference;
         this.mainColor = mainColor

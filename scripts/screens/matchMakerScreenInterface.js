@@ -11,6 +11,7 @@ class MatchMakerScreenInterface extends GameScreenInterface {
     htmlElement = document.querySelector(".match-maker-screen");
     boardElement = document.querySelector(".match-maker-screen .board");
     timeElement = document.querySelector(".match-maker-screen .time");
+    bonusTimeElement = document.querySelector(".match-maker-screen .bonus-time");
     movesElement = document.querySelector(".match-maker-screen .moves");
 
     showStartScreen() {
@@ -57,13 +58,16 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                             this.updateTime();
                             if (this.gameModel.time < 0) {
                                 clearInterval(this.timeInterval);
-                                this.timeInterval = null;
                                 this.showGameOverScreen();
                             }
-                        }, 1)
+                        }, 1);
                     }
 
-                    cardElement.classList.add("flip");
+                    if (this.gameConfigurationModal.configuration.cardAnimation === "true") {
+                        this.cardFlipAnimation(cardElement, 300);
+                    } else {
+                        this.cardFlipAnimation(cardElement, 0);
+                    }
                     this.gameModel.increaseMove();
                     this.setMoves(this.movesElement);
 
@@ -72,22 +76,24 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                         let secondCardElement = document.getElementById(this.gameModel.secondCard.id);
 
                         if (this.gameModel.checkMatch()) {
-                            if (this.gameConfigurationModal.configuration.cardMatchSign === "true") {
+                            if (this.gameConfigurationModal.configuration.cardMatchMarker === "true") {
                                 await this.cardMatchAnimation(firstCardElement, secondCardElement);
                                 if (this.lastPromise !== null) {
                                     this.lastPromise.then(() => {
 
                                         if (this.gameModel.checkGameWin()) {
+                                            this.bonusTimeAnimation();
                                             this.startGame();
                                         }
                                     })
                                 }
-
+                                
                             } else {
                                 this.gameModel.clearCards();
-
+                                
                                 setTimeout(() => { // This is to wait for the card animation to end
                                     if (this.gameModel.checkGameWin()) {
+                                        this.bonusTimeAnimation();
                                         this.startGame();
                                     }
                                 }, 500)
@@ -96,8 +102,13 @@ class MatchMakerScreenInterface extends GameScreenInterface {
                         } else {
                             setTimeout(() => {
                                 this.gameModel.unFlipCards();
-                                firstCardElement.classList.remove("flip");
-                                secondCardElement.classList.remove("flip");
+                                if (this.gameConfigurationModal.configuration.cardAnimation === "true") {
+                                    this.cardUnFlipAnimation(firstCardElement, 300);
+                                    this.cardUnFlipAnimation(secondCardElement, 300);
+                                } else{
+                                    this.cardUnFlipAnimation(firstCardElement,0);
+                                    this.cardUnFlipAnimation(secondCardElement,0);                                   
+                                }
                             }, 1000);
                         }
                     }
@@ -110,6 +121,26 @@ class MatchMakerScreenInterface extends GameScreenInterface {
         if (this.gameConfigurationModal.configuration.boardAnimation === "true") {
             this.animateBoard();
         }
+    }
+
+    cardFlipAnimation(card, duration) {
+        const animation = card.animate([
+            { transform: "rotateY(180deg)" }
+        ], { duration: duration, fill: "forwards" });
+
+        animation.addEventListener("finish", () => {
+            card.style.transform = "rotateY(180deg)";
+        })
+    }
+
+    cardUnFlipAnimation(card, duration) {
+        const animation = card.animate([
+            { transform: "rotateY(0deg)" }
+        ], { duration: duration, fill: "forwards" });
+
+        animation.addEventListener("finish", () => {
+            card.style.transform = "rotateY(0deg)";
+        })
     }
 
     cardMatchAnimation(firstCardElement, secondCardElement) {
