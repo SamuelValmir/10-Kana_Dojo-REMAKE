@@ -140,8 +140,9 @@ let menuScreenInterface = {
 
 
             referenceSection.addEventListener("click", () => {
-                // menuScreenInterface.hide();
-                referenceScreenInterface.show();
+                let firstScreen = this;
+                let secondScreen = referenceScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
             })
 
             flashCardSection.addEventListener("click", () => {

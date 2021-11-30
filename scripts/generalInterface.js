@@ -38,7 +38,7 @@ window.document.addEventListener("scroll", () => {
         voicedTop = document.querySelector(".stats-screen .voiced").offsetTop;
         comboTop1 = document.querySelector(".stats-screen .combo1").offsetTop;
         comboTop2 = document.querySelector(".stats-screen .combo2").offsetTop;
-;
+        ;
         basicScroll = document.querySelector(".stats-screen .basic-scroll");
         voicedScroll = document.querySelector(".stats-screen .voiced-scroll");
         combo1Scroll = document.querySelector(".stats-screen .combo-scroll1");
@@ -89,6 +89,92 @@ window.document.addEventListener("scroll", () => {
         pinOnTop(screenShowing);
     }
 })
+
+let screensTransitions = {
+    firstScreen: null,
+    secondScreen: null,
+
+    setScreens(firstScreen, secondScreen) {
+        this.firstScreen = firstScreen.htmlElement;
+        this.secondScreen = secondScreen.htmlElement;
+    },
+
+    transition_1(firstScreen, secondScreen) {
+        this.setScreens(firstScreen, secondScreen);
+
+        this.firstScreen.style.left = 0;
+        this.firstScreen.style.zIndex = "0";
+        const firstScreenAnimation = this.firstScreen.animate([
+            { left: "-6rem" }
+        ], { duration: 200 })
+
+        firstScreenAnimation.addEventListener("finish", () => {
+            firstScreen.hide()
+        })
+
+        secondScreen.show();
+        this.secondScreen.style.left = document.documentElement.clientWidth + "px";
+        this.secondScreen.style.zIndex = "2";
+
+        const secondScreenAnimation = this.secondScreen.animate([
+            { left: "0px" }
+        ], { duration: 200 })
+
+        secondScreenAnimation.addEventListener("finish", () => {
+            this.secondScreen.style.left = "0";
+        })
+    },
+
+    transition_2(firstScreen, secondScreen) {
+        this.setScreens(firstScreen, secondScreen);
+
+        secondScreen.show();
+        this.firstScreen.style.left = 0;
+        this.firstScreen.style.zIndex = "1";
+
+        const firstScreenAnimation = this.secondScreen.animate([
+            { left: document.documentElement.clientWidth + "px" }
+        ], { duration: 200 })
+
+        firstScreenAnimation.addEventListener("finish", () => {
+            this.secondScreen.style.left = document.documentElement.clientWidth + "px";
+            firstScreen.hide();
+        })
+
+        this.secondScreen.style.left = "-6rem";
+        this.secondScreen.style.zIndex = "0";
+
+        const secondScreenAnimation = this.firstScreen.animate([
+            { left: "0" }
+        ], { duration: 200 })
+
+        secondScreenAnimation.addEventListener("finish", () => {
+            this.secondScreen.style.left = "0";
+        })
+    },
+
+}
+
+function returnButtonAnimation(returnButtonHighlight) {
+    const promise = new Promise(resolve => {
+
+        returnButtonHighlight.style.display = "block";
+
+        let animation = returnButtonHighlight.animate([
+            {
+                display: "block",
+                transform: "scale(2)"
+            }
+        ], { duration: 150, easing: "ease" })
+
+        animation.addEventListener("finish", () => {
+            returnButtonHighlight.style.display = "none";
+            resolve();
+        })
+    })
+
+    return promise;
+}
 
 function pinOnTop(screenShowing) {
     let screen;

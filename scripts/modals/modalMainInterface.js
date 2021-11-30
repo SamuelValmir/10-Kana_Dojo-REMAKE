@@ -7,6 +7,9 @@ let modalMainInterface = {
     firstShow: true,
     leadsTo: undefined,
 
+    leftCheckBoxListController: null,
+    rightCheckBoxListController: null,
+
     leftCheckBoxObjectList: [],
     rightCheckBoxObjectList: [],
 
@@ -53,12 +56,15 @@ let modalMainInterface = {
             let leftCheckBoxElementList = this.leftCheckBoxElementList;
             let rightCheckBoxElementList = this.rightCheckBoxElementList;
 
-             this.leftCheckBoxObjectList = new CheckBoxListController(leftCheckBoxElementList, false, undefined, undefined, this.startButton, true, MENU_PRIMARY_COLOR).build();
-             this.rightCheckBoxObjectList = new CheckBoxListController(rightCheckBoxElementList, true, undefined, undefined, this.startButton, true, MENU_PRIMARY_COLOR).build();
-             
+            this.leftCheckBoxListController = new CheckBoxListController(leftCheckBoxElementList, false, undefined, undefined, this.startButton, true, MENU_PRIMARY_COLOR);
+            this.rightCheckBoxListController = new CheckBoxListController(rightCheckBoxElementList, true, undefined, undefined, this.startButton, true, MENU_PRIMARY_COLOR);
+
+            this.leftCheckBoxObjectList = this.leftCheckBoxListController.build();
+            this.rightCheckBoxObjectList = this.rightCheckBoxListController.build();
+
         } else {
-            checkBoxList.reset(this.leftCheckBoxObjectList);
-            checkBoxList.reset(this.rightCheckBoxObjectList);
+            this.leftCheckBoxListController.reset(this.leftCheckBoxObjectList);
+            this.rightCheckBoxListController.reset(this.rightCheckBoxObjectList);
         }
     },
 

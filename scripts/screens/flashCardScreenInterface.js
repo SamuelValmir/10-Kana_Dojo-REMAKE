@@ -6,10 +6,13 @@ let flashCardScreenInterface = {
         htmlElement: document.querySelector(".flashCard-screen .top"),
         returnButton: {
             htmlElement: document.querySelector(".flashCard-screen .top .return-button"),
+            highlight: document.querySelector(".flashCard-screen .top .return-button .return-button-highlight"),
             addEventListener() {
-                this.htmlElement.addEventListener("click", () => {
-                    flashCardScreenInterface.hide();
-                    menuScreenInterface.show();
+                this.htmlElement.addEventListener("click", async () => {
+                    await returnButtonAnimation(this.highlight);
+                    let firstScreen = flashCardScreenInterface;
+                    let secondScreen = menuScreenInterface;
+                    screensTransitions.transition_1(firstScreen, secondScreen);
                 })
             }
         },

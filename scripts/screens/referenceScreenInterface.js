@@ -116,8 +116,10 @@ let referenceScreenInterface = {
 
             referenceScreenInterface.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
-                referenceScreenInterface.hide();
-                menuScreenInterface.show();
+
+                let firstScreen = this;
+                let secondScreen = menuScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
             })
 
             this.containers.addEventListener("scroll", () => { HeaderControllerObject.nav.scrollListener(NavModelObject) })

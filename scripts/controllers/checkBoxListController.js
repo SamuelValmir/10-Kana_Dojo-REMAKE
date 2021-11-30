@@ -10,9 +10,10 @@ class CheckBoxListController {
         this.defaultCheckList = defaultCheckList;
     }
 
-    checkedAmount = undefined;
-    confirmButton = undefined;
-    mustHasAtLeastOneChecked = undefined;
+    checkBoxObjectList = [];
+    checkedAmount;
+    confirmButton;
+    mustHasAtLeastOneChecked;
 
     isLastChecked(list, selectedIndex) {
         this.setCheckedAmount(list);
@@ -30,7 +31,7 @@ class CheckBoxListController {
         this.checkedAmount = checkBoxCheckedList.length;
     }
 
-    parseFamilyOfCheckedToHiragana(checkBoxObjectList) {
+    static parseFamilyOfCheckedToHiragana(checkBoxObjectList) {
         let result = [];
         let checkBoxCheckedList = this.getAllChecked(checkBoxObjectList);
         checkBoxCheckedList.forEach((checkBoxObject) => {
@@ -43,7 +44,7 @@ class CheckBoxListController {
         return result;
     }
 
-    parseFamilyOfCheckedToKatakana(checkBoxObjectList) {
+    static parseFamilyOfCheckedToKatakana(checkBoxObjectList) {
         let result = [];
         let checkBoxCheckedList = this.getAllChecked(checkBoxObjectList);
         checkBoxCheckedList.forEach((checkBoxObject) => {
@@ -56,9 +57,9 @@ class CheckBoxListController {
         return result;
     }
 
-    getAllChecked(list) {
+    static getAllChecked(checkBoxObjectList) {
         let checkBoxCheckedList = [];
-        checkBoxCheckedList = list.filter((checkBox) => checkBox.isChecked === true);
+        checkBoxCheckedList = checkBoxObjectList.filter((checkBox) => checkBox.isChecked === true);
         return checkBoxCheckedList;
     }
 
@@ -82,7 +83,6 @@ class CheckBoxListController {
 
     build() {
         // Return an object list of check box that its first element is checked by default
-        const checkBoxObjectList = [];
 
         for (let index = 0; index < this.elementList.length; index++) {
             const checkBoxElement = this.elementList[index];
@@ -120,18 +120,17 @@ class CheckBoxListController {
                 checkBoxObject.alphabet = checkBoxElement.getAttribute("alphabet")
             }
 
-            checkBoxObjectList.push(checkBoxObject);
+            this.checkBoxObjectList.push(checkBoxObject);
         }
 
-        this.initializeCheckboxList(checkBoxObjectList);
-
-        return checkBoxObjectList;
+        this.initializeCheckboxList();
+        return this.checkBoxObjectList;
     }
 
     // It checks the first checkbox and inserts the click event in everyone 
-    initializeCheckboxList(checkBoxObjectList) {
-        for (let index = 0; index < checkBoxObjectList.length; index++) {
-            const checkBoxObject = checkBoxObjectList[index];
+    initializeCheckboxList() {
+        for (let index = 0; index < this.checkBoxObjectList.length; index++) {
+            const checkBoxObject = this.checkBoxObjectList[index];
             const checkBoxElement = checkBoxObject.htmlElement;
 
             if (checkBoxObject.isChecked === true) {
@@ -143,7 +142,7 @@ class CheckBoxListController {
 
             // It adds click event in checkbox
             checkBoxElement.addEventListener(("click"), () => {
-                this.checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index);
+                this.checkBoxClickEventListener(checkBoxObject, index);
             })
 
             // It adds click event in checkbox's edit icon
@@ -155,10 +154,10 @@ class CheckBoxListController {
         }
     }
 
-    checkBoxClickEventListener(checkBoxObject, checkBoxObjectList, index) {
+    checkBoxClickEventListener(checkBoxObject, index) {
         checkBoxObject.animateCheckBoxAndCheckMarkCircle();
 
-        if (this.isLastChecked(checkBoxObjectList, index) === true) {
+        if (this.isLastChecked(this.checkBoxObjectList, index) === true) {
 
             if (checkBoxObject.isChecked === true) {
                 this.disableCheckBox(checkBoxObject);

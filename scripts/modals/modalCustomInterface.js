@@ -99,21 +99,21 @@ let modalCustomInterface = {
 
                 switch (this.currentCheckBox.name) {
                     case "Basic":
-                        modalMainInterface.hiraganaBasicList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                        modalMainInterface.katakanaBasicList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        modalMainInterface.hiraganaBasicList = CheckBoxListController.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaBasicList = CheckBoxListController.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
                         break;
                     case "Voiced":
-                        modalMainInterface.hiraganaVoicedList = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                        modalMainInterface.katakanaVoicedList = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        modalMainInterface.hiraganaVoicedList = CheckBoxListController.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaVoicedList = CheckBoxListController.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
 
                         break;
                     case "Combo 1":
-                        modalMainInterface.hiraganaCombo1List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                        modalMainInterface.katakanaCombo1List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        modalMainInterface.hiraganaCombo1List = CheckBoxListController.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaCombo1List = CheckBoxListController.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
                         break;
                     case "Combo 2":
-                        modalMainInterface.hiraganaCombo2List = checkBoxList.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
-                        modalMainInterface.katakanaCombo2List = checkBoxList.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
+                        modalMainInterface.hiraganaCombo2List = CheckBoxListController.parseFamilyOfCheckedToHiragana(this.checkBoxObjectList);
+                        modalMainInterface.katakanaCombo2List = CheckBoxListController.parseFamilyOfCheckedToKatakana(this.checkBoxObjectList);
                         break;
 
                     default:
