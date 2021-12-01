@@ -2,7 +2,7 @@
 let quizScreenInterface = {
     htmlElement: document.querySelector(".quiz-screen"),
     firstShow: true,
-    cards: undefined,
+    cards: null,
     inputText: document.querySelector(".quiz-screen .footer input"),
     text: document.querySelector('.quiz-screen .footer .text'),
     verticalLine: document.querySelector(".quiz-screen .vertical-line"),
@@ -15,19 +15,15 @@ let quizScreenInterface = {
 
     card: document.querySelector(".quiz-screen .card"),
 
-    quizScreenModelObject: undefined,
+    quizScreenModelObject: null,
 
-    show(cards) {
+    async showTransition(backScreen){
         this.htmlElement.style.display = "flex";
-        this.cards = cards;
-        this.initialize();
+        await screensTransitions.transition_1(backScreen, this);
+        this.show();
     },
 
-    hide() {
-        this.htmlElement.style.display = "none";
-    },
-
-    initialize() {
+    show() {
         this.card.style.display = "block";
         this.wrongCounter.style.display = "block";
         this.cardsCounter.style.display = "block";
@@ -35,15 +31,30 @@ let quizScreenInterface = {
         this.text.style.display = "block";
         this.verticalLine.style.display = "block";
 
+        this.initialize();
+    },
+
+    hide() {
+        this.htmlElement.style.display = "none";
+        this.card.style.display = "none";
+        this.wrongCounter.style.display = "none";
+        this.cardsCounter.style.display = "none";
+        this.rightCounter.style.display = "none";
+        this.text.style.display = "none";
+        this.verticalLine.style.display = "none";
+    },
+
+    initialize() {
         if (this.firstShow === true) {
             this.firstShow = false;
 
-            const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, undefined);
+            const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, null);
 
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
-                this.hide();
-                menuScreenInterface.show();
+                let firstScreen = this;
+                let secondScreen = menuScreenInterface;
+                screensTransitions.transition_2(firstScreen, secondScreen);
             })
 
             this.inputText.addEventListener("input", () => {
@@ -66,7 +77,7 @@ let quizScreenInterface = {
         }
 
         this.quizScreenModelObject = new QuizScreenModel(this.cards)
-        
+
         this.inputText.focus();
         this.updateWrongCounter();
         this.updateRightCounter();
@@ -202,9 +213,9 @@ let quizScreenInterface = {
             await this.wrongAnimation();
             await this.showRightAnswer();
         }
-        
+
         await this.hideCardAnimation();
-        
+
         if (this.quizScreenModelObject.isOnLastCard === true) {
             this.card.style.display = "none";
             this.wrongCounter.style.display = "none";
@@ -214,7 +225,7 @@ let quizScreenInterface = {
             this.inputText.value = "";
             this.text.innerHTML = "";
             modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
-            
+
         } else {
             await this.showCardAnimation();
             this.setCurrentCard();

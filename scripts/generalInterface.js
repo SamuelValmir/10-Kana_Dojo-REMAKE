@@ -100,29 +100,35 @@ let screensTransitions = {
     },
 
     transition_1(firstScreen, secondScreen) {
-        this.setScreens(firstScreen, secondScreen);
+        const promise = new Promise(resolve => {
 
-        this.firstScreen.style.left = 0;
-        this.firstScreen.style.zIndex = "0";
-        const firstScreenAnimation = this.firstScreen.animate([
-            { left: "-6rem" }
-        ], { duration: 200 })
+            this.setScreens(firstScreen, secondScreen);
 
-        firstScreenAnimation.addEventListener("finish", () => {
-            firstScreen.hide()
+            this.firstScreen.style.left = 0;
+            this.firstScreen.style.zIndex = "0";
+            const firstScreenAnimation = this.firstScreen.animate([
+                { left: "-6rem" }
+            ], { duration: 1000 })
+
+            firstScreenAnimation.addEventListener("finish", () => {
+                firstScreen.hide()
+            })
+
+            this.secondScreen.style.left = document.documentElement.clientWidth + "px";
+            this.secondScreen.style.zIndex = "2";
+
+            const secondScreenAnimation = this.secondScreen.animate([
+                { left: "0px" }
+            ], { duration: 1000 })
+
+            secondScreenAnimation.addEventListener("finish", () => {
+                this.secondScreen.style.left = "0";
+                resolve();
+            })
         })
 
-        secondScreen.show();
-        this.secondScreen.style.left = document.documentElement.clientWidth + "px";
-        this.secondScreen.style.zIndex = "2";
+        return promise;
 
-        const secondScreenAnimation = this.secondScreen.animate([
-            { left: "0px" }
-        ], { duration: 200 })
-
-        secondScreenAnimation.addEventListener("finish", () => {
-            this.secondScreen.style.left = "0";
-        })
     },
 
     transition_2(firstScreen, secondScreen) {
@@ -130,27 +136,27 @@ let screensTransitions = {
 
         secondScreen.show();
         this.firstScreen.style.left = 0;
-        this.firstScreen.style.zIndex = "1";
+        this.firstScreen.style.zIndex = 1;
 
-        const firstScreenAnimation = this.secondScreen.animate([
+        const firstScreenAnimation = this.firstScreen.animate([
             { left: document.documentElement.clientWidth + "px" }
-        ], { duration: 200 })
+        ], { duration: 1000 })
 
         firstScreenAnimation.addEventListener("finish", () => {
-            this.secondScreen.style.left = document.documentElement.clientWidth + "px";
+            this.firstScreen.style.left = document.documentElement.clientWidth + "px";
             firstScreen.hide();
         })
 
-        this.secondScreen.style.left = "-6rem";
-        this.secondScreen.style.zIndex = "0";
+        // this.secondScreen.style.left = "-6rem";
+        // this.secondScreen.style.zIndex = 0;
 
-        const secondScreenAnimation = this.firstScreen.animate([
-            { left: "0" }
-        ], { duration: 200 })
+        // const secondScreenAnimation = this.secondScreen.animate([
+        //     { left: "0" }
+        // ], { duration: 1000 })
 
-        secondScreenAnimation.addEventListener("finish", () => {
-            this.secondScreen.style.left = "0";
-        })
+        // secondScreenAnimation.addEventListener("finish", () => {
+        //     this.secondScreen.style.left = "0";
+        // })
     },
 
 }

@@ -157,15 +157,19 @@ let modalMainInterface = {
             cards = Cards.shuffle(cards);
 
             this.hide();
-            menuScreenInterface.hide();
 
+            let backScreen = menuScreenInterface;
             switch (this.leadsTo) {
                 case FLASH_CARD_SCREEN: {
-                    flashCardScreenInterface.show(cards);
+                    let secondScreen = flashCardScreenInterface;
+                    flashCardScreenInterface.cards = cards;
+                    screensTransitions.transition_1(backScreen, secondScreen);
+
                 } break;
 
                 case QUIZ_SCREEN: {
-                    quizScreenInterface.show(cards);
+                    quizScreenInterface.cards = cards;
+                    quizScreenInterface.showTransition(backScreen);
                 } break;
 
             }

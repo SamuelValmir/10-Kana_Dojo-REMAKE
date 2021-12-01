@@ -2,6 +2,7 @@
 let flashCardScreenInterface = {
     htmlElement: document.querySelector(".flashCard-screen"),
     firstShow: true,
+    cards: null,
     top: {
         htmlElement: document.querySelector(".flashCard-screen .top"),
         returnButton: {
@@ -12,7 +13,7 @@ let flashCardScreenInterface = {
                     await returnButtonAnimation(this.highlight);
                     let firstScreen = flashCardScreenInterface;
                     let secondScreen = menuScreenInterface;
-                    screensTransitions.transition_1(firstScreen, secondScreen);
+                    screensTransitions.transition_2(firstScreen, secondScreen);
                 })
             }
         },
@@ -142,9 +143,9 @@ let flashCardScreenInterface = {
         })
     },
 
-    show(flashCards) {
+    show() {
         this.htmlElement.style.display = "grid";
-        this.initialize(flashCards);
+        this.initialize();
     },
 
     hide() {
@@ -154,7 +155,8 @@ let flashCardScreenInterface = {
         this.items.flashCardList = [];
     },
 
-    initialize(flashCards) {
+    initialize() {
+        const flashCards = this.cards;
         flashCardScreenInterface.items.cards = flashCards;
         flashCardScreenInterface.items.buildCards();
         if (this.firstShow === true) {
