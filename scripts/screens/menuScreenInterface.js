@@ -38,10 +38,10 @@ let menuScreenInterface = {
         katakanaProgress: document.querySelector(".menu-screen .progress-container-katakana"),
     },
 
-    show() {
+    show(optionSelected = "left") {
         this.htmlElement.style.display = "block";
         this.isShowing = true;
-        this.initialize();
+        this.initialize(optionSelected);
     },
 
     hide() {
@@ -52,7 +52,7 @@ let menuScreenInterface = {
         this.navModel.menuContentIsShowing = false;
     },
 
-    initialize() {
+    initialize(optionSelected) {
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;
@@ -63,7 +63,7 @@ let menuScreenInterface = {
         let playScreen = this.screens.playScreen;
 
         const NavModelObject = new NavModel("left");
-        const NavControllerObject = new NavController(learnOption, learnOptionHighlight, playOption, playOptionHighlight, "left", learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
+        const NavControllerObject = new NavController(learnOption, learnOptionHighlight, playOption, playOptionHighlight, optionSelected, learnScreen, playScreen, this.containersElement, this.scrollBar, this.menuButton);
         const HeaderControllerObject = new HeaderController(undefined, NavControllerObject);
 
         this.headerController = HeaderControllerObject;
@@ -100,15 +100,25 @@ let menuScreenInterface = {
                 }
             })
 
-            this.games.eyeSpyElement.addEventListener("click", () => {
-                this.hide();
+            this.games.eyeSpyElement.addEventListener("click", async () => {
+                await this.animateSection(this.games.eyeSpyElement);
+
+                const firstScreen = this;
+                const secondScreen = gameStartScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+
                 new EyeSpyScreenInterface().showStartScreen();
             })
             
-            this.games.matchMakerElement.addEventListener("click", () => {
-                this.hide();
+            this.games.matchMakerElement.addEventListener("click", async () => {
+                await this.animateSection(this.games.matchMakerElement);
+
+                const firstScreen = this;
+                const secondScreen = gameStartScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+                
                 new MatchMakerScreenInterface().showStartScreen();
-        })
+            })
 
             window.addEventListener("click", async (event) => {
                 let elementClicked = event.target;
@@ -139,31 +149,61 @@ let menuScreenInterface = {
             let quizSection = this.studySections.quizSection;
 
 
-            referenceSection.addEventListener("click", () => {
-                let firstScreen = this;
-                let secondScreen = referenceScreenInterface;
+            referenceSection.addEventListener("click", async () => {
+                await this.animateSection(referenceSection);
+
+                const firstScreen = this;
+                const secondScreen = referenceScreenInterface;
                 screensTransitions.transition_1(firstScreen, secondScreen);
+
+                referenceScreenInterface.show();
             })
 
-            flashCardSection.addEventListener("click", () => {
+            flashCardSection.addEventListener("click", async () => {
+                await this.animateSection(flashCardSection);
                 modalMainInterface.show();
                 modalMainInterface.leadsTo = FLASH_CARD_SCREEN;
             })
 
-            quizSection.addEventListener("click", () => {
+            quizSection.addEventListener("click", async () => {
+                await this.animateSection(quizSection);
                 modalMainInterface.show();
                 modalMainInterface.leadsTo = QUIZ_SCREEN;
             })
 
-            this.progress.hiraganaProgress.addEventListener("click", () => {
-                this.hide();
+            this.progress.hiraganaProgress.addEventListener("click", async () => {
+                await this.animateSection(this.progress.hiraganaProgress);
+
+                const firstScreen = this;
+                const secondScreen = statsScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+
                 statsScreenInterface.show("left");
             })
 
-            this.progress.katakanaProgress.addEventListener("click", () => {
-                this.hide();
+            this.progress.katakanaProgress.addEventListener("click", async () => {
+                await this.animateSection(this.progress.katakanaProgress);
+               
+                const firstScreen = this;
+                const secondScreen = statsScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+                
                 statsScreenInterface.show("right");
             })
         }
+    },
+
+    animateSection(section) {
+        const promise = new Promise(resolve => {
+
+            const animation = section.animate([
+                { backgroundColor: "#ccc" }
+            ], { duration: 200, easing: "ease-out" })
+
+            animation.addEventListener("finish", () =>
+                resolve());
+        })
+
+        return promise;
     }
 }

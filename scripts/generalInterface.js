@@ -108,10 +108,10 @@ let screensTransitions = {
             this.firstScreen.style.zIndex = "0";
             const firstScreenAnimation = this.firstScreen.animate([
                 { left: "-6rem" }
-            ], { duration: 1000 })
+            ], { duration: 200 })
 
             firstScreenAnimation.addEventListener("finish", () => {
-                firstScreen.hide()
+                firstScreen.hide();
             })
 
             this.secondScreen.style.left = document.documentElement.clientWidth + "px";
@@ -119,7 +119,7 @@ let screensTransitions = {
 
             const secondScreenAnimation = this.secondScreen.animate([
                 { left: "0px" }
-            ], { duration: 1000 })
+            ], { duration: 200 })
 
             secondScreenAnimation.addEventListener("finish", () => {
                 this.secondScreen.style.left = "0";
@@ -140,23 +140,23 @@ let screensTransitions = {
 
         const firstScreenAnimation = this.firstScreen.animate([
             { left: document.documentElement.clientWidth + "px" }
-        ], { duration: 1000 })
+        ], { duration: 200 })
 
         firstScreenAnimation.addEventListener("finish", () => {
             this.firstScreen.style.left = document.documentElement.clientWidth + "px";
             firstScreen.hide();
         })
 
-        // this.secondScreen.style.left = "-6rem";
-        // this.secondScreen.style.zIndex = 0;
+        this.secondScreen.style.left = "-6rem";
+        this.secondScreen.style.zIndex = 0;
 
-        // const secondScreenAnimation = this.secondScreen.animate([
-        //     { left: "0" }
-        // ], { duration: 1000 })
+        const secondScreenAnimation = this.secondScreen.animate([
+            { left: "0" }
+        ], { duration: 200 })
 
-        // secondScreenAnimation.addEventListener("finish", () => {
-        //     this.secondScreen.style.left = "0";
-        // })
+        secondScreenAnimation.addEventListener("finish", () => {
+            this.secondScreen.style.left = "0";
+        })
     },
 
 }

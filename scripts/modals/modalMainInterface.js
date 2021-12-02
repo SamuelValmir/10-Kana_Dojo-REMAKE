@@ -164,6 +164,7 @@ let modalMainInterface = {
                     let secondScreen = flashCardScreenInterface;
                     flashCardScreenInterface.cards = cards;
                     screensTransitions.transition_1(backScreen, secondScreen);
+                    flashCardScreenInterface.show();
 
                 } break;
 

@@ -1,5 +1,6 @@
 let referenceScreenInterface = {
     htmlElement: document.querySelector(".reference-screen"),
+    display: "block",
     isShowing: false,
     firstShow: true,
     returnButton: document.querySelector(".reference-screen .return-button"),
@@ -120,6 +121,7 @@ let referenceScreenInterface = {
                 let firstScreen = this;
                 let secondScreen = menuScreenInterface;
                 screensTransitions.transition_1(firstScreen, secondScreen);
+                menuScreenInterface.show();
             })
 
             this.containers.addEventListener("scroll", () => { HeaderControllerObject.nav.scrollListener(NavModelObject) })

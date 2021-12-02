@@ -151,7 +151,11 @@ let statsScreenInterface = {
 
             statsScreenInterface.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
-                statsScreenInterface.hide();
+
+                const firstScreen = this;
+                const secondScreen = menuScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+
                 menuScreenInterface.show();
             })
 

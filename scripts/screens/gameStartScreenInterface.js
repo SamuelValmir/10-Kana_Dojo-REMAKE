@@ -93,8 +93,11 @@ let gameStartScreenInterface = {
 
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
-                this.hide();
-                menuScreenInterface.show();
+
+                const firstScreen = this;
+                const secondScreen = menuScreenInterface;
+                screensTransitions.transition_1(firstScreen, secondScreen);
+                menuScreenInterface.show("right");
             })
 
             this.buttonElement.addEventListener("click", async () => {
