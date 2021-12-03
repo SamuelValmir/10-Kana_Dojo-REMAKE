@@ -8,7 +8,7 @@
 -->
 
 ## See the project here:
-<a href="https://samuelvalmir.github.io/10-Memory_game/">Go to git hub pages.</a>
+<a href="https://samuelvalmir.github.io/10-Kana_Dojo-REMAKE/">Go to git hub pages.</a>
 
 ## Description:
 <p> A projects to put in practice my knowledges about javascript and improve my skills with JSON. This exercise was passed as a challenge in my course Programador BR. The proposal is to make a game to learn Japanese hiragana and katakana. These are two of the three Japanese alphabets. The user will have some options to carry out his study and also some game variations.</p>
