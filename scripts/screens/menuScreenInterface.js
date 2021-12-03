@@ -109,14 +109,14 @@ let menuScreenInterface = {
 
                 new EyeSpyScreenInterface().showStartScreen();
             })
-            
+
             this.games.matchMakerElement.addEventListener("click", async () => {
                 await this.animateSection(this.games.matchMakerElement);
 
                 const firstScreen = this;
                 const secondScreen = gameStartScreenInterface;
                 screensTransitions.transition_1(firstScreen, secondScreen);
-                
+
                 new MatchMakerScreenInterface().showStartScreen();
             })
 
@@ -183,11 +183,11 @@ let menuScreenInterface = {
 
             this.progress.katakanaProgress.addEventListener("click", async () => {
                 await this.animateSection(this.progress.katakanaProgress);
-               
+
                 const firstScreen = this;
                 const secondScreen = statsScreenInterface;
                 screensTransitions.transition_1(firstScreen, secondScreen);
-                
+
                 statsScreenInterface.show("right");
             })
         }

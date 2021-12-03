@@ -323,8 +323,7 @@ svg circle:last-child {
     font-size: 5vw;
 }
 
-
-.about-screen .footer{
+.about-screen .red-white{
     background-color: rgb(245, 73, 73);
     text-align: center;
     display: block;
@@ -336,7 +335,6 @@ svg circle:last-child {
     border-radius: .2rem;
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 
 /** ----- PROGRESS CONTAINER ----- */
 
@@ -463,6 +461,7 @@ svg circle:last-child {
 .quiz-screen{
     flex-direction: column;
     background-color: #f1f1f1;
+    height: 100vw;
 }
 
 .quiz-screen .header{
@@ -825,6 +824,7 @@ label{
     display: none;
     position: absolute;
     top: 0;
+    z-index: 2;
 }
 
 .game-configuration-modal .container{
