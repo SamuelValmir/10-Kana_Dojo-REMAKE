@@ -84,11 +84,15 @@ svg circle:last-child {
 .menu-screen{
     background-color: #f1f1f1;
 
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 
 .title{
     font-size: 6vw;
+}
+
+.header{
+    align-items: center;
 }
 
 .menu-screen .header, .about-screen .header{
@@ -306,7 +310,7 @@ svg circle:last-child {
     align-items: center;
 
     border-radius: .2rem;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .about-screen img{
@@ -333,7 +337,20 @@ svg circle:last-child {
     margin: .5rem;
 
     border-radius: .2rem;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.about-screen .contacts{
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.about-screen .contacts a{
+    text-decoration: none;
+}
+
+.about-screen .contacts a img{
+    height: 3rem;
 }
 
 /** ----- PROGRESS CONTAINER ----- */
@@ -1265,6 +1282,10 @@ label{
 
 /** ----- GAME ----- */
 
+.game {
+    z-index: 2;
+}
+
 .game .top .time-container{
     position: relative;
 }
@@ -1436,3 +1457,137 @@ label{
     -webkit-user-select: none;
     user-select: none;
 }
+
+/** --------------- MEDIA QUERIES ---------------  */
+
+@media screen and (min-width: 420px){
+    body{
+        font-size: 3.5vw;
+    }
+
+    .header .return-button{
+        width: 4vw;
+        height: 4vw;
+    }
+    .header .top{
+        padding: 5%;
+    }
+    
+    .header .menu-screen-nav > div{
+        padding: 5px;
+    }
+
+    .header .scroll-bar{
+        height: 1vw;
+    }
+
+    .menu-screen .study-section img{
+        --imgSize: 12vw;
+    }
+    
+    .menu-screen .study-section{
+        padding: 3%;
+    }
+
+    .menu-screen .progress-container{
+        padding: 3%;
+    }
+
+}
+
+@media screen and (max-width: 7673px){
+
+}
+
+@media screen and (min-width: 768px){
+    body{
+        font-size: 1.5vw;
+    }
+
+    .header .top{
+        padding: .5vw;
+    }
+    
+    .header .return-button{
+        width: 2.5vw;
+        height: 2.5vw;
+    }
+    
+    .header .title{
+        font-size: 2vw;
+    }
+
+    .header .scroll-bar{
+        height: .5vw;
+    }
+    
+    .menu-screen .menu-button{
+        width: 3vw;
+    }
+
+    .menu-screen .study-section{
+        gap: 4vw;
+        padding: 1vw;
+    }
+
+    .menu-screen .study-section img{
+        --imgSize: 5vw;
+    }
+  
+    .menu-screen .progress-container{
+        padding: 1vw;
+        padding-right: 8vw;
+    }
+
+    .menu-screen .progress-container h3{
+        font-size: 2.5vw;
+    }
+
+    /** ----- ----- ----- ----- */
+    
+    .reference-screen .family{
+        margin: auto;
+        width: 80vw;
+        justify-content: space-between;
+    }
+    
+    .reference-screen .family .card{
+        width: 6vw;
+        height: 8vw;
+        font-size: 1.5vw;
+    }
+
+    .reference-screen .card .top{
+        font-size: 2.5vw;
+        
+    }
+    
+    /** ----- ----- ----- ----- */
+
+    .modal{
+        font-size: 2.5vw;
+    }
+
+    .modal .content label{
+        font-size: 3vw;
+    }
+
+    .modal .content .checkbox-container .checkbox{
+        min-width: 4vw;
+        height: 4vw;
+    }
+
+    .modal .content .checkbox-container .checkmark{
+        width: 40%;
+        height: 70%;
+    }
+    
+    .modal .content img{
+        font-size: 4vw;
+    }
+}
+
+@media screen and (min-width: 1024px){
+
+}
+        
