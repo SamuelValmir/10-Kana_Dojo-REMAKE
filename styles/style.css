@@ -672,6 +672,7 @@ svg circle:last-child {
     display: flex;
     flex-direction: row;
     gap: 5px;
+    align-items: center;
 }
 
 .modal .content-right img{
@@ -685,8 +686,8 @@ label{
 
 
 .checkbox{
-    min-width: 5vw;
-    height: 5vw;
+    min-width: 2vw;
+    height: 2vw;
     border: solid 2px rgba(0, 0, 0, 0.6);
     border-radius: 3px;
     display: flex;
@@ -696,8 +697,8 @@ label{
 }
 
 .checkmark{
-    width: 2vw;
-    height: 3vw;
+    width: 40%;
+    height: 70%;
 
     position: absolute;
     left: 50%;
@@ -714,8 +715,8 @@ label{
 }
 
 .checkmark-circle{
-    width: 5vw;
-    height: 5vw;
+    width: 2vw;
+    height: 2vw;
     position: absolute;
     border-radius: 50%;
     opacity: 0;
@@ -1032,6 +1033,7 @@ label{
 .modal-custom .family{
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 
 .modal ::-webkit-scrollbar{
@@ -1073,7 +1075,7 @@ label{
 
     .modal .content{
         display: flex;
-        gap: 20px;
+        gap: 1vw;
     }
 
     .checkbox-container{
@@ -1114,14 +1116,15 @@ label{
     display: flex;
     width: 100%;
     justify-content: space-between;
-    font-size: 6vw;
+    align-items: center;
+    font-size: 4vw;
     position: absolute;
     top: 10px;
     z-index: 1;
 }
 
-.flashCard-screen .top .return-icon img{
-    width: 7vw;
+.flashCard-screen .top .return-button img{
+    width: 4vw;
     filter: invert();
 }
 
@@ -1150,7 +1153,7 @@ label{
 
     width: 100%;
     height: 100vw;
-    max-height: 85vh;
+    max-height: 55vh;
     /* min-height: 85vh; */
     position: relative;
 
@@ -1167,7 +1170,7 @@ label{
     place-content: center;
     align-items: center;
 
-    font-size: 40vw;
+    font-size: 20vw;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -1562,19 +1565,23 @@ label{
         
     }
     
-    /** ----- ----- ----- ----- */
-
+    /** --------------- MODAL --------------- */
+    
     .modal{
+        font-size: 2vw;
+    }
+    
+    .modal .content label{
         font-size: 2.5vw;
     }
-
-    .modal .content label{
-        font-size: 3vw;
-    }
-
+    
     .modal .content .checkbox-container .checkbox{
-        min-width: 4vw;
-        height: 4vw;
+        min-width: 2vw;
+        height: 2vw;
+    }
+    
+    .modal .content .checkbox-container .checkmark-circle{
+        
     }
 
     .modal .content .checkbox-container .checkmark{
@@ -1582,9 +1589,29 @@ label{
         height: 70%;
     }
     
-    .modal .content img{
-        font-size: 4vw;
+    .modal .content .content-right img{
+        width: 3vw;
+        height: 3vw;
     }
+    
+    /** --------------- FLASH CARD SCREEN --------------- */
+
+    .flashCard-screen .items-wrapper{
+
+    }
+
+    .flashCard-front, .flashCard-back{
+        font-size: 15vw;
+        width: 90vw;
+        margin: auto;
+    }
+
+    .flashCard{
+        margin: auto;
+        justify-content: center;
+        align-items: center;
+    }
+
 }
 
 @media screen and (min-width: 1024px){
