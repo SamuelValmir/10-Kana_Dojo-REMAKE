@@ -476,9 +476,10 @@ svg circle:last-child {
 /** ----- QUIZ SCREEN ----- */
 
 .quiz-screen{
-    flex-direction: column;
     background-color: #f1f1f1;
-    height: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    overflow-y: hidden;
 }
 
 .quiz-screen .header{
@@ -489,7 +490,7 @@ svg circle:last-child {
     color: #555;
     font-size: 5vw;
 
-    padding: 1rem;
+    padding: 2vw;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -686,8 +687,8 @@ label{
 
 
 .checkbox{
-    min-width: 2vw;
-    height: 2vw;
+    min-width: 5vw;
+    height: 5vw;
     border: solid 2px rgba(0, 0, 0, 0.6);
     border-radius: 3px;
     display: flex;
@@ -705,7 +706,7 @@ label{
     z-index: 1;
 
     border: solid white;
-    border-width: 0 3px 3px 0;
+    border-width: 0 2px 2px 0;
 
     -webkit-transform: translate(-50%, -20%) rotate(40deg);
     -ms-transform: translate(-50%, -20%) rotate(40deg);
@@ -1537,6 +1538,10 @@ label{
         --imgSize: 5vw;
     }
   
+    .menu-screen .containers{
+        padding-top: 1vw;
+    }
+    
     .menu-screen .progress-container{
         padding: 1vw;
         padding-right: 8vw;
@@ -1593,11 +1598,20 @@ label{
         width: 3vw;
         height: 3vw;
     }
+
+    .modal-custom .container .content{
+         max-height: 25vw;
+    }
+
+    .modal-custom .checkbox{
+        min-width: 2vw;
+        height: 2vw;
+    }
     
     /** --------------- FLASH CARD SCREEN --------------- */
-
+    
     .flashCard-screen .items-wrapper{
-
+        
     }
 
     .flashCard-front, .flashCard-back{
@@ -1605,13 +1619,50 @@ label{
         width: 90vw;
         margin: auto;
     }
-
+    
     .flashCard{
         margin: auto;
         justify-content: center;
         align-items: center;
     }
+   
+    /** --------------- QUIZ SCREEN --------------- */
+    
+    .quiz-screen .container{
+        font-size: 2vw;
+    }
+    
+    .quiz-screen .footer{
+        font-size: 5vw;
+    }
+    .quiz-screen .footer{
+        height: 5vw;
+    }
+    
+    .quiz-screen .container .card{
+        font-size: 10vw;
+    }
+    
+    /** --------------- STATS SCREEN --------------- */
+    
+    
+    .stats-screen .containers .container .row{
+        height: 10vw;
+        font-size: 1vw;
+        justify-content: space-around;
+    }
+    
+    .stats-screen .containers .container{
+       /* align-items: center; */
+       /* align-content: space-between; */
+    } 
 
+    .stats-screen .containers .container .row .card{
+        /* background-color: #333; */
+        width: 5vw;
+        height: 5vw;
+    } 
+   
 }
 
 @media screen and (min-width: 1024px){
