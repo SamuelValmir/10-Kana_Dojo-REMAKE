@@ -738,6 +738,7 @@ label{
     display: none;
     flex-direction: column;
     overflow-x: auto; 
+    overflow-y: hidden;
     z-index: 0;
 }
 
@@ -747,10 +748,11 @@ label{
 
 .game-start-screen .top{
     overflow: hidden;
+    text-align: center;
 }
 
 .game-start-screen .top > img{
-    height: 100%;
+    width: 60vw;
 
     opacity: .2;
 
@@ -773,14 +775,10 @@ label{
 .game-start-screen .top .head .settings-icon-container{
     display: flex;
     align-items: center;
-
 }
 
 .game-start-screen .top .head .settings-icon-container img{
-    width: 8vw;
-}
-
-.game-start-screen .top .head .settings-icon-container img{
+    width: 7vw;
     filter: invert();
 }
 
@@ -802,15 +800,16 @@ label{
 }
 
 .game-start-screen .bottom{
-    box-shadow: -10rem -35vw 8rem #131517, 0rem -35vw 8rem #131517, 10rem -35vw 8rem #131517;
+    box-shadow: -15rem -5vh 10vh #131517, -5rem -5vh 10vh #131517, 5rem -5vh 10vh #131517, 15rem -5vh 10vh #131517;
     z-index: 1;
 }
 
 .game-start-screen .bottom .container{
     width: 90%;
+    height: 90%;
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 5vh;
     margin: auto;
     text-align: center;
 }
@@ -824,7 +823,11 @@ label{
 
 .game-start-screen .bottom .game-title{
     display: block;
-    font-size: 9vw;
+    font-size: 8vw;
+}
+
+.game-start-screen .bottom .text .game-description{
+    font-size: 2vw;
 }
 
 .game-start-screen .bottom .options{
@@ -888,8 +891,9 @@ label{
 
 .game-configuration-modal .animation-container{
     display: flex;
-    width: 50vw;
+    width: 50%;
     justify-content: space-between;
+    /* justify-content: start; */
 }
 
 .game-configuration-modal .switch{
@@ -1372,7 +1376,7 @@ label{
     justify-items: center;
     align-items: center;
 
-    border-radius: .5rem;
+    border-radius: 2vw;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
     backface-visibility: hidden;
 
@@ -1478,7 +1482,7 @@ label{
     }
     
     .header .menu-screen-nav > div{
-        padding: 5px;
+        padding: 1vw;
     }
 
     .header .scroll-bar{
@@ -1499,9 +1503,6 @@ label{
 
 }
 
-@media screen and (max-width: 7673px){
-
-}
 
 @media screen and (min-width: 768px){
     body{
@@ -1521,9 +1522,14 @@ label{
         font-size: 2vw;
     }
 
+    .header .nav-option, .header .menu-screen-nav > div{
+        padding: 0;
+    }
+
     .header .scroll-bar{
         height: .5vw;
     }
+
     
     .menu-screen .menu-button{
         width: 3vw;
@@ -1647,7 +1653,7 @@ label{
     
     
     .stats-screen .containers .container .row{
-        height: 10vw;
+        height: 4vw;
         font-size: 1vw;
         justify-content: space-around;
     }
@@ -1657,12 +1663,77 @@ label{
        /* align-content: space-between; */
     } 
 
-    .stats-screen .containers .container .row .card{
-        /* background-color: #333; */
-        width: 5vw;
-        height: 5vw;
-    } 
-   
+    /* .stats-screen .containers .container .row .card{
+        width: 2vw;
+        height: 2vw;
+    }  */
+    
+    /** --------------- GAME START SCREEN --------------- */
+    
+    .game-start-screen .top .head{
+        font-size: 2vw;
+    }
+    
+    .game-start-screen .top .head img, .game-start-screen .top .head .settings-icon-container img{
+        width: 4vw;
+    }
+    
+    .game-start-screen .bottom .text .game-title{
+        font-size: 5vw;
+    }
+    
+    .game-start-screen .bottom .options .checkbox{
+        min-width: 2vw;
+        height: 2vw;
+    }
+    
+    .game-start-screen .bottom .options .checkbox-container{
+        font-size: 2.5vw;
+    }
+    
+    /** --------------- GAME START SCREEN --------------- */
+    
+    .game-configuration-modal .animation-container{
+        width: 30%;
+    }
+    
+    /** --------------- GAME SCREEN --------------- */
+    
+    .eye-spy-screen{
+        font-size: 3vw;
+    }
+    
+    .eye-spy-screen .top .sorted-card{
+        font-size: 4.5vw;
+    }
+
+    .eye-spy-screen .board .card{
+        width: 6vw;
+        height: 6vw;
+    }
+    
+    .eye-spy-screen .board .card-front{
+        border-radius: 1vw;
+        font-size: 2.5vw;
+    }
+    
+    /** --------------- GAME OVER SCREEN --------------- */
+
+    .gameOver-screen .container, .gameOver-screen .container .top, .gameOver-screen .container .best{
+        font-size: 2.5vw;
+    }
+
+    .gameOver-screen .container .content{
+        font-size: 3vw;
+    }
+    
+    .gameOver-screen .container .content .green{
+        font-size: 3.5vw;
+    }
+    
+    .gameOver-screen .container button{
+        width: fit-content;
+    }
 }
 
 @media screen and (min-width: 1024px){
