@@ -23,11 +23,11 @@ class GameConfigurationModal {
     isShowing = false;
 
     configuration = {
-        minutes: 0,
-        seconds: "1",
-        bonusTime: 5,
-        dimensionX: 2,
-        dimensionY: 2,
+        minutes: "1",
+        seconds: "60",
+        bonusTime: 10,
+        dimensionX: 4,
+        dimensionY: 4,
         boardAnimation: "true",
         cardAnimation: "true",
         cardMatchMarker: "true"
@@ -55,11 +55,6 @@ class GameConfigurationModal {
     }
 
     initialize() {
-        // localStorage.setItem("name", "Samuel");
-        // let isGameConfigurationModalInitialized = localStorage.getItem("isGameConfigurationModalInitialized");
-        // if (isGameConfigurationModalInitialized === null) {
-        //     localStorage.setItem("isGameConfigurationModalInitialized", true);
-
         if (this.firstShow === true) {
             this.firstShow = false;
 
@@ -281,6 +276,8 @@ class GameConfigurationModal {
                 this.dimensionElementList[2].innerHTML = "4x4";
                 this.dimensionElementList[3].innerHTML = "5x4";
                 this.dimensionElementList[4].innerHTML = "6x6";
+                
+                this.cardMarkerSwitchElement.parentElement.style.display = "flex";
             } break;
 
             case "EyeSpyScreenInterface": {
@@ -289,6 +286,8 @@ class GameConfigurationModal {
                 this.dimensionElementList[2].innerHTML = "4x4";
                 this.dimensionElementList[3].innerHTML = "5x5";
                 this.dimensionElementList[4].innerHTML = "6x6";
+
+                this.cardMarkerSwitchElement.parentElement.style.display = "none";
             } break;
         }
 

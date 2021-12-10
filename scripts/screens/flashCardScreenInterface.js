@@ -88,9 +88,11 @@ let flashCardScreenInterface = {
                 items.appendChild(cardElement);
                 cardElement.appendChild(backCardElement);
                 cardElement.appendChild(frontCardElement);
+                
+                cardElement.setAttribute("flipped", false);
 
                 cardElement.addEventListener("click", () => {
-                    cardElement.classList.toggle("flip");
+                    flashCardScreenInterface.flipCard(cardElement);
                     // cardElement.focus();
                     // cardElement.scrollIntoView();
                 });
@@ -129,6 +131,22 @@ let flashCardScreenInterface = {
                 })
             })
         },
+    },
+
+    flipCard(cardElement){
+        const isFlipped = cardElement.getAttribute("flipped");
+        const degree = isFlipped === "true" ? "360" : "180";
+
+        const animation = cardElement.animate([
+            {transform: "rotateY(" + degree + "deg)"}
+        ], 200)
+
+        animation.addEventListener("finish", ()=>{
+            cardElement.style.transform = "rotateY(" + degree + "deg)";
+
+            const attribute = isFlipped === "true" ? "false" : "true";
+            cardElement.setAttribute("flipped", attribute);
+        })
     },
 
     setItemsWheelEventListener: function () {

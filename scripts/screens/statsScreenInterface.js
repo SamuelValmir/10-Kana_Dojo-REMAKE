@@ -7,10 +7,16 @@ let statsScreenInterface = {
     returnButton: document.querySelector(".stats-screen .return-button"),
     returnButtonHighlight: document.querySelector(".stats-screen .return-button-highlight"),
 
+    statsScreenModel: new StatsScreenModel(),
     progressBar: document.querySelector(".stats-screen .progress-container"),
     progressBarTop: "",
     setProgressBarTop() {
         this.progressBarTop = this.progressBar.offsetTop;
+    },
+
+    resetBasicScrollWidth(){
+        const basicScroll = document.querySelector(".stats-screen .basic-scroll");
+        basicScroll.style.width = 0;
     },
 
     navOptions: {
@@ -163,6 +169,7 @@ let statsScreenInterface = {
         }
 
         this.setProgressBarTop();
+        this.resetBasicScrollWidth();
     },
 }
 
