@@ -6,6 +6,59 @@ let progressBarTop;
 document.addEventListener("DOMContentLoaded", () => {
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
+
+    //It's important to make just one instance of the "database"/local storage
+
+    // localStorage.removeItem("canStoreJsonTasks")
+    // localStorage.clear();
+
+    if (typeof (Storage) !== "undefined") {
+        let canStoreJsonTasks = localStorage.getItem("canStoreJsonTasks");
+
+        if (canStoreJsonTasks === null || canStoreJsonTasks === undefined) {
+            let statsDataStored = {
+                hiragana: { basic: {}, voiced: {}, combo1: {}, combo2: {} },
+                katakana: { basic: {}, voiced: {}, combo1: {}, combo2: {} }
+            };
+
+            setTimeout(() => {
+                for (let index = 0; index < Object.entries(kana.groups).length; index++) {
+                    let group = Object.entries(kana.groups)[index];
+                    let groupName = group[0];
+                    for (let family of Object.values(group[1])) {
+
+                        for (let kana of family) {
+                            kana = wanakana.toHiragana(kana);
+                            statsDataStored.hiragana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
+
+                            kana = wanakana.toKatakana(kana);
+                            statsDataStored.katakana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
+
+                        }
+                    }
+                }
+
+                statsDataStored = JSON.stringify(statsDataStored);
+                localStorage.setItem("statsDataStored", statsDataStored);
+                localStorage.setItem("canStoreJsonTasks", false);
+
+                console.log("Local storage defined.")
+
+            }, 200);
+
+
+        }
+
+    } else {
+        console.error("This browser do not supports Local Storage");
+        document.write("This browser do not supports Local Storage");
+    }
+
+    // setTimeout(()=>{
+
+    //     let statsDataStored = JSON.parse(localStorage.getItem("statsDataStored"));
+    //     console.log(statsDataStored)
+    // }, 210)
 })
 
 // It fills the 3 scrolls bar as long as the screen is scrolled

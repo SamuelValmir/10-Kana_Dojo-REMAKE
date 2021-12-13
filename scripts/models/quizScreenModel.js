@@ -2,9 +2,12 @@
 
 class QuizScreenModel {
     constructor(cards) {
+        console.log(cards)
         this.cards = cards;
         this.currentCard = cards[0];
     }
+
+    s = {'ふ': 'right', 'そ': 'wrong', 'も': 'wrong'};
 
     wrongCounter = 0;
     rightCounter = 0;

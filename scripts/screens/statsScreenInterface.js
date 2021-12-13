@@ -14,7 +14,7 @@ let statsScreenInterface = {
         this.progressBarTop = this.progressBar.offsetTop;
     },
 
-    resetBasicScrollWidth(){
+    resetBasicScrollWidth() {
         const basicScroll = document.querySelector(".stats-screen .basic-scroll");
         basicScroll.style.width = 0;
     },
@@ -46,7 +46,6 @@ let statsScreenInterface = {
 
     drawCards(option, containerScreen) {
         let statsScreenContainer = containerScreen;
-        // statsScreenContainer.innerHTML = "";
         let rowElement;
         rowElement = document.createElement("div");
         rowElement.classList.add("row");
@@ -70,57 +69,111 @@ let statsScreenInterface = {
         rowElement.appendChild(wrongElement);
         rowElement.appendChild(accuracyElement);
 
-        for (let index = 0; index < Object.entries(kana.groups).length; index++) {
-            let group = Object.entries(kana.groups)[index];
+        let statsDataStored = JSON.parse(localStorage.getItem("statsDataStored"));
+        let groupList = statsDataStored[option];
+
+        for (let group in groupList) {
             let addGroupClass = true;
-            for (let family of Object.values(group[1])) {
+            for (kana in groupList[group]) {
+                let kanaObject = groupList[group][kana];
 
-                for (let kana of family) {
-                    let rowElement;
-                    rowElement = document.createElement("div");
-                    rowElement.classList.add("row");
+                let rowElement;
+                rowElement = document.createElement("div");
+                rowElement.classList.add("row");
 
-                    if (addGroupClass === true) {
-                        addGroupClass = false;
-                        rowElement.classList.add(group[0]);
-                    }
-
-                    let kanaElement = document.createElement("span");
-                    kanaElement.classList.add("kana");
-
-                    if (option === "hiragana") {
-                        kanaElement.innerHTML = wanakana.toHiragana(kana);
-                    } else if (option === "katakana") {
-                        kanaElement.innerHTML = wanakana.toKatakana(kana);
-                    }
-
-                    let rightElement = document.createElement("span");
-                    rightElement.classList.add("right");
-                    rightElement.innerHTML = "4";
-
-                    let wrongElement = document.createElement("span");
-                    wrongElement.classList.add("wrong");
-                    wrongElement.innerHTML = "5";
-
-                    let accuracyElement = document.createElement("span");
-                    accuracyElement.classList.add("accuracy");
-                    accuracyElement.innerHTML = "44%";
-
-                    statsScreenContainer.appendChild(rowElement);
-                    rowElement.appendChild(kanaElement);
-                    rowElement.appendChild(rightElement);
-                    rowElement.appendChild(wrongElement);
-                    rowElement.appendChild(accuracyElement);
-
-                    rowElement.addEventListener("click", (event) => {
-                        let rowElement = event.target;
-                        rowElement.animate([
-                            { backgroundColor: "#aaa" }
-                        ], { duration: 200, easing: "ease" })
-                    })
+                if (addGroupClass === true) {
+                    addGroupClass = false;
+                    rowElement.classList.add(group);
                 }
+
+                let kanaElement = document.createElement("span");
+                kanaElement.classList.add("kana");
+
+                if (option === "hiragana") {
+                    kanaElement.innerHTML = wanakana.toHiragana(kana);
+                } else if (option === "katakana") {
+                    kanaElement.innerHTML = wanakana.toKatakana(kana);
+                }
+
+                let rightElement = document.createElement("span");
+                rightElement.classList.add("right");
+                rightElement.innerHTML = kanaObject.right;
+
+                let wrongElement = document.createElement("span");
+                wrongElement.classList.add("wrong");
+                wrongElement.innerHTML = kanaObject.wrong;
+
+                let accuracyElement = document.createElement("span");
+                accuracyElement.classList.add("accuracy");
+                accuracyElement.innerHTML = kanaObject.accuracy + "%";
+
+                statsScreenContainer.appendChild(rowElement);
+                rowElement.appendChild(kanaElement);
+                rowElement.appendChild(rightElement);
+                rowElement.appendChild(wrongElement);
+                rowElement.appendChild(accuracyElement);
+
+                rowElement.addEventListener("click", (event) => {
+                    let rowElement = event.target;
+                    rowElement.animate([
+                        { backgroundColor: "#aaa" }
+                    ], { duration: 200, easing: "ease" })
+                })
+
             }
         }
+
+        // for (let index = 0; index < Object.entries(kana.groups).length; index++) {
+        //     let group = Object.entries(kana.groups)[index];
+        //     let addGroupClass = true;
+        //     for (let family of Object.values(group[1])) {
+
+        //         for (let kana of family) {
+        //             let rowElement;
+        //             rowElement = document.createElement("div");
+        //             rowElement.classList.add("row");
+
+        //             if (addGroupClass === true) {
+        //                 addGroupClass = false;
+        //                 rowElement.classList.add(group[0]);
+        //             }
+
+        //             let kanaElement = document.createElement("span");
+        //             kanaElement.classList.add("kana");
+
+        //             if (option === "hiragana") {
+        //                 kanaElement.innerHTML = wanakana.toHiragana(kana);
+        //             } else if (option === "katakana") {
+        //                 kanaElement.innerHTML = wanakana.toKatakana(kana);
+        //             }
+
+        //             let rightElement = document.createElement("span");
+        //             rightElement.classList.add("right");
+        //             rightElement.innerHTML = "4";
+
+        //             let wrongElement = document.createElement("span");
+        //             wrongElement.classList.add("wrong");
+        //             wrongElement.innerHTML = "5";
+
+        //             let accuracyElement = document.createElement("span");
+        //             accuracyElement.classList.add("accuracy");
+        //             accuracyElement.innerHTML = "44%";
+
+        //             statsScreenContainer.appendChild(rowElement);
+        //             rowElement.appendChild(kanaElement);
+        //             rowElement.appendChild(rightElement);
+        //             rowElement.appendChild(wrongElement);
+        //             rowElement.appendChild(accuracyElement);
+
+        //             rowElement.addEventListener("click", (event) => {
+        //                 let rowElement = event.target;
+        //                 rowElement.animate([
+        //                     { backgroundColor: "#aaa" }
+        //                 ], { duration: 200, easing: "ease" })
+        //             })
+        //         }
+        //     }
+        // }
     },
 
     initialize(navOptionSelected) {
