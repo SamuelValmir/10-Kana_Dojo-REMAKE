@@ -7,16 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
 
-    //It's important to make just one instance of the "database"/local storage
 
     // localStorage.removeItem("canStoreJsonTasks")
     // localStorage.clear();
 
+    // It verifies if the browser supports web storage and local storage
     if (typeof (Storage) !== "undefined") {
         let canStoreJsonTasks = localStorage.getItem("canStoreJsonTasks");
 
+        // It's important to make just one instance of the "database"/local storage
         if (canStoreJsonTasks === null || canStoreJsonTasks === undefined) {
-            let statsDataStored = {
+            let statsData = {
                 hiragana: { basic: {}, voiced: {}, combo1: {}, combo2: {} },
                 katakana: { basic: {}, voiced: {}, combo1: {}, combo2: {} }
             };
@@ -29,17 +30,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         for (let kana of family) {
                             kana = wanakana.toHiragana(kana);
-                            statsDataStored.hiragana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
+                            statsData.hiragana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
 
                             kana = wanakana.toKatakana(kana);
-                            statsDataStored.katakana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
+                            statsData.katakana[groupName][kana] = { "right": 0, "wrong": 0, "accuracy": 0 };
 
                         }
                     }
                 }
 
-                statsDataStored = JSON.stringify(statsDataStored);
-                localStorage.setItem("statsDataStored", statsDataStored);
+                statsData = JSON.stringify(statsData);
+                localStorage.setItem("statsData", statsData);
                 localStorage.setItem("canStoreJsonTasks", false);
 
                 console.log("Local storage defined.")
@@ -56,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // setTimeout(()=>{
 
-    //     let statsDataStored = JSON.parse(localStorage.getItem("statsDataStored"));
+    //     let statsDataStored = JSON.parse(localStorage.getItem("statsData"));
     //     console.log(statsDataStored)
     // }, 210)
 })

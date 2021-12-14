@@ -69,7 +69,7 @@ let statsScreenInterface = {
         rowElement.appendChild(wrongElement);
         rowElement.appendChild(accuracyElement);
 
-        let statsDataStored = JSON.parse(localStorage.getItem("statsDataStored"));
+        let statsDataStored = JSON.parse(localStorage.getItem("statsData"));
         let groupList = statsDataStored[option];
 
         for (let group in groupList) {

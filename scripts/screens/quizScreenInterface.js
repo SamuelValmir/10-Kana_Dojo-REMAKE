@@ -225,6 +225,7 @@ let quizScreenInterface = {
             this.inputText.value = "";
             this.text.innerHTML = "";
             modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
+            this.quizScreenModelObject.saveAnswers();
 
         } else {
             await this.showCardAnimation();

@@ -35,7 +35,14 @@ let menuScreenInterface = {
 
     progress: {
         hiraganaProgress: document.querySelector(".menu-screen .progress-container-hiragana"),
+        hiraganaProgressBar: document.querySelector(".menu-screen .progress-container-hiragana .progress-bar"),
+        hiraganaProgressText: document.querySelector(".menu-screen .progress-container-hiragana .progress-text"),
+        hiraganaProgressNumber: document.querySelector(".menu-screen .progress-container-hiragana .progress-number"),
+
         katakanaProgress: document.querySelector(".menu-screen .progress-container-katakana"),
+        katakanaProgressBar: document.querySelector(".menu-screen .progress-container-katakana .progress-bar"),
+        katakanaProgressText: document.querySelector(".menu-screen .progress-container-katakana .progress-text"),
+        katakanaProgressNumber: document.querySelector(".menu-screen .progress-container-katakana .progress-number"),
     },
 
     show(optionSelected = "left") {
@@ -53,6 +60,8 @@ let menuScreenInterface = {
     },
 
     initialize(optionSelected) {
+        this.calculateProgress();
+
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;
@@ -205,5 +214,72 @@ let menuScreenInterface = {
         })
 
         return promise;
+    },
+
+    calculateProgress() {
+        const statsDataStored = JSON.parse(localStorage.getItem("statsData"));
+        const hiraganaValues = Object.values(statsDataStored.hiragana);
+        const katakanaValues = Object.values(statsDataStored.katakana);
+        const hiraganaEntries = Object.entries(hiraganaValues);
+        const katakanaEntries = Object.entries(katakanaValues);
+
+        let hiraganaProgress = 0;
+
+        // It calculates the hiragana progress
+        for (let groupObject of hiraganaEntries) {
+            let group = Object.values(groupObject[1]);
+
+            for (let answer of group) {
+                let idealValue = answer.wrong * 1.5 + 10;
+                let percentage = answer.right * 100 / idealValue;
+                let roundedPercentage = Math.round(percentage);
+                if (roundedPercentage > 100) {
+                    roundedPercentage = 100;
+                }
+                hiraganaProgress += roundedPercentage / 104;
+            }
+        }
+
+        let katakanaProgress = 0;
+
+        // It calculates the katakana progress
+        for (let groupObject of katakanaEntries) {
+            let group = Object.values(groupObject[1]);
+
+            for (let answer of group) {
+                let idealValue = answer.wrong * 1.5 + 10;
+                let percentage = answer.right * 100 / idealValue;
+                let roundedPercentage = Math.round(percentage);
+                if (roundedPercentage > 100) {
+                    roundedPercentage = 100;
+                }
+                katakanaProgress += roundedPercentage / 104;
+            }
+        }
+
+        hiraganaProgress = hiraganaProgress.toFixed(2);
+        this.progress.hiraganaProgressBar.style.setProperty("--progress", hiraganaProgress);
+        this.progress.hiraganaProgressNumber.innerHTML = hiraganaProgress + "%";
+        this.calculateLevel(hiraganaProgress, this.progress.hiraganaProgressText);
+
+        katakanaProgress = katakanaProgress.toFixed(2);
+        this.progress.katakanaProgressBar.style.setProperty("--progress", katakanaProgress);
+        this.progress.katakanaProgressNumber.innerHTML = katakanaProgress + "%";
+        this.calculateLevel(katakanaProgress, this.progress.katakanaProgressText);
+
+    },
+
+    calculateLevel(progress, textElement) {
+        if (progress < 25) {
+            textElement.innerHTML = "Beginner";
+        } else if (progress < 50) {
+            textElement.innerHTML = "Average";
+        } else if (progress < 75) {
+            textElement.innerHTML = "Skilled";
+        } else if (progress < 100) {
+            textElement.innerHTML = "Specialist";
+        } else{
+            textElement.innerHTML = "Master";
+        }
     }
 }
