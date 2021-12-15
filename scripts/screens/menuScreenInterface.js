@@ -60,8 +60,6 @@ let menuScreenInterface = {
     },
 
     initialize(optionSelected) {
-        this.calculateProgress();
-
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;

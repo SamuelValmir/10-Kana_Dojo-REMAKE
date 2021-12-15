@@ -2,7 +2,6 @@
 
 class GameScreenInterface {
     constructor(returnButton, returnButtonHighlight) {
-        // this.gameScreenInterfaceReference = gameScreenInterfaceReference;
         this.returnButton = returnButton;
         this.returnButtonHighlight = returnButtonHighlight;
     }
@@ -12,6 +11,7 @@ class GameScreenInterface {
     gameModel = null;
 
     gameConfigurationModal = null;
+    checkBoxObjectList = null;
 
     kanaList = null;
     timeInterval = null;
@@ -39,13 +39,15 @@ class GameScreenInterface {
         this.timeElement.innerHTML = minutes + ":" + seconds;
     }
 
-    setVariables(kanaList, { dimensionX, dimensionY }) {
+    setVariables(kanaList, { dimensionX, dimensionY }, checkBoxObjectList) {
         this.htmlElement.style.display = "grid";
         this.timeInterval = null;
         this.kanaList = kanaList;
         this.dimension = dimensionX * dimensionY;
         this.boardElement.style.gridTemplateColumns = "auto ".repeat(dimensionX);
         this.boardElement.style.gridTemplateRows = "auto ".repeat(dimensionY);
+
+        this.checkBoxObjectList = checkBoxObjectList;
     }
 
     hide() {
@@ -100,6 +102,6 @@ class GameScreenInterface {
 
     showGameOverScreen() {
         this.htmlElement.style.display = "none";
-        gameOverScreenInterface.show(this, this.gameModel.matches);
+        gameOverScreenInterface.show(this, this.gameModel, this.checkBoxObjectList);
     }
 }

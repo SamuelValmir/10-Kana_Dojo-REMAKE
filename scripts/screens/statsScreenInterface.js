@@ -7,7 +7,6 @@ let statsScreenInterface = {
     returnButton: document.querySelector(".stats-screen .return-button"),
     returnButtonHighlight: document.querySelector(".stats-screen .return-button-highlight"),
 
-    statsScreenModel: new StatsScreenModel(),
     progressBar: document.querySelector(".stats-screen .progress-container"),
     progressBarTop: "",
     setProgressBarTop() {

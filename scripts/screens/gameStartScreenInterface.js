@@ -116,7 +116,7 @@ let gameStartScreenInterface = {
                     cards = Cards.shuffle(cards);
 
                     this.hideContent();
-                    this.game.show(cards, this.gameConfigurationModal.configuration);
+                    this.game.show(cards, this.gameConfigurationModal.configuration, this.checkBoxObjectList);
                 }
             })
 

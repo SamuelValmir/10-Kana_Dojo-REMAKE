@@ -24,7 +24,7 @@ class GameConfigurationModal {
 
     configuration = {
         minutes: "1",
-        seconds: "60",
+        seconds: "0",
         bonusTime: 10,
         dimensionX: 4,
         dimensionY: 4,

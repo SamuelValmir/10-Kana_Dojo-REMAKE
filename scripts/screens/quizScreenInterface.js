@@ -226,7 +226,8 @@ let quizScreenInterface = {
             this.text.innerHTML = "";
             modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
             this.quizScreenModelObject.saveAnswers();
-
+            menuScreenInterface.calculateProgress();
+            
         } else {
             await this.showCardAnimation();
             this.setCurrentCard();

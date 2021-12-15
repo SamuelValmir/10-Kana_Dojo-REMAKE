@@ -28,9 +28,9 @@ class EyeSpyScreenInterface extends GameScreenInterface {
             this.gameConfigurationModal);
     }
 
-    show(kanaList, gameConfiguration) {
-        this.setVariables(kanaList, gameConfiguration);
-        this.gameModel = new EyeSpyModel(this.kanaList, gameConfiguration);
+    show(kanaList, gameConfiguration, checkBoxObjectList) {
+        this.setVariables(kanaList, gameConfiguration, checkBoxObjectList);
+        this.gameModel = new EyeSpyModel(this.kanaList, gameConfiguration, EYE_SPY_GAME_TITLE);
         this.currentGameScreenInterface = this;
         this.setMoves(this.movesElement);
         this.startGame();

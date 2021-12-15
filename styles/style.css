@@ -350,7 +350,7 @@ h2, h3{
     width: 90%;
     height: 4px;
 
-    --progress: 50;
+    --progress: 0;
     display: flex;
 }
 
@@ -727,7 +727,7 @@ label{
 }
 
 .game-start-screen .top > img{
-    width: 60vw;
+    height: 50vh;
 
     opacity: .2;
 
@@ -758,8 +758,26 @@ label{
 }
 
 .game-start-screen .top .score{
+    
+    width: fit-content;
     display: flex;
     flex-direction: column;
+    margin: auto;
+
+    position: absolute;
+    top: 25%;
+    left: 0;
+    right: 0;
+    
+    border: 1px solid;
+    border-radius: 5%;
+}
+
+.game-start-screen .top .score .best{
+    position: absolute;
+    top: -30%;
+    left: 0;
+    right: 0;    
 }
 
 .game-start-screen .top .return-button{
@@ -1402,7 +1420,7 @@ label{
     font-size: 8.5vw;
 }
 
-.gameOver-screen .container .best{
+.gameOver-screen .container .moves{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 6vw;
 
@@ -1440,10 +1458,6 @@ label{
         font-size: 3.5vw;
     }
 
-    .header .return-button{
-        width: 4vw;
-        height: 4vw;
-    }
     .header .top{
         padding: 5%;
     }
@@ -1613,6 +1627,15 @@ label{
         font-size: 10vw;
     }
     
+    /** --------------- QUIZ MODEL --------------- */
+
+    .modal-quiz .container{
+        font-size: 2vw;
+    }
+    .modal-quiz .container .content .bottom{
+        font-size: 3vw;
+    }
+
     /** --------------- STATS SCREEN --------------- */
     
     
@@ -1624,6 +1647,11 @@ label{
     
     /** --------------- GAME START SCREEN --------------- */
     
+    .game-start-screen .top > img{
+        width: 60vw;
+        height: auto;
+    }
+
     .game-start-screen .top .head{
         font-size: 2vw;
     }
@@ -1673,7 +1701,7 @@ label{
     
     /** --------------- GAME OVER SCREEN --------------- */
 
-    .gameOver-screen .container, .gameOver-screen .container .top, .gameOver-screen .container .best{
+    .gameOver-screen .container, .gameOver-screen .container .top, .gameOver-screen .container .moves{
         font-size: 2.5vw;
     }
 

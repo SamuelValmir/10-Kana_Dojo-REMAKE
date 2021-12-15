@@ -119,8 +119,8 @@
                     <div class="progress-container progress-container-hiragana">
                         <h3 class="title">Hiragana</h3>
                         <div class="top">
-                            <p class="progress-text"></p>
-                            <p class="progress-number"></p>
+                            <p class="progress-text">Beginner</p>
+                            <p class="progress-number">0.00%</p>
                         </div>
                         <div class="progress-bar"></div>
                     </div>
@@ -128,8 +128,8 @@
                     <div class="progress-container progress-container-katakana">
                         <h3 class="title">Katakana</h3>
                         <div class="top">
-                            <p class="progress-text"></p>
-                            <p class="progress-number"></p>
+                            <p class="progress-text">Beginner</p>
+                            <p class="progress-number">0.00%</p>
                         </div>
                         <div class="progress-bar"></div>
                     </div>
@@ -515,8 +515,15 @@
 
                 <span class="score">
                     <span class="best">BEST</span>
-                    <span class="result">Hiragana<span class="green"> - </span></span>
-                    <span class="result">Katakana<span class="green"> - </span></span>
+
+                    <span class="result">Hiragana<span class="green"> - </span><span class="moves"> moves <span class="green">
+                                - </span></span></span>
+
+                    <span class="result">Katakana<span class="green"> - </span><span class="moves"> moves <span class="green">
+                                - </span></span></span>
+
+                    <span class="result">Both<span class="green"> - </span><span class="moves"> moves <span class="green">
+                                -</span></span></span>
                 </span>
 
                 <span class="settings-icon-container">
@@ -650,7 +657,7 @@
         <div class="container">
             <span class="top"> Time's up</span>
             <span class="content"> YOU MADE <span class="matches green">0</span> MATCHES</span>
-            <span class="best">Best <span class="best-value orange">0</span></span>
+            <span class="moves">Moves <span class="moves-value orange">0</span></span>
             <div>
                 <button class="play-again">Play again</button>
                 <button class="menu">Menu</button>
@@ -681,7 +688,6 @@
     <script src="./scripts/screens/quizScreenInterface.js"></script>
     <script src="./scripts/modals/modalQuizInterface.js"></script>
 
-    <script src="./scripts/models/statsScreenModel.js"></script>
     <script src="./scripts/screens/statsScreenInterface.js"></script>
 
     <script src="./scripts/controllers/checkBoxController.js"></script>

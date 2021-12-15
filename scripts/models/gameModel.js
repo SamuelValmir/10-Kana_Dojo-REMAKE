@@ -1,13 +1,16 @@
 "use strict";
 
 class GameModel {
-    constructor(kanaList, gameConfiguration) {
+    constructor(kanaList, gameConfiguration, gameName) {
         this.kanaList = kanaList;
         this.gameConfiguration = gameConfiguration;
         this.time = (gameConfiguration.minutes * 60) + (gameConfiguration.seconds * 1);
         this.dimension = Math.floor((gameConfiguration.dimensionX * gameConfiguration.dimensionY));
+        this.gameType = 0;
+        this.gameName = gameName;
     }
 
+    gameName;
     cards = [];
     currentCards = [];
 

@@ -7,8 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
 
-
-    // localStorage.removeItem("canStoreJsonTasks")
     // localStorage.clear();
 
     // It verifies if the browser supports web storage and local storage
@@ -20,6 +18,18 @@ document.addEventListener("DOMContentLoaded", () => {
             let statsData = {
                 hiragana: { basic: {}, voiced: {}, combo1: {}, combo2: {} },
                 katakana: { basic: {}, voiced: {}, combo1: {}, combo2: {} }
+            };
+
+            let eyeSpyData = {
+                hiragana: { best: 0, moves: 0 },
+                katakana: { best: 0, moves: 0 },
+                both: { best: 0, moves: 0 },
+            };
+
+            let matchMakerData = {
+                hiragana: { best: 0, moves: 0 },
+                katakana: { best: 0, moves: 0 },
+                both: { best: 0, moves: 0 },
             };
 
             setTimeout(() => {
@@ -39,15 +49,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
 
+                // It parses object to JSON
                 statsData = JSON.stringify(statsData);
+                eyeSpyData = JSON.stringify(eyeSpyData);
+                matchMakerData = JSON.stringify(matchMakerData);
+
+                // It storages data
                 localStorage.setItem("statsData", statsData);
+                localStorage.setItem("eyeSpyData", eyeSpyData);
+                localStorage.setItem("matchMakerData", matchMakerData);
+                
                 localStorage.setItem("canStoreJsonTasks", false);
 
                 console.log("Local storage defined.")
 
             }, 200);
 
-
+        } else {
+            menuScreenInterface.calculateProgress();
         }
 
     } else {
