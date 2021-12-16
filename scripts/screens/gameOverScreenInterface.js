@@ -45,6 +45,10 @@ let gameOverScreenInterface = {
 
 
         let gameNameStorage;
+        console.log(this.gameModel)
+        console.log(this.gameModel.gameName)
+        console.log(EYE_SPY_GAME_TITLE)
+
         if (this.gameModel.gameName === EYE_SPY_GAME_TITLE) {
             gameNameStorage = "eyeSpyData";
 
@@ -52,36 +56,62 @@ let gameOverScreenInterface = {
             gameNameStorage = "matchMakerData";
         }
 
+        console.log(gameNameStorage)
         const storedGameData = JSON.parse(localStorage.getItem(gameNameStorage));
         console.log(storedGameData);
 
-        const best;
-        const moves;
+        let bestStored;
+        let movesStored;
 
         if (checkBoxHiragana.isChecked === true && checkBoxKatakana.isChecked === true) {
-            best = storedGameData.both.best;
-            moves = storedGameData.both.moves;
-            console.log(best)
-            console.log(moves)
+            bestStored = storedGameData.both.bestMatches;
+            movesStored = storedGameData.both.bestMoves;
+            console.log(bestStored)
+            console.log(movesStored)
+            this.tryToStore(gameNameStorage, storedGameData, storedGameData.both);
+
         } else {
             if (checkBoxHiragana.isChecked === true) {
-                best = storedGameData.hiragana.best;
-                moves = storedGameData.hiragana.moves;
-                console.log(best)
-                console.log(moves)
+                bestStored = storedGameData.hiragana.bestMatches;
+                movesStored = storedGameData.hiragana.bestMoves;
+                console.log(bestStored)
+                console.log(movesStored)
+                this.tryToStore(gameNameStorage, storedGameData, storedGameData.hiragana);
             }
 
             if (checkBoxKatakana.isChecked === true) {
-                best = storedGameData.katakana.best;
-                moves = storedGameData.katakana.moves;
-                console.log(best)
-                console.log(moves)
-
+                bestStored = storedGameData.katakana.bestMatches;
+                movesStored = storedGameData.katakana.bestMoves;
+                console.log(bestStored)
+                console.log(movesStored)
+                this.tryToStore(gameNameStorage, storedGameData, storedGameData.katakana);
             }
         }
+    },
 
-        if (best > this.gameModel.matches && moves < this.gameModel.moves) {
-            // Update data from local storage
+    tryToStore(gameNameStorage, storedGameData, storedGameDataType) { // The stored game data type can be hiragana, katakana or both
+        console.log(this.gameModel.matches);
+        console.log(this.gameModel.moves);
+        console.log(storedGameDataType);
+
+        let updateData = false;
+        if (this.gameModel.matches > storedGameDataType.bestMatches) {
+            console.log("game model is greater")
+            storedGameDataType.bestMatches = this.gameModel.matches;
+            storedGameDataType.bestMoves = this.gameModel.moves;
+            updateData = true;
+
+        } else if (this.gameModel.matches === storedGameDataType.bestMatches & this.gameModel.moves < storedGameDataType.bestMoves) {
+            console.log("game model is equal")
+            storedGameDataType.bestMoves = this.gameModel.moves;
+            updateData = true;
+        }
+
+        if (updateData === true) {
+            console.log("update data!")
+            console.log(storedGameData);
+            storedGameData = JSON.stringify(storedGameData);
+            localStorage.setItem(gameNameStorage, storedGameData);
         }
     }
 }

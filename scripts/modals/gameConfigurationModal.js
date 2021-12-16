@@ -23,11 +23,11 @@ class GameConfigurationModal {
     isShowing = false;
 
     configuration = {
-        minutes: "1",
-        seconds: "0",
+        minutes: "0",
+        seconds: "2",
         bonusTime: 10,
-        dimensionX: 4,
-        dimensionY: 4,
+        dimensionX: 2,
+        dimensionY: 2,
         boardAnimation: "true",
         cardAnimation: "true",
         cardMatchMarker: "true"

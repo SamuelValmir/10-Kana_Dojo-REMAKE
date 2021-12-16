@@ -1,8 +1,8 @@
 "use strict";
 
 class EyeSpyModel extends GameModel {
-    constructor(kanaList, dimension) {
-        super(kanaList, dimension);
+    constructor(kanaList, dimension, gameName) {
+        super(kanaList, dimension, gameName);
     }
 
     sortedCard = null;

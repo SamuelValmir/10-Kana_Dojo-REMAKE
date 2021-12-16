@@ -1,8 +1,8 @@
 "use strict";
 
 class MatchMakerModel extends GameModel {
-    constructor(kanaList, gameConfiguration) {
-        super(kanaList, gameConfiguration);
+    constructor(kanaList, gameConfiguration, gameName) {
+        super(kanaList, gameConfiguration, gameName);
     }
 
     lockMode = false;

@@ -21,15 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
             let eyeSpyData = {
-                hiragana: { best: 0, moves: 0 },
-                katakana: { best: 0, moves: 0 },
-                both: { best: 0, moves: 0 },
+                hiragana: { bestMatches: 0, bestMoves: 0 },
+                katakana: { bestMatches: 0, bestMoves: 0 },
+                both: { bestMatches: 0, bestMoves: 0 },
             };
 
             let matchMakerData = {
-                hiragana: { best: 0, moves: 0 },
-                katakana: { best: 0, moves: 0 },
-                both: { best: 0, moves: 0 },
+                hiragana: { bestMatches: 0, bestMoves: 0 },
+                katakana: { bestMatches: 0, bestMoves: 0 },
+                both: { bestMatches: 0, bestMoves: 0 },
             };
 
             setTimeout(() => {
