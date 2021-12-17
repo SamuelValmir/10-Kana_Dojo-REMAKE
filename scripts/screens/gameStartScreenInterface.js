@@ -11,6 +11,14 @@ let gameStartScreenInterface = {
     topElement: document.querySelector(".game-start-screen .top"),
     returnButton: document.querySelector(".game-start-screen .return-button"),
     returnButtonHighlight: document.querySelector(".game-start-screen .return-button-highlight"),
+
+    hiraganaBestMatches: document.querySelector(".game-start-screen .result .hiragana-matches"),
+    hiraganaBestMoves: document.querySelector(".game-start-screen .result .hiragana-moves"),
+    katakanaBestMatches: document.querySelector(".game-start-screen .result .katakana-matches"),
+    katakanaBestMoves: document.querySelector(".game-start-screen .result .katakana-moves"),
+    bothBestMatches: document.querySelector(".game-start-screen .result .both-matches"),
+    bothBestMoves: document.querySelector(".game-start-screen .result .both-moves"),
+
     settingsIcon: document.querySelector(".game-start-screen .settings-icon-container"),
     bottomElement: document.querySelector(".game-start-screen .bottom"),
     backgroundImageElement: document.querySelector(".game-start-screen .top img"),
@@ -140,6 +148,8 @@ let gameStartScreenInterface = {
         this.horizontalBarElement.style.borderColor = this.mainColor;
 
         this.buttonElement.style.backgroundColor = this.mainColor;
+
+        this.updateScore();
     },
 
     animateSettingsIcon() {
@@ -154,5 +164,28 @@ let gameStartScreenInterface = {
             })
         })
         return promise;
+    },
+
+    updateScore() {
+        let gameNameStorage;
+        switch (this.title) {
+            case EYE_SPY_GAME_TITLE: gameNameStorage = "eyeSpyData"; break;
+            case MATCH_MAKER_GAME_TITLE: gameNameStorage = "matchMakerData"; break;
+        }
+
+        const storedGameData = JSON.parse(localStorage.getItem(gameNameStorage));
+        const hiraganaBestMatches = storedGameData.hiragana.bestMatches;
+        const hiraganaBestMoves = storedGameData.hiragana.bestMoves;
+        const katakanaBestMatches = storedGameData.katakana.bestMatches;
+        const katakanaBestMoves = storedGameData.katakana.bestMoves;
+        const bothBestMatches = storedGameData.both.bestMatches;
+        const bothBestMoves = storedGameData.both.bestMoves;
+
+        this.hiraganaBestMatches.innerHTML = hiraganaBestMatches;
+        this.hiraganaBestMoves.innerHTML = hiraganaBestMoves;
+        this.katakanaBestMatches.innerHTML = katakanaBestMatches;
+        this.katakanaBestMoves.innerHTML = katakanaBestMoves;
+        this.bothBestMatches.innerHTML = bothBestMatches;
+        this.bothBestMoves.innerHTML = bothBestMoves;
     }
 }

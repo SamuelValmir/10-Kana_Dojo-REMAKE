@@ -4,8 +4,22 @@ let progressBar;
 let progressBarTop;
 
 document.addEventListener("DOMContentLoaded", () => {
+    document.body.classList.remove("no-js");
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
+
+
+    let hintHighlight = document.querySelector(".hint");
+
+    
+
+    // let menuScreenNav = document.querySelector(".menu-screen-nav");
+    // hintHighlight.style.left = menuScreenNav.offsetLeft + "px";
+    // hintHighlight.style.top = menuScreenNav.offsetTop + "px";
+    // hintHighlight.style.width = menuScreenNav.offsetWidth + "px";
+    // hintHighlight.style.height = menuScreenNav.offsetHeight + "px";
+    
+
 
     // localStorage.clear();
 
@@ -73,12 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("This browser do not supports Local Storage");
         document.write("This browser do not supports Local Storage");
     }
-
-    // setTimeout(()=>{
-
-    //     let statsDataStored = JSON.parse(localStorage.getItem("statsData"));
-    //     console.log(statsDataStored)
-    // }, 210)
 })
 
 // It fills the 3 scrolls bar as long as the screen is scrolled

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
 
-<!-- Built in 07/09/2021 - /11/2021 by Samuel Valmir -->
+<!-- Built in 07/09/2021 - 17/12/2021 by Samuel Valmir -->
+
 <!-- What I've learned:
      Make the code easy to comprehend by commenting less and only when necessary,
      Make the project with just one html file,
      Noscript tag,
      3d flip effect,
-     work with objects,
+     Work with objects,
      Mobile first,
      Progress bar,
      Tab navigator,
@@ -17,6 +18,8 @@
      Classes,
      Inheritance,
      Polymorphism,
+     Local storage,
+
     -->
 
 <!-- News (changes):
@@ -32,7 +35,7 @@
     -->
 
 <!-- ATTENTION
-    In my project, all controllers scripts manages more than one screen or screen animation, besides the screen interface script, by it self, manages only one screen. -->
+    In my project, all controllers scripts manages more than one screen or screen animation, besides the screen interface script, by it self, manages only one screen. This is its difference -->
 
 <head>
     <meta charset="utl-8">
@@ -60,12 +63,15 @@
     <script src="https://unpkg.com/wanakana@4.0.2/umd/wanakana.min.js"></script>
     <script src="./scripts/jquery-3.6.0.min.js"></script>
     <script src="./scripts/jquery.mask.js.js"></script>
-    <noscript> This page uses javaScript to work. Make sure if you are using the most up date version of your javaScript
-        or if you have enabled the javaScript in your browser! </noscript>
-    <title>Game</title>
+    <noscript> This page uses javaScript to work. Make sure if you are using the most up date
+        version of your javaScript or if you have enabled the javaScript in your browser! You can check if you
+        javaScript is enabled by following the steps in <a href="https://support.google.com/adsense/answer/12654?hl=en"
+            target="_blank"> https://support.google.com/adsense/answer/12654?hl=en</a>.
+    </noscript>
+    <title> Kana Dojo</title>
 </head>
 
-<body class="no-select">
+<body class="no-select no-js">
 
     <!------- MENU SCREEN ------->
     <div class='menu-screen screen'>
@@ -516,14 +522,14 @@
                 <span class="score">
                     <span class="best">BEST</span>
 
-                    <span class="result">Hiragana<span class="green"> - </span><span class="moves"> moves <span class="green">
-                                - </span></span></span>
+                    <span class="result">Hiragana <span class="green hiragana-matches"></span><span class="moves">
+                            moves <span class="green hiragana-moves"></span></span></span>
 
-                    <span class="result">Katakana<span class="green"> - </span><span class="moves"> moves <span class="green">
-                                - </span></span></span>
+                    <span class="result">Katakana <span class="green katakana-matches"> </span><span class="moves">
+                            moves <span class="green katakana-moves"></span></span></span>
 
-                    <span class="result">Both<span class="green"> - </span><span class="moves"> moves <span class="green">
-                                -</span></span></span>
+                    <span class="result">Both <span class="green both-matches"> </span><span class="moves">
+                            moves <span class="green both-moves"></span></span></span>
                 </span>
 
                 <span class="settings-icon-container">
@@ -661,6 +667,28 @@
             <div>
                 <button class="play-again">Play again</button>
                 <button class="menu">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!------- HINTS ------->
+    <span class="hint"></span>
+
+    <span class="do-not-click-screen"></span>
+    <div class="modal-hint">
+        <div class="container">
+            <div class="top">
+                <h4>Hints</h4>
+            </div>
+
+            <div class="content">
+                Welcome! Would you like to see the tutorial?
+            </div>
+
+            <div class="bottom">
+                <span class="button back-button"> No </span>
+                <span class="button next-button"> Yes </span>
+                <!-- &lt; &gt; -->
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 /* Dictionary:
- -----... - separate screens 
- ----- TEXT ----- - separate divisions in screen*/
+-----... - separate screens 
+----- TEXT ----- - separate divisions in screen*/
 
 *{
     margin: 0;
@@ -15,6 +15,65 @@
     --white: #fefefe;
     --scrollbarThumbColor: rgb(213, 3, 3);
     --scrollbarTrackColor: rgb(253, 94, 94);
+}
+
+.hint{
+    position: absolute;
+    opacity: .6;
+    outline: 1000vh solid black;
+}
+
+.do-not-click-screen{    
+    width: 100vw;
+    height: 100vh;
+    
+    position: absolute;
+    z-index: 0;
+}
+
+.modal-hint .container{
+    background-color: #fefefe;
+    color: #131517;
+    
+    width: fit-content;
+    max-width: 80vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 5%;
+    
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    
+    border-radius: .5rem;
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.7);
+    font-size: 4vw;
+}
+
+.modal-hint .bottom{
+    display: flex;
+    gap: 1rem;
+    align-self: center;
+    font-size: 7vw;
+}
+
+.modal-hint .bottom .back-button{
+    color: rgb(213, 3, 3);
+}
+
+.modal-hint .bottom .next-button{
+    color: green;
+}
+
+.no-js{
+    color: black;
 }
 
 body{
@@ -59,7 +118,7 @@ h2, h3{
     overflow-y: auto;
 }
 
-.title{
+.menu-screen .title{
     font-size: 6vw;
 }
 

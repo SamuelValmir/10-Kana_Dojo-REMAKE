@@ -27,8 +27,8 @@ class MatchMakerScreenInterface extends GameScreenInterface {
             this.gameConfigurationModal);
     }
 
-    show(kanaList, gameConfiguration) {
-        this.setVariables(kanaList, gameConfiguration);
+    show(kanaList, gameConfiguration, checkBoxObjectList) {
+        this.setVariables(kanaList, gameConfiguration, checkBoxObjectList);
         this.gameModel = new MatchMakerModel(this.kanaList, gameConfiguration, MATCH_MAKER_GAME_TITLE);
         this.currentGameScreenInterface = this;
         this.setMoves(this.movesElement);
