@@ -60,6 +60,11 @@ let menuScreenInterface = {
     },
 
     initialize(optionSelected) {
+        let canStoreJsonTasks = localStorage.getItem("canStoreJsonTasks");
+        if (canStoreJsonTasks === null || canStoreJsonTasks === undefined) {
+            this.showTutorial();
+        }
+
         // ----- Set the options of the learn option ----- 
         let learnOption = this.navOptions.learnOption;
         let playOption = this.navOptions.playOption;
@@ -200,6 +205,77 @@ let menuScreenInterface = {
         }
     },
 
+    showTutorial() {
+        localStorage.setItem("canStoreJsonTasks", false);
+
+        let noClickScreen = document.querySelector(".do-not-click-screen");
+        let hintHighlight = document.querySelector(".hint");
+        let modalHint = document.querySelector(".modal-hint .container");
+
+        let buttonsContainer = document.querySelector(".modal-hint .container .bottom");
+        let exitButton = document.querySelector(".modal-hint .container .bottom .exit-button");
+        let backButton = document.querySelector(".modal-hint .container .bottom .back-button");
+        let nextButton = document.querySelector(".modal-hint .container .bottom .next-button");
+
+        let modalControllerObject = new ModalController(backButton, nextButton);
+
+        noClickScreen.style.display = "block";
+        hintHighlight.style.display = "block";
+        modalHint.style.display = "flex";
+
+        let hintList = [
+            "Here you can navigate between the learn screen where you will leant new kana and store you progress. In the Play screen you will put in practice you knowledge by playing games",
+            "Here you have the learn section",
+            "",
+        ]
+
+        async function backButtonListener() {
+            await modalControllerObject.animateLeftButton();
+            console.log("previous");
+        }
+
+        async function nextButtonListener() {
+            await modalControllerObject.animateRightButton();
+            console.log("next");
+        }
+
+        async function exitButtonListener() {
+            await modalControllerObject.animateLeftButton();
+            noClickScreen.style.display = "none";
+            hintHighlight.style.display = "none";
+            modalHint.style.display = "none";
+        }
+
+        async function startButtonListener() {
+            await modalControllerObject.animateRightButton();
+            backButton.innerHTML = "&lt;"
+            nextButton.innerHTML = "&gt;"
+
+            backButton.removeEventListener("click", backButtonListener);
+            nextButton.removeEventListener("click", nextButtonListener);
+
+            exitButton.style.display = "block";
+            buttonsContainer.style.width = "50%"
+            buttonsContainer.style.justifyContent = "space-between";
+            buttonsContainer.style.gap = "0";
+
+            backButton.addEventListener("click", backButtonListener);
+            nextButton.addEventListener("click", nextButtonListener);
+        }
+
+
+
+        backButton.addEventListener("click", exitButtonListener);
+        nextButton.addEventListener("click", startButtonListener);
+
+
+        // let menuScreenNav = document.querySelector(".menu-screen-nav");
+        // hintHighlight.style.left = menuScreenNav.offsetLeft + "px";
+        // hintHighlight.style.top = menuScreenNav.offsetTop + "px";
+        // hintHighlight.style.width = menuScreenNav.offsetWidth + "px";
+        // hintHighlight.style.height = menuScreenNav.offsetHeight + "px";
+    },
+
     animateSection(section) {
         const promise = new Promise(resolve => {
 
@@ -276,7 +352,7 @@ let menuScreenInterface = {
             textElement.innerHTML = "Skilled";
         } else if (progress < 100) {
             textElement.innerHTML = "Specialist";
-        } else{
+        } else {
             textElement.innerHTML = "Master";
         }
     }

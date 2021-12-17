@@ -7,21 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-js");
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
-
-
-    let hintHighlight = document.querySelector(".hint");
-
     
-
-    // let menuScreenNav = document.querySelector(".menu-screen-nav");
-    // hintHighlight.style.left = menuScreenNav.offsetLeft + "px";
-    // hintHighlight.style.top = menuScreenNav.offsetTop + "px";
-    // hintHighlight.style.width = menuScreenNav.offsetWidth + "px";
-    // hintHighlight.style.height = menuScreenNav.offsetHeight + "px";
-    
-
-
-    // localStorage.clear();
+    localStorage.clear();
 
     // It verifies if the browser supports web storage and local storage
     if (typeof (Storage) !== "undefined") {
@@ -72,8 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("statsData", statsData);
                 localStorage.setItem("eyeSpyData", eyeSpyData);
                 localStorage.setItem("matchMakerData", matchMakerData);
-                
-                localStorage.setItem("canStoreJsonTasks", false);
 
                 console.log("Local storage defined.")
 

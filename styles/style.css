@@ -18,12 +18,14 @@
 }
 
 .hint{
+    display: none;
     position: absolute;
     opacity: .6;
     outline: 1000vh solid black;
 }
 
 .do-not-click-screen{    
+    display: none;
     width: 100vw;
     height: 100vh;
     
@@ -32,13 +34,13 @@
 }
 
 .modal-hint .container{
+    display: none;
     background-color: #fefefe;
     color: #131517;
     
     width: fit-content;
     max-width: 80vw;
     height: fit-content;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 1rem;
@@ -59,9 +61,17 @@
 
 .modal-hint .bottom{
     display: flex;
-    gap: 1rem;
+    gap: 80%;
     align-self: center;
     font-size: 7vw;
+}
+
+.modal-hint .bottom .button{
+    padding: .5rem;
+}
+
+.modal-hint .bottom .exit-button{
+    display: none;
 }
 
 .modal-hint .bottom .back-button{
@@ -1545,6 +1555,16 @@ label{
 
 
 @media screen and (min-width: 768px){
+    .modal-hint .container{
+        font-size: 1.5vw;
+        padding: 2.5%;
+        gap: 2rem;
+    }
+
+    .modal-hint .bottom{
+        font-size: 2vw;
+    }
+
     body{
         font-size: 1.5vw;
     }
