@@ -20,7 +20,7 @@
 .hint{
     display: none;
     position: absolute;
-    opacity: .6;
+    opacity: .7;
     outline: 1000vh solid black;
 }
 
@@ -39,6 +39,7 @@
     color: #131517;
     
     width: fit-content;
+    min-width: 50vw;
     max-width: 80vw;
     height: fit-content;
     flex-direction: column;
@@ -70,7 +71,7 @@
     padding: .5rem;
 }
 
-.modal-hint .bottom .exit-button{
+.modal-hint .bottom .exit-button, .modal-hint .bottom .finish-button{
     display: none;
 }
 
@@ -78,7 +79,7 @@
     color: rgb(213, 3, 3);
 }
 
-.modal-hint .bottom .next-button{
+.modal-hint .bottom .next-button, .modal-hint .bottom .finish-button{
     color: green;
 }
 
@@ -285,6 +286,7 @@ h2, h3{
 .menu-screen .progress-container{
     padding: 5% 10%;
 }
+
 .flashCard-screen ::-webkit-scrollbar{
     height: 2vw;
 }

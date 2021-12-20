@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-js");
     menuScreenInterface.show();
     //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
-    
+
     localStorage.clear();
 
     // It verifies if the browser supports web storage and local storage

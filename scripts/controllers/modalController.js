@@ -18,6 +18,20 @@ class ModalController {
         return promise;
     };
 
+    static animateButton(button) {
+        let promise = new Promise(resolve => {
+            let animation = button.animate([
+                { backgroundColor: "#ddd" },
+                { backgroundColor: "var(--white)" },
+            ], 300);
+
+            animation.addEventListener('finish', () => {
+                resolve();
+            })
+        })
+        return promise;
+    };
+
     animateLeftButton() {
         return this.animateButton(this.leftButton);
     }
