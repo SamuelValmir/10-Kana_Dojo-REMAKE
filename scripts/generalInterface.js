@@ -6,9 +6,6 @@ let progressBarTop;
 document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-js");
     menuScreenInterface.show();
-    //! I MUST MAKE THE HINTS WHEN APPLICATION IS SHOWING FOR THE FIRST TIME
-
-    localStorage.clear();
 
     // It verifies if the browser supports web storage and local storage
     if (typeof (Storage) !== "undefined") {
@@ -183,7 +180,7 @@ function showTutorial() {
     let studySectionQuiz = document.querySelector(".menu-screen .study-section-quiz");
     let progressSection = document.querySelector(".menu-screen .progress-section");
     let eyeSpySection = document.querySelector(".menu-screen .play-screen .eye-spy");
-    let matchMakerSection = document.querySelector(".menu-screen .progress-section");
+    let matchMakerSection = document.querySelector(".menu-screen .play-screen .match-maker");
 
     let aboutButton = document.querySelector(".menu-screen .menu-button");
 
@@ -192,7 +189,7 @@ function showTutorial() {
         { "text": "Here you can navigate between the learn screen and the play screen.", "hintHighlightedComponent": menuScreenNav, "modalPos": "center", "nav": "left" },
         { "text": "In the learn screen you will learn new kana and store you progress.", "hintHighlightedComponent": menuScreenNavLeftOption, "modalPos": "center", "nav": "left" },
         { "text": "In the reference section you will have a table with all kana.", "hintHighlightedComponent": studySectionReference, "modalPos": "center", "nav": "left" },
-        { "text": "In the flash card section you can try remember the kana.", "hintHighlightedComponent": studySectionFlashcard, "modalPos": "bottom", "nav": "left" },
+        { "text": "In the flash card section you can try to remember the kana.", "hintHighlightedComponent": studySectionFlashcard, "modalPos": "bottom", "nav": "left" },
         { "text": "In the quiz section you will take a quiz where you need to write the write answer according to the kana.", "hintHighlightedComponent": studySectionQuiz, "modalPos": "bottom", "nav": "left" },
         { "text": "Here you can check you progress that is defined as long as you complete the quizzes.", "hintHighlightedComponent": progressSection, "modalPos": "top", "nav": "left", "moveTo": "left" },
 
@@ -364,12 +361,12 @@ function showTutorial() {
         localStorage.setItem("canStoreJsonTasks", false);
     }
 
-    
+
     async function startButtonListener() {
         await modalControllerObject.animateRightButton();
         backButton.innerHTML = "&lt;" // <
         nextButton.innerHTML = "&gt;" // >
-        
+
         backButton.removeEventListener("click", tryExitButtonListener);
         backButton.removeEventListener("click", finishButtonListener);
         nextButton.removeEventListener("click", startButtonListener);
@@ -388,11 +385,11 @@ function showTutorial() {
         buttonsContainer.style.width = "50%"
         buttonsContainer.style.justifyContent = "space-between";
         buttonsContainer.style.gap = "0";
-        
+
         showHint(hintIndex);
     }
-    
-    
+
+
     backButton.addEventListener("click", tryExitButtonListener);
     nextButton.addEventListener("click", startButtonListener);
 }

@@ -73,7 +73,7 @@ let statsScreenInterface = {
 
         for (let group in groupList) {
             let addGroupClass = true;
-            for (kana in groupList[group]) {
+            for (let kana in groupList[group]) {
                 let kanaObject = groupList[group][kana];
 
                 let rowElement;
@@ -193,7 +193,7 @@ let statsScreenInterface = {
             this.firstShow = false;
 
             statsScreenInterface.drawCards(HIRAGANA, hiraganaScreen);
-            statsScreenInterface.drawCards(KATAKANA, katakanaScreen);
+            // statsScreenInterface.drawCards(KATAKANA, katakanaScreen);
 
             hiraganaOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateLeftOption() === true) {

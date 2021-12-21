@@ -16,8 +16,9 @@ let quizScreenInterface = {
     card: document.querySelector(".quiz-screen .card"),
 
     quizScreenModelObject: null,
+    thereIsProgressToLose: false,
 
-    async showTransition(backScreen){
+    async showTransition(backScreen) {
         this.htmlElement.style.display = "flex";
         await screensTransitions.transition_1(backScreen, this);
         this.show();
@@ -52,9 +53,28 @@ let quizScreenInterface = {
 
             this.returnButton.addEventListener("click", async () => {
                 await HeaderControllerObject.animateButton();
-                let firstScreen = this;
-                let secondScreen = menuScreenInterface;
-                screensTransitions.transition_2(firstScreen, secondScreen);
+
+                if (this.thereIsProgressToLose === true) {
+                    swal({
+                        title: "Are you sure?",
+                        text: "If you exit now your progress will not be saved.",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                        .then((confirm) => {
+                            if (confirm) {
+                                let firstScreen = this;
+                                let secondScreen = menuScreenInterface;
+                                screensTransitions.transition_2(firstScreen, secondScreen);
+                            }
+                        });
+
+                } else {
+                    let firstScreen = this;
+                    let secondScreen = menuScreenInterface;
+                    screensTransitions.transition_2(firstScreen, secondScreen);
+                }
             })
 
             this.inputText.addEventListener("input", () => {
@@ -76,6 +96,7 @@ let quizScreenInterface = {
             })
         }
 
+        this.thereIsProgressToLose = false;
         this.quizScreenModelObject = new QuizScreenModel(this.cards)
 
         this.inputText.focus();
@@ -202,6 +223,7 @@ let quizScreenInterface = {
     },
 
     async nextCard() {
+        this.thereIsProgressToLose === false ? this.thereIsProgressToLose = true : null;
         this.quizScreenModelObject.animationIsShowing = true;
         if (this.quizScreenModelObject.checkAnswer(this.inputText.value) === true) {
             this.makeCardGreen();
@@ -227,7 +249,7 @@ let quizScreenInterface = {
             modalQuizInterface.show(this.quizScreenModelObject.rightCounter, this.quizScreenModelObject.wrongCounter);
             this.quizScreenModelObject.saveAnswers();
             menuScreenInterface.calculateProgress();
-            
+
         } else {
             await this.showCardAnimation();
             this.setCurrentCard();

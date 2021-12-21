@@ -12,7 +12,7 @@ let referenceScreenInterface = {
         this.progressBarTop = this.progressBar.offsetTop;
     },
 
-    resetBasicScrollWidth(){
+    resetBasicScrollWidth() {
         const basicScroll = document.querySelector(".reference-screen .basic-scroll");
         basicScroll.style.width = 0;
     },
@@ -45,6 +45,7 @@ let referenceScreenInterface = {
     drawCards(option, containerScreen) {
         let referenceScreenContainer = containerScreen;
         referenceScreenContainer.innerHTML = "";
+
         for (const group of Object.entries(kana.groups)) {
             let familyName = document.createElement("div");
             familyName.classList.add("family-name");
@@ -99,15 +100,15 @@ let referenceScreenInterface = {
 
         const NavModelObject = new NavModel("left");
         const NavControllerObject = new NavController(hiraganaOption, hiraganaOptionHighlight, katakanaOption, katakanaOptionHighlight, "left", hiraganaScreen, katakanaScreen, this.containers, this.scrollBar, undefined);
-        
+
         const HeaderControllerObject = new HeaderController(this.returnButtonHighlight, NavControllerObject)
-        
+
         if (this.firstShow === true) {
             this.firstShow = false;
-            
+
             referenceScreenInterface.drawCards(HIRAGANA, hiraganaScreen);
             referenceScreenInterface.drawCards(KATAKANA, katakanaScreen);
-            
+
             hiraganaOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateLeftOption() === true) {
                     HeaderControllerObject.nav.animateLeftOption();
