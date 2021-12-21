@@ -104,7 +104,7 @@ window.document.addEventListener("scroll", () => {
         voicedTop = document.querySelector(".stats-screen .voiced").offsetTop;
         comboTop1 = document.querySelector(".stats-screen .combo1").offsetTop;
         comboTop2 = document.querySelector(".stats-screen .combo2").offsetTop;
-        ;
+
         basicScroll = document.querySelector(".stats-screen .basic-scroll");
         voicedScroll = document.querySelector(".stats-screen .voiced-scroll");
         combo1Scroll = document.querySelector(".stats-screen .combo-scroll1");
@@ -155,6 +155,247 @@ window.document.addEventListener("scroll", () => {
         pinOnTop(screenShowing);
     }
 })
+
+function showTutorial() {
+    let noClickScreen = document.querySelector(".do-not-click-screen");
+    let hintHighlight = document.querySelector(".hint");
+    let modalHint = document.querySelector(".modal-hint .container");
+    let hintTitleCounter = document.querySelector(".modal-hint .top .counter");
+
+    let modalHintContent = document.querySelector(".modal-hint .content");
+    let buttonsContainer = document.querySelector(".modal-hint .container .bottom");
+    let exitButton = document.querySelector(".modal-hint .container .bottom .exit-button");
+    let backButton = document.querySelector(".modal-hint .container .bottom .back-button");
+    let nextButton = document.querySelector(".modal-hint .container .bottom .next-button");
+    let finishButton = document.querySelector(".modal-hint .container .bottom .finish-button");
+
+    let modalControllerObject = new ModalController(backButton, nextButton);
+
+    noClickScreen.style.display = "block";
+    hintHighlight.style.display = "block";
+    modalHint.style.display = "flex";
+
+    let menuScreenNav = document.querySelector(".menu-screen-nav");
+    let menuScreenNavLeftOption = document.querySelector(".menu-screen-nav .left-option");
+    let menuScreenNavRightOption = document.querySelector(".menu-screen-nav .right-option");
+    let studySectionReference = document.querySelector(".menu-screen .study-section-reference");
+    let studySectionFlashcard = document.querySelector(".menu-screen .study-section-flash-card");
+    let studySectionQuiz = document.querySelector(".menu-screen .study-section-quiz");
+    let progressSection = document.querySelector(".menu-screen .progress-section");
+    let eyeSpySection = document.querySelector(".menu-screen .play-screen .eye-spy");
+    let matchMakerSection = document.querySelector(".menu-screen .progress-section");
+
+    let aboutButton = document.querySelector(".menu-screen .menu-button");
+
+    let hintIndex = 0;
+    let hintList = [
+        { "text": "Here you can navigate between the learn screen and the play screen.", "hintHighlightedComponent": menuScreenNav, "modalPos": "center", "nav": "left" },
+        { "text": "In the learn screen you will learn new kana and store you progress.", "hintHighlightedComponent": menuScreenNavLeftOption, "modalPos": "center", "nav": "left" },
+        { "text": "In the reference section you will have a table with all kana.", "hintHighlightedComponent": studySectionReference, "modalPos": "center", "nav": "left" },
+        { "text": "In the flash card section you can try remember the kana.", "hintHighlightedComponent": studySectionFlashcard, "modalPos": "bottom", "nav": "left" },
+        { "text": "In the quiz section you will take a quiz where you need to write the write answer according to the kana.", "hintHighlightedComponent": studySectionQuiz, "modalPos": "bottom", "nav": "left" },
+        { "text": "Here you can check you progress that is defined as long as you complete the quizzes.", "hintHighlightedComponent": progressSection, "modalPos": "top", "nav": "left", "moveTo": "left" },
+
+        { "text": "In the play screen you will put in practice you knowledge by playing games.", "hintHighlightedComponent": menuScreenNavRightOption, "modalPos": "center", "nav": "left", "moveTo": "right" },
+        { "text": "In Eye Spy you must to select the same kana that is sorted.", "hintHighlightedComponent": eyeSpySection, "modalPos": "bottom", "nav": "right" },
+        { "text": "In the Match Maker you will play the memory game but with kana.", "hintHighlightedComponent": matchMakerSection, "modalPos": "bottom", "nav": "right" },
+
+        { "text": "Here you can replay the tutorial and see some contacts information. If you find some issues or perhaps if you would like to suggest new features, you can contact the developer (me) ;)", "hintHighlightedComponent": aboutButton, "modalPos": "center", "nav": "left" },
+        { "text": "I hope you enjoy this application. ありがとうございます!", "hintHighlightedComponent": null, "modalPos": "center", "moveTo": "left", "nav": "left" },
+    ]
+
+    function tryToMove(index) {
+        switch (hintList[index].moveTo) {
+            case "left":
+                menuScreenInterface.containersElement.scrollTo(0, 0);
+                break;
+
+            case "right":
+                menuScreenInterface.containersElement.scrollTo((menuScreenInterface.containersElement.scrollWidth / 2), 0);
+                break;
+            default: break;
+        }
+    }
+
+    function hintHighlightAnimation(hintHighlightedComponent, index = "0") {
+        let displayWidth;
+        switch (hintList[index].nav) {
+            case "left":
+                displayWidth = 0;
+                break;
+
+            case "right":
+                displayWidth = document.documentElement.clientWidth;
+                break;
+        }
+
+        if (hintHighlightedComponent !== null) {
+
+            hintHighlight.animate([
+                { width: 0 },
+                { width: hintHighlightedComponent.offsetWidth + "px" }
+            ],
+                { duration: 200, easing: "ease-in", fill: "forwards" })
+
+            hintHighlight.style.left = (hintHighlightedComponent.offsetLeft - displayWidth) + "px";
+            hintHighlight.style.top = hintHighlightedComponent.offsetTop + "px";
+            hintHighlight.style.height = hintHighlightedComponent.offsetHeight + "px";
+        } else {
+            hintHighlight.style.top = "-10rem";
+        }
+    }
+
+
+    function showHint(index) {
+        hintTitleCounter.innerHTML = (index + 1) + "/" + hintList.length;
+        modalHintContent.innerHTML = hintList[index].text;
+        let hintHighlightedComponent = hintList[index].hintHighlightedComponent;
+
+        hintHighlightAnimation(hintHighlightedComponent, index);
+
+        switch (hintList[index].modalPos) {
+            case "top": {
+                modalHint.animate([
+                    { top: 0, bottom: "100vh", transform: "translateY(60%)" }
+                ], { duration: 400, easing: "ease-out", fill: "forwards" })
+
+            } break;
+            case "center": {
+                modalHint.animate([
+                    { top: 0, bottom: 0, transform: "translateY(0)" }
+                ], { duration: 400, easing: "ease-out", fill: "forwards" })
+
+            } break;
+            case "bottom": {
+                modalHint.animate([
+                    { top: "100vh", bottom: 0, transform: "translateY(-60%)" }
+                ], { duration: 400, easing: "ease-out", fill: "forwards" })
+
+            } break;
+        }
+    }
+
+    function hintContainerComponentsControl() {
+        switch (hintIndex) {
+            case 0: {
+                backButton.style.display = "none";
+            } break;
+
+            case 1: {
+                backButton.style.display = "block";
+            } break;
+
+            case hintList.length - 2: {
+                exitButton.style.display = "block";
+                nextButton.style.display = "block";
+                finishButton.style.display = "none";
+            } break;
+
+            case hintList.length - 1: {
+                exitButton.style.display = "none";
+                nextButton.style.display = "none";
+                finishButton.style.display = "block";
+            } break;
+        }
+    }
+
+    async function backButtonListener() {
+        if (nextButton.getAttribute("disabled") === "false") {
+
+            nextButton.setAttribute("disabled", true);
+            await modalControllerObject.animateLeftButton();
+            nextButton.setAttribute("disabled", false);
+
+            hintIndex--;
+            hintContainerComponentsControl();
+
+            tryToMove(hintIndex);
+            showHint(hintIndex);
+        }
+    }
+
+    async function nextButtonListener() {
+        if (nextButton.getAttribute("disabled") === "false") {
+
+            nextButton.setAttribute("disabled", true);
+            await modalControllerObject.animateRightButton();
+            nextButton.setAttribute("disabled", false);
+
+            hintIndex++;
+            hintContainerComponentsControl();
+
+            tryToMove(hintIndex);
+            showHint(hintIndex);
+        }
+    }
+
+    async function tryExitButtonListener(event) {
+        await modalControllerObject.animateButton(event.target);
+        modalHintContent.innerHTML = "Are you sure that you want to skip the tutorial? You can always replay the tutorial in the about menu.";
+
+        hintHighlight.style.top = "-30rem";
+        exitButton.style.display = "none";
+        backButton.style.display = "block";
+        backButton.innerHTML = "Exit";
+        nextButton.innerHTML = "Continue";
+
+        buttonsContainer.style.width = "50%"
+        buttonsContainer.style.justifyContent = "space-between";
+        buttonsContainer.style.gap = "0";
+
+        modalHint.animate([
+            { top: 0, bottom: 0, transform: "translateY(0)" }
+        ], { duration: 400, easing: "ease-out", fill: "forwards" })
+
+        hintHighlightAnimation(aboutButton);
+
+        backButton.removeEventListener("click", backButtonListener);
+        nextButton.removeEventListener("click", nextButtonListener);
+
+        backButton.addEventListener("click", finishButtonListener);
+        nextButton.addEventListener("click", startButtonListener);
+    }
+
+    async function finishButtonListener(event) {
+        await modalControllerObject.animateButton(event.target);
+        noClickScreen.style.display = "none";
+        hintHighlight.style.display = "none";
+        modalHint.style.display = "none";
+        localStorage.setItem("canStoreJsonTasks", false);
+    }
+
+    
+    async function startButtonListener() {
+        await modalControllerObject.animateRightButton();
+        backButton.innerHTML = "&lt;" // <
+        nextButton.innerHTML = "&gt;" // >
+        
+        backButton.removeEventListener("click", tryExitButtonListener);
+        backButton.removeEventListener("click", finishButtonListener);
+        nextButton.removeEventListener("click", startButtonListener);
+
+        exitButton.addEventListener("click", tryExitButtonListener);
+        finishButton.addEventListener("click", finishButtonListener);
+        backButton.addEventListener("click", backButtonListener);
+        nextButton.addEventListener("click", nextButtonListener);
+
+        backButton.setAttribute("disabled", false);
+        nextButton.setAttribute("disabled", false);
+
+        exitButton.style.display = "block";
+        backButton.style.display = "block";
+        hintContainerComponentsControl();
+        buttonsContainer.style.width = "50%"
+        buttonsContainer.style.justifyContent = "space-between";
+        buttonsContainer.style.gap = "0";
+        
+        showHint(hintIndex);
+    }
+    
+    
+    backButton.addEventListener("click", tryExitButtonListener);
+    nextButton.addEventListener("click", startButtonListener);
+}
 
 let screensTransitions = {
     firstScreen: null,
