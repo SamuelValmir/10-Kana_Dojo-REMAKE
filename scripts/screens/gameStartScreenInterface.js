@@ -172,7 +172,7 @@ let gameStartScreenInterface = {
             case EYE_SPY_GAME_TITLE: gameNameStorage = "eyeSpyData"; break;
             case MATCH_MAKER_GAME_TITLE: gameNameStorage = "matchMakerData"; break;
         }
-
+        
         const storedGameData = JSON.parse(localStorage.getItem(gameNameStorage));
         const hiraganaBestMatches = storedGameData.hiragana.bestMatches;
         const hiraganaBestMoves = storedGameData.hiragana.bestMoves;

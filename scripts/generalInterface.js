@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.remove("no-js");
     menuScreenInterface.show();
 
+    // localStorage.clear();
+
     // It verifies if the browser supports web storage and local storage
     if (typeof (Storage) !== "undefined") {
         let canStoreJsonTasks = localStorage.getItem("canStoreJsonTasks");
@@ -172,6 +174,13 @@ function showTutorial() {
     hintHighlight.style.display = "block";
     modalHint.style.display = "flex";
 
+    hintTitleCounter.innerHTML = "";
+    modalHintContent.innerHTML = " Welcome! Here you'll be able to learn the Japanese Hiragana and Katakana with games, tests and more. Would you like to see the tutorial?";
+    nextButton.style.display = "block";
+    finishButton.style.display = "none";
+    backButton.innerHTML = "No";
+    nextButton.innerHTML = "Yes";
+
     let menuScreenNav = document.querySelector(".menu-screen-nav");
     let menuScreenNavLeftOption = document.querySelector(".menu-screen-nav .left-option");
     let menuScreenNavRightOption = document.querySelector(".menu-screen-nav .right-option");
@@ -194,8 +203,8 @@ function showTutorial() {
         { "text": "Here you can check you progress that is defined as long as you complete the quizzes.", "hintHighlightedComponent": progressSection, "modalPos": "top", "nav": "left", "moveTo": "left" },
 
         { "text": "In the play screen you will put in practice you knowledge by playing games.", "hintHighlightedComponent": menuScreenNavRightOption, "modalPos": "center", "nav": "left", "moveTo": "right" },
-        { "text": "In Eye Spy you must to select the same kana that is sorted.", "hintHighlightedComponent": eyeSpySection, "modalPos": "bottom", "nav": "right" },
-        { "text": "In the Match Maker you will play the memory game but with kana.", "hintHighlightedComponent": matchMakerSection, "modalPos": "bottom", "nav": "right" },
+        { "text": "In Eye Spy you must to select the same kana that is sorted.", "hintHighlightedComponent": eyeSpySection, "modalPos": "bottom", "nav": "right"},
+        { "text": "In the Match Maker you will play the memory game but with kana.", "hintHighlightedComponent": matchMakerSection, "modalPos": "bottom", "nav": "right", "moveTo": "right" },
 
         { "text": "Here you can replay the tutorial and see some contacts information. If you find some issues or perhaps if you would like to suggest new features, you can contact the developer (me) ;)", "hintHighlightedComponent": aboutButton, "modalPos": "center", "nav": "left" },
         { "text": "I hope you enjoy this application. ありがとうございます!", "hintHighlightedComponent": null, "modalPos": "center", "moveTo": "left", "nav": "left" },
@@ -330,6 +339,7 @@ function showTutorial() {
         await modalControllerObject.animateButton(event.target);
         modalHintContent.innerHTML = "Are you sure that you want to skip the tutorial? You can always replay the tutorial in the about menu.";
 
+        hintTitleCounter.innerHTML = "";
         hintHighlight.style.top = "-30rem";
         exitButton.style.display = "none";
         backButton.style.display = "block";
@@ -355,9 +365,17 @@ function showTutorial() {
 
     async function finishButtonListener(event) {
         await modalControllerObject.animateButton(event.target);
+        hintIndex = 0;
         noClickScreen.style.display = "none";
         hintHighlight.style.display = "none";
         modalHint.style.display = "none";
+
+        exitButton.removeEventListener("click", finishButtonListener);
+        backButton.removeEventListener("click", tryExitButtonListener);
+        backButton.removeEventListener("click", finishButtonListener);
+        nextButton.removeEventListener("click", startButtonListener);
+        finishButton.removeEventListener("click", startButtonListener);
+
         localStorage.setItem("canStoreJsonTasks", false);
     }
 

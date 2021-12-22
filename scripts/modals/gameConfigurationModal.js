@@ -23,8 +23,8 @@ class GameConfigurationModal {
     isShowing = false;
 
     configuration = {
-        minutes: "0",
-        seconds: "2",
+        minutes: "1",
+        seconds: "0",
         bonusTime: 10,
         dimensionX: 2,
         dimensionY: 2,

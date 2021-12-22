@@ -193,7 +193,7 @@ let statsScreenInterface = {
             this.firstShow = false;
 
             statsScreenInterface.drawCards(HIRAGANA, hiraganaScreen);
-            // statsScreenInterface.drawCards(KATAKANA, katakanaScreen);
+            statsScreenInterface.drawCards(KATAKANA, katakanaScreen);
 
             hiraganaOption.addEventListener("click", () => {
                 if (NavModelObject.canAnimateLeftOption() === true) {
