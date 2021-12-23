@@ -1,11 +1,8 @@
 <h1 align="center"> Kana Dojo (REMAKE)</h1>
 
-<!--
 <h1 align="center">
-  <img width="48%" alt="Menu screen" title="Menu screen" src="#" />
-  <img width="48%" alt="Menu screen" title="Menu screen" src="#" />
+  <a href="https://www.dropbox.com/s/jk30satrhuolbzd/Kana%20dojo%20tutorial.mp4?dl=0" target="_blank"> Tutorial part 1 (dropbox video) </a>
 </h1>
--->
 
 ## See the project here:
 <a href="https://samuelvalmir.github.io/10-Kana_Dojo-REMAKE/">Go to git hub pages.</a>
