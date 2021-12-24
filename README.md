@@ -1,7 +1,8 @@
 <h1 align="center"> Kana Dojo (REMAKE)</h1>
 
 <h1 align="center">
-  <a href="https://www.dropbox.com/s/jk30satrhuolbzd/Kana%20dojo%20tutorial.mp4?dl=0" target="_blank"> Tutorial part 1 (dropbox video) </a>
+  <a href="https://www.dropbox.com/s/jk30satrhuolbzd/Kana%20dojo%20tutorial%20parte%201.mp4?dl=0" target="_blank"> Tutorial part 1 (dropbox video) </a>
+    <a href="https://www.dropbox.com/s/kiu64xukqqck7fs/Kana%20dojo%20tutorial%20part%202.mp4?dl=0" target="_blank"> Tutorial part 2 (dropbox video) </a>
 </h1>
 
 ## See the project here:
