@@ -3,7 +3,9 @@
 <h1 align="center">
   <a href="https://www.dropbox.com/s/jk30satrhuolbzd/Kana%20dojo%20tutorial%20parte%201.mp4?dl=0" target="_blank"> Tutorial part 1 (dropbox video) </a>
     <a href="https://www.dropbox.com/s/kiu64xukqqck7fs/Kana%20dojo%20tutorial%20part%202.mp4?dl=0" target="_blank"> Tutorial part 2 (dropbox video) </a>
+   <a href="https://youtu.be/vKD6oTsVYkQ" target="_blank"> Tutorial part 3 (youtube video) </a> 
 </h1>
+
 
 ## See the project here:
 <a href="https://samuelvalmir.github.io/10-Kana_Dojo-REMAKE/">Go to git hub pages.</a>
